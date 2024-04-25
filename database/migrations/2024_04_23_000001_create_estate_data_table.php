@@ -18,7 +18,7 @@ class CreateEstateDataTable extends Migration
             $table->string('est_room_no')->nullable();
             $table->string('est_name')->nullable();
             $table->string('est_zip')->nullable();
-            $table->integer('est_pref')->nullable();
+            $table->string('est_pref')->nullable();
             $table->string('est_city')->nullable();
             $table->string('est_ward')->nullable();
             $table->string('est_address')->nullable();
