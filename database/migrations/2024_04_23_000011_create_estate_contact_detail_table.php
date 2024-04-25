@@ -14,7 +14,7 @@ class CreateEstateContactDetailTable extends Migration
     public function up()
     {
         Schema::create('estate_contact_detail', function (Blueprint $table) {
-            $table->integer('id')->unique();
+            $table->increments('id');
             $table->integer('contact_id')->nullable();
             $table->string('contact_file')->nullable();
             $table->timestamps();

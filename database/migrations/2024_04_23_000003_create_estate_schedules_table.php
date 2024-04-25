@@ -14,7 +14,7 @@ class CreateEstateSchedulesTable extends Migration
     public function up()
     {
         Schema::create('estate_schedules', function (Blueprint $table) {
-            $table->string('schedule_id', 20)->unique();
+            $table->increments('schedule_id');
             $table->integer('est_id')->nullable();
             $table->string('schedule_name')->nullable();
             $table->timestamp('schedule_date')->nullable();

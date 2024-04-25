@@ -14,7 +14,7 @@ class CreateCatalogueTable extends Migration
     public function up()
     {
         Schema::create('catalogue', function (Blueprint $table) {
-            $table->integer('cata_id')->unique();
+            $table->increments('cata_id');
             $table->string('cata_title')->nullable();
             $table->string('cata_description')->nullable();
             $table->string('cata_image')->nullable();

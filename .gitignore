@@ -28,4 +28,4 @@ doc/api/
 
 vendor/
 storage/
-public/storage/
+public/storage*

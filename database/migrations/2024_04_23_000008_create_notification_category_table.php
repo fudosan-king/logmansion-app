@@ -14,7 +14,7 @@ class CreateNotificationCategoryTable extends Migration
     public function up()
     {
         Schema::create('notification_category', function (Blueprint $table) {
-            $table->integer('cat_id')->unique();
+            $table->increments('cat_id');
             $table->string('cat_name')->nullable();
             $table->timestamps();
             $table->softDeletes();

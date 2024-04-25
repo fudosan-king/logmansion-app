@@ -14,7 +14,7 @@ class CreateEstateDocsTable extends Migration
     public function up()
     {
         Schema::create('estate_docs', function (Blueprint $table) {
-            $table->integer('doc_id')->unique();
+            $table->increments('doc_id');
             $table->integer('est_id')->nullable();
             $table->integer('doc_category')->default('0')->comment(" 0:押印済み書類 | 1:管理系資料 | 2:付属資料");
             $table->string('doc_name')->nullable();

@@ -14,8 +14,9 @@ class CreateNotificationsTable extends Migration
     public function up()
     {
         Schema::create('notifications', function (Blueprint $table) {
-            $table->integer('noti_id')->unique();
+            $table->increments('noti_id');
             $table->integer('cat_id')->nullable();
+            $table->string('noti_title')->nullable();
             $table->string('noti_content')->nullable()->comment("本文");
             $table->timestamp('noti_date')->nullable()->comment("日付");
             $table->integer('noti_status')->default('0')->comment("有効 0:draft | 1:publish");

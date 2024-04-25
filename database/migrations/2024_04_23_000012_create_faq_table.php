@@ -14,7 +14,7 @@ class CreateFaqTable extends Migration
     public function up()
     {
         Schema::create('faq', function (Blueprint $table) {
-            $table->integer('faq_id')->unique();
+            $table->increments('faq_id');
             $table->string('faq_title')->nullable();
             $table->string('faq_content')->nullable();
             $table->integer('faq_active')->default('0')->comment("有効 0:draft | 1:publish");
