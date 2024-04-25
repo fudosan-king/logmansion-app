@@ -21,6 +21,7 @@ class CreateEstateClientsTable extends Migration
             $table->string('client_l_name')->nullable();
             $table->string('client_furigana')->nullable();
             $table->string('client_email', 255)->unique();
+            $table->string('client_password', 255)->nullable();
             $table->string('client_tel')->nullable();
             // $table->string('cli_address')->nullable();
             $table->timestamps();
