@@ -24,7 +24,17 @@ $ mkdir ./docker/mysql
 $ echo '' >> ./storage/logs/laravel.log
 
 #thần chú Laravel
-$ cp .env.example .env
+$ cp env.example .env
+
+$ vi .env
+
+# データベースの部分のみ下記に変更
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=log_mansion
+DB_USERNAME=logmansion
+DB_PASSWORD=admin
 
 ### 初回実行コマンド
 
@@ -63,3 +73,4 @@ password : super1234
 
 email : admin@propolife.co.jp
 password : admin1234
+
