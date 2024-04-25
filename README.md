@@ -56,3 +56,10 @@ php artisan db:seed
 ### 動作確認
 
 ブラウザで`http://localhost`にアクセスすれば確認ができる。
+User Login
+
+email : superadmin@propolife.co.jp
+password : super1234
+
+email : admin@propolife.co.jp
+password : admin1234
