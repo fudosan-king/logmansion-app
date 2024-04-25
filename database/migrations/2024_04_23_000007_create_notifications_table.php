@@ -20,6 +20,7 @@ class CreateNotificationsTable extends Migration
             $table->string('noti_content')->nullable()->comment("本文");
             $table->timestamp('noti_date')->nullable()->comment("日付");
             $table->integer('noti_status')->default('0')->comment("有効 0:draft | 1:publish");
+            $table->string('noti_url')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
