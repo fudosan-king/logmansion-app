@@ -29,5 +29,7 @@ doc/api/
 vendor/
 storage/
 public/storage*
-docker/*
+
+# Compose
+docker/
 docker-compose.yml
