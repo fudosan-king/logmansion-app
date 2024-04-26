@@ -348,6 +348,11 @@ return [
             ]
            
         ],
+        [
+            'text' => 'Notification',
+            'url'  => 'notification',
+            'icon' => 'fas fa-fw fa-bell',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
@@ -356,8 +361,15 @@ return [
         ],
         [
             'text' => 'Settings',
-            'url'  => 'settings',
+            // 'url'  => 'settings',
             'icon' => 'fas fa-fw fa-cogs',
+            'submenu'      =>[
+                [
+                    'text' => 'Notification Category',
+                    'route' => 'topic',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                ],
+            ]
         ],
         // Sidebar items:
         [
