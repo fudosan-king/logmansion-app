@@ -30,4 +30,4 @@ vendor/
 storage/
 public/storage*
 docker/*
-docker-compose.yml*
+docker-compose.yml
