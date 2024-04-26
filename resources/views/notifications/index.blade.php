@@ -19,17 +19,17 @@
                 <th scope="col">タイトル</th>
                 <th scope="col">状態</th>
                 <th scope="col">最終更新日</th>
-                <th scope="col"></th>
+                <th scope="col">アクション</th>
             </tr>
         </thead>
         <tbody>
             @foreach($notifications as $notification)
             <tr>
-                <td>{{ $notification->noti_date ? substr($notification->noti_date, 0, 10) : '' }}</td>
+                <td>{{ \Carbon\Carbon::parse($notification->noti_date)->format('d/m/Y') }}</td>
                 <td>{{ $notification->category->cat_name ?? "" }}</td>
                 <td>{{ $notification->noti_title ?? "" }}</td>
                 <td>{{ $notification->noti_status == 1 ? '有効' : '' }}</td>
-                <td>{{ $notification->updated_at ?? "" }}</td>
+                <td>{{ \Carbon\Carbon::parse($notification->updated_at)->format('d/m/Y') }}</td>
                 <td>
                     <a href="{{ route('notification.edit', $notification->noti_id) }}" class="btn btn-primary">編集</a>
                     {{-- <button type="button" class="btn btn-danger">削除</button> --}}

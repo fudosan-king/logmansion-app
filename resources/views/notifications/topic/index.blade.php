@@ -16,14 +16,14 @@
             <tr>
                 <th scope="col">カテゴリ</th>
                 <th scope="col">最終更新日</th>
-                <th scope="col"></th>
+                <th scope="col">アクション</th>
             </tr>
         </thead>
         <tbody>
             @foreach($categories as $category)
             <tr>
                 <td>{{ $category->cat_name ?? "" }}</td>
-                <td>{{ $category->updated_at ?? "" }}</td>
+                <td>{{ \Carbon\Carbon::parse($category->updated_at)->format('d/m/Y') }}</td>
                 <td>
                     <a href="{{ route('topic.edit', $category->cat_id) }}" class="btn btn-primary">編集</a>
                     <form action="{{ route('topic.destroy', $category->cat_id) }}" method="POST"
