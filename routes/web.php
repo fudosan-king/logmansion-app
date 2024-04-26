@@ -6,6 +6,7 @@ use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\EstatesController; 
+use App\Http\Controllers\NotificationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,7 +25,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => ['auth', 'permission']], function(){
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');    
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');   
+      
+    Route::get('/notification', [NotificationController::class, 'index'])->name('notification'); 
+    Route::get('/notification/create', [NotificationController::class, 'create'])->name('notification.create'); 
+    Route::post('/notification/store', [NotificationController::class, 'store'])->name('notification.store');
+    Route::get('/notification/edit/{id}', [NotificationController::class, 'edit'])->name('notification.edit');
+    Route::put('/notification/update/{id}', [NotificationController::class, 'update'])->name('notification.update');Route::delete('/notifications/destroy/{id}', [NotificationController::class, 'destroy'])->name('notification.destroy');
+    
 
     Route::group(['prefix'=> 'users', 'as' => 'users.'], function(){
         Route::resource('permissions', PermissionsController::class);
@@ -52,3 +60,4 @@ Route::group(['middleware' => ['auth', 'permission']], function(){
         return "Route for superuser without assigning";
     })->name('test3');
 });
+

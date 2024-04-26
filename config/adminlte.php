@@ -348,6 +348,11 @@ return [
             ]
            
         ],
+        [
+            'text' => 'Notification',
+            'url'  => 'notification',
+            'icon' => 'fas fa-fw fa-bell',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
