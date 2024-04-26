@@ -350,8 +350,20 @@ return [
         ],
         [
             'text' => 'Notification',
-            'url'  => 'notification',
+            // 'url'  => 'notification',
             'icon' => 'fas fa-fw fa-bell',
+            'submenu'      =>[
+                [
+                    'text' => 'All',
+                    'route' => 'notification',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                ],
+                [   
+                    'text' => 'Category',
+                    'route' => 'topic',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                ],
+            ]
         ],
         ['header' => 'account_settings'],
         [
@@ -363,13 +375,6 @@ return [
             'text' => 'Settings',
             // 'url'  => 'settings',
             'icon' => 'fas fa-fw fa-cogs',
-            'submenu'      =>[
-                [
-                    'text' => 'Notification Category',
-                    'route' => 'topic',
-                    'icon' => 'fas fa-fw fa-chevron-right',
-                ],
-            ]
         ],
         // Sidebar items:
         [
