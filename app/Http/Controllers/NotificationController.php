@@ -74,4 +74,48 @@ class NotificationController extends Controller
         $notification->delete();
         return redirect()->route('notification')->with('success', 'Notification deleted successfully');
     }
+
+    public function topicIndex()
+    {
+        $categories = NotiCategory::all();
+        return view('notifications.topic.index', compact('categories'));
+    }
+
+    public function topicCreate()
+    {
+        return view('notifications.topic.create');
+    }
+
+    public function topicStore(Request $request)
+    {
+        $data = $request->validate([
+            'cat_name' => 'required',
+        ]);
+        $notification = NotiCategory::create($data);
+        return redirect()->route('topic')->with('success', 'Category created successfully');
+    }
+
+    public function topicEdit($id)
+    {
+        $category = NotiCategory::findOrFail($id);
+        return view('notifications.topic.edit', compact('category'));
+    }
+
+    public function topicUpdate(Request $request, $id)
+    {
+        $category = NotiCategory::findOrFail($id);
+        $data = $request->validate([
+            'cat_name' => 'required',
+        ]);
+        $category->update($data);
+
+        return redirect()->route('topic')->with('success', 'Category updated successfully');
+    }
+
+    public function topicDestroy($id)
+    {
+        $category = NotiCategory::findOrFail($id);
+        $category->delete();
+        return redirect()->route('topic')->with('success', 'Category deleted successfully');
+    }
 }

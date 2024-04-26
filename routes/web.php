@@ -32,6 +32,13 @@ Route::group(['middleware' => ['auth', 'permission']], function(){
     Route::post('/notification/store', [NotificationController::class, 'store'])->name('notification.store');
     Route::get('/notification/edit/{id}', [NotificationController::class, 'edit'])->name('notification.edit');
     Route::put('/notification/update/{id}', [NotificationController::class, 'update'])->name('notification.update');Route::delete('/notifications/destroy/{id}', [NotificationController::class, 'destroy'])->name('notification.destroy');
+
+    Route::get('/topic', [NotificationController::class, 'topicIndex'])->name('topic'); 
+    Route::get('/topic/create', [NotificationController::class, 'topicCreate'])->name('topic.create'); 
+    Route::post('/topic/store', [NotificationController::class, 'topicStore'])->name('topic.store');
+    Route::get('/topic/edit/{id}', [NotificationController::class, 'topicEdit'])->name('topic.edit');
+    Route::put('/topic/update/{id}', [NotificationController::class, 'topicUpdate'])->name('topic.update');
+    Route::delete('/topic/destroy/{id}', [NotificationController::class, 'topicDestroy'])->name('topic.destroy');
     
 
     Route::group(['prefix'=> 'users', 'as' => 'users.'], function(){
