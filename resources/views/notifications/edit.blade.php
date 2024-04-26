@@ -64,7 +64,7 @@
                         <label for="noti_url">URL</label>
                         <input type="text" name="noti_url" id="noti_url"
                             class="form-control @error('noti_url') is-invalid @enderror"
-                            value="{{ $notification->noti_url }}">
+                            value="{{ $notification->noti_url ?? "" }}">
                         @error('noti_url')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -73,7 +73,7 @@
             </div>
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary float-right">保存</button>
             </div>
         </form>
     </div>
@@ -85,6 +85,5 @@
 
 @section('js')
     <script>
-        console.log('Hi!');
     </script>
 @stop

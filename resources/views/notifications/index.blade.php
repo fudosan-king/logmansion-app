@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <a href="{{ route('notification.create') }}" class="btn btn-outline-success">Add New</a>
+    <a href="{{ route('notification.create') }}" class="btn btn-outline-success mb-2">Add New</a>
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
@@ -25,9 +25,9 @@
         <tbody>
             @foreach($notifications as $notification)
             <tr>
-                <td>{{ $notification->noti_title ?? "" }}</td>
+                <td>{{ $notification->noti_date ? substr($notification->noti_date, 0, 10) : '' }}</td>
                 <td>{{ $notification->category->cat_name ?? "" }}</td>
-                <td>{{ $notification->noti_date ?? "" }}</td>
+                <td>{{ $notification->noti_title ?? "" }}</td>
                 <td>{{ $notification->noti_status == 1 ? '有効' : '' }}</td>
                 <td>{{ $notification->updated_at ?? "" }}</td>
                 <td>

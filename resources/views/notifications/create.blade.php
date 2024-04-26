@@ -66,7 +66,7 @@
             </div>
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary float-right">保存</button>
             </div>
         </form>
     </div>
@@ -78,6 +78,5 @@
 
 @section('js')
     <script>
-        console.log('Hi!');
     </script>
 @stop
