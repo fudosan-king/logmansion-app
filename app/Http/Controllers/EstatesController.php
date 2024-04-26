@@ -13,7 +13,7 @@ class EstatesController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        return view('estate/index');
     }
 
     /**
