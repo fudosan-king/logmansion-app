@@ -34,8 +34,8 @@
                         <div class="btn btn-primary mt-2 mb-2">Add new Estate</div>
                         <div >
                             <nav class="navbar navbar-light bg-light">
-                            <form class="form-inline">
-                                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <form class="form-inline"  method="GET" action="{{ request()->url() }}">
+                                <input name="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                             </form>
                             </nav>
@@ -53,9 +53,10 @@
                       </tr>
                     </thead>
                     <tbody>
+                      @foreach($estates as $estate)
                       <tr class="odd">
-                        <td class="dtr-control">マートルコート奥沢 5階</td>
-                        <td class="sorting_1">引渡し済</td>
+                        <td class="dtr-control">{{$estate->est_name}}</td>
+                        <td class="sorting_1">{{$estate->est_name}}</td>
                         <td>024.4.15 事前審査</td>
                         <td>山田二郎</td>
                         <td>
@@ -67,6 +68,7 @@
                             </div>
                         </td>
                       </tr>
+                      @endforeach
                     </tbody>
                     <tfoot>
                       <tr>
@@ -81,25 +83,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-sm-12 col-md-5">
-                  <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Showing 41 to 50 of 57 entries</div>
-                </div>
-                <div class="col-sm-12 col-md-7">
-                  <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                    <ul class="pagination">
-                      <li class="paginate_button page-item previous" id="example2_previous">
-                        <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
-                      </li>
-                      <li class="paginate_button page-item active">
-                        <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-                      </li>
-                     
-                      <li class="paginate_button page-item next" id="example2_next">
-                        <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+                {{ $estates->links() }}
               </div>
             </div>
           </div>

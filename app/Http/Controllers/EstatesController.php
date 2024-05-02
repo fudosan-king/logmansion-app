@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Estate;
 class EstatesController extends Controller
 {
     /**
@@ -13,7 +13,17 @@ class EstatesController extends Controller
      */
     public function index()
     {
-        return view('estate/index');
+        $search = request('search');
+        $estates = Estate::orderBy('est_id', 'desc')
+            ->when($search, function ($query, $search) {
+                return $query->where('est_name', 'like', '%' . $search . '%');
+            })
+            ->paginate(10);
+            
+        return view('estate/index', [
+            'estates' => $estates
+        ]);
+        
     }
 
     /**
