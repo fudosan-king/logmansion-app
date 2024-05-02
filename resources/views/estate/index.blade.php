@@ -56,7 +56,7 @@
                       @foreach($estates as $estate)
                       <tr class="odd">
                         <td class="dtr-control">{{$estate->est_name}}</td>
-                        <td class="sorting_1">{{$estate->est_name}}</td>
+                        <td class="sorting_1">Status</td>
                         <td>024.4.15 事前審査</td>
                         <td>山田二郎</td>
                         <td>
