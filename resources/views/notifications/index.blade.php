@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <a href="{{ route('notification.create') }}" class="btn btn-outline-success mb-2">Add New</a>
+    <a href="{{ route('notification.create') }}" class="btn btn-success mb-4">Add New</a>
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
@@ -25,11 +25,11 @@
         <tbody>
             @foreach($notifications as $notification)
             <tr>
-                <td>{{ \Carbon\Carbon::parse($notification->noti_date)->format('d/m/Y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($notification->noti_date)->format('Y/m/d') }}</td>
                 <td>{{ $notification->category->cat_name ?? "" }}</td>
                 <td>{{ $notification->noti_title ?? "" }}</td>
                 <td>{{ $notification->noti_status == 1 ? '有効' : '' }}</td>
-                <td>{{ \Carbon\Carbon::parse($notification->updated_at)->format('d/m/Y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($notification->updated_at)->format('Y/m/d  ') }}</td>
                 <td>
                     <a href="{{ route('notification.edit', $notification->noti_id) }}" class="btn btn-primary">編集</a>
                     {{-- <button type="button" class="btn btn-danger">削除</button> --}}
