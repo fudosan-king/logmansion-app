@@ -31,9 +31,6 @@ class NotificationController extends Controller
             'noti_url' => 'nullable',
         ]);
         $data['noti_status'] = $request->has('noti_status');
-        // $d=strtotime($data['noti_date']. "00:00:00");
-        // $data['noti_date'] =  date("Y-m-d h:i:s", $d);
-        // $data['noti_date'] = str_replace('/','-',$data['noti_date']);
         $notification = Notification::create($data);
         return redirect()->route('notification')->with('success', 'Notification created successfully');
     }
