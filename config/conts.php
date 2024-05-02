@@ -12,6 +12,6 @@ return [
         '2'     => '付属資料'
     ],
     'schedule'  => '決済までの流れ',
-    'warranty'  => '保証期'
-
+    'warranty'  => '保証期',
+    'paging'  => 10,
 ];
