@@ -348,6 +348,23 @@ return [
             ]
            
         ],
+        [
+            'text' => 'Notification',
+            // 'url'  => 'notification',
+            'icon' => 'fas fa-fw fa-bell',
+            'submenu'      =>[
+                [
+                    'text' => 'All',
+                    'route' => 'notification',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                ],
+                [   
+                    'text' => 'Category',
+                    'route' => 'topic',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                ],
+            ]
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
@@ -356,7 +373,7 @@ return [
         ],
         [
             'text' => 'Settings',
-            'url'  => 'settings',
+            // 'url'  => 'settings',
             'icon' => 'fas fa-fw fa-cogs',
         ],
         // Sidebar items:
@@ -473,6 +490,26 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
+        'DatePicker' => [   
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/moment/moment.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css',
                 ],
             ],
         ],
