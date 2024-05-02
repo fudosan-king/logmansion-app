@@ -499,7 +499,7 @@ return [
                 [
                     'type' => 'js',
                     'asset' => true,
-                    'location' => 'vendor/plugins/moment/moment.min.js',
+                    'location' => 'vendor/moment/moment.min.js',
                 ],
                 [
                     'type' => 'js',

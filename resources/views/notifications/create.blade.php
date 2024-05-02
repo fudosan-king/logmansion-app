@@ -75,7 +75,8 @@
             </div>
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary float-right">保存</button>
+                <button type="submit" class="btn btn-primary" style="width:150px">{{ __("messages.save") }}</button>
+                <a href="{{url()->previous()}}"  class="btn btn-default float" style="width:150px;margin-left:10px">@lang('messages.cancel')</a>
             </div>
         </form>
     </div>
