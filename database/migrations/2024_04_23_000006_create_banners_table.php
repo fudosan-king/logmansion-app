@@ -15,6 +15,7 @@ class CreateBannersTable extends Migration
     {
         Schema::create('estate_banners', function (Blueprint $table) {
             $table->increments('banner_id');
+            $table->string('banner_title')->nullable();
             $table->string('banner_description')->nullable();
             $table->string('banner_image')->nullable();
             $table->string('banner_url')->nullable();

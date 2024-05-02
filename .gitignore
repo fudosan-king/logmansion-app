@@ -26,8 +26,8 @@ doc/api/
 .flutter-plugins
 .flutter-plugins-dependencies
 
-vendor/
+/vendor/
 storage/
-public/storage*
-docker/*
+/public/storage*
+/docker/*
 docker-compose.yml*

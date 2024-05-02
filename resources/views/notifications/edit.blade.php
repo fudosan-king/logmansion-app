@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Notification')
 
 @section('content_header')
     <h1>Edit Notification</h1>
@@ -53,9 +53,19 @@
                     </div>
                     <div class="form-group">
                         <label for="noti_date">日付</label>
-                        <input type="date" name="noti_date" id="noti_date"
+                        
+                        <div class="input-group date" id="notidatepicker" data-target-input="nearest">
+                            <input type="text" name="noti_date"  class="form-control datetimepicker-input @error('noti_date') is-invalid @enderror" 
+                            value="{{ $notification->noti_date ? substr($notification->noti_date, 0, 10) : '' }}"
+                            data-target="#notidatepicker" />
+                            <div class="input-group-append" data-target="#notidatepicker" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+
+                        {{-- <input type="date" name="noti_date" id="noti_date"
                             class="form-control @error('noti_date') is-invalid @enderror"
-                            value="{{ $notification->noti_date ? substr($notification->noti_date, 0, 10) : '' }}">
+                            value="{{ $notification->noti_date ? substr($notification->noti_date, 0, 10) : '' }}"> --}}
                         @error('noti_date')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -73,7 +83,8 @@
             </div>
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary float-right">保存</button>
+                <button type="submit" class="btn btn-primary" style="width:150px">{{ __("messages.save") }}</button>
+                <a href="{{url()->previous()}}"  class="btn btn-default float" style="width:150px;margin-left:10px">@lang('messages.cancel')</a>
             </div>
         </form>
     </div>
@@ -84,6 +95,18 @@
 @stop
 
 @section('js')
-    <script>
-    </script>
+<script>
+  $(function () {
+    $('#notidatepicker').datetimepicker({
+        changeMonth: true,
+        changeYear: true,
+        format: 'YYYY/MM/DD',
+        yearRange: '2000:2100',
+        disabledDates: false,
+    })
+    $("#notidatepicker").on("change.datetimepicker", function (e) {
+        $('#notidatepicker').datetimepicker('minDate', e.date);
+    });
+  })
+</script>
 @stop
