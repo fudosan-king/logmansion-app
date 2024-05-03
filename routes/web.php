@@ -7,6 +7,8 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\EstatesController; 
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\BannerController;
+use App\Http\Controllers\FAQController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +24,10 @@ Route::get('/', function () {
     // return view('welcome');
     return redirect()->route('login');
 });
+
+// Route::get('/schedule', function () {
+//     return view('schedule.schedule');
+// });
 
 Auth::routes();
 
@@ -40,6 +46,20 @@ Route::group(['middleware' => ['auth', 'permission']], function(){
     Route::get('/topic/edit/{id}', [NotificationController::class, 'topicEdit'])->name('topic.edit');
     Route::put('/topic/update/{id}', [NotificationController::class, 'topicUpdate'])->name('topic.update');
     Route::delete('/topic/destroy/{id}', [NotificationController::class, 'topicDestroy'])->name('topic.destroy');
+      
+    Route::get('/banner', [BannerController::class, 'index'])->name('banner'); 
+    Route::get('/banner/create', [BannerController::class, 'create'])->name('banner.create'); 
+    Route::post('/banner/store', [BannerController::class, 'store'])->name('banner.store');
+    Route::get('/banner/edit/{id}', [BannerController::class, 'edit'])->name('banner.edit');
+    Route::put('/banner/update/{id}', [BannerController::class, 'update'])->name('banner.update');
+    Route::delete('/banner/destroy/{id}', [BannerController::class, 'destroy'])->name('banner.destroy');
+      
+    Route::get('/faq', [FAQController::class, 'index'])->name('faq'); 
+    Route::get('/faq/create', [FAQController::class, 'create'])->name('faq.create'); 
+    Route::post('/faq/store', [FAQController::class, 'store'])->name('faq.store');
+    Route::get('/faq/edit/{id}', [FAQController::class, 'edit'])->name('faq.edit');
+    Route::put('/faq/update/{id}', [FAQController::class, 'update'])->name('faq.update');
+    Route::delete('/faq/destroy/{id}', [FAQController::class, 'destroy'])->name('faq.destroy');
     
 
     Route::group(['prefix'=> 'users', 'as' => 'users.'], function(){
