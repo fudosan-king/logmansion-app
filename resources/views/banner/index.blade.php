@@ -17,18 +17,18 @@
             </div>
         </div>
     @endif
-    <div class="float">
+    {{-- <div class="float">
         <a href="{{ route('banner.create') }}" class="btn btn-outline-success mb-1">Add New</a>
-    </div>
+    </div> --}}
 
     <div class="card">
-        {{-- <div class="card-header">
+        <div class="card-header">
             <div class="card-tools">
                 <a href="{{ route('banner.create') }}" class="btn btn-outline-success mr-2">Add New</a>
             </div>
-        </div> --}}
+        </div>
         <div class="card-body table-responsive p-0">
-            <table class="table table-hover table-bordered">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -45,22 +45,28 @@
                             <td><img src="{{ asset('storage/' . $banner->banner_image) }}"
                                     alt="{{ $banner->banner_description }}" style="max-width: 100px;"></td>
                             <td>{{ $banner->banner_url }}</td>
-                            <td>{{ $banner->banner_active ? 'Active' : 'Deactive' }}</td>
                             <td>
-                                <a href="{{ route('banner.edit', $banner->banner_id) }}"
-                                    class="btn btn-primary btn-sm">{{ __("messages.edit") }}</a>
+                                @if ($banner->banner_active)
+                                    <div type="button" class="badge badge-primary">Active</div>
+                                @else
+                                    <div type="button" class="badge badge-secondary">Deactive</div>
+                                @endif</td>
+                            <td>
+                                <a class="btn btn-xs btn-warning" id="btnEdit" href="{{ route('banner.edit', $banner->banner_id) }}"><i class="fas fa-edit"></i></a>
                                 <form action="{{ route('banner.destroy', $banner->banner_id) }}" method="POST"
                                     style="display: inline-block;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Are you sure you want to delete this banner?')">{{ __("messages.delete") }}</button>
+                                    <button type="submit" class="btn btn-xs btn-outline-danger"
+                                        onclick="return confirm('Are you sure you want to delete this banner?')"><i class="fas fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+        </div>
+        <div class="card-footer clearfix">
         </div>
     </div>
 @stop

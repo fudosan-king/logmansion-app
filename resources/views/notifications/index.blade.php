@@ -54,18 +54,20 @@
                             <td>{{ \Carbon\Carbon::parse($notification->noti_date)->format('Y/m/d') }}</td>
                             <td>{{ $notification->category->cat_name ?? '' }}</td>
                             <td>{{ $notification->noti_title ?? '' }}</td>
-                            <td>{{ $notification->noti_status == 1 ? '有効' : '' }}</td>
+                            <td>
+                                @if ($notification->noti_status == 1)
+                                    <div type="button" class="badge badge-primary">有効</div>
+                                @endif
+                            </td>
                             <td>{{ \Carbon\Carbon::parse($notification->updated_at)->format('Y/m/d  ') }}</td>
                             <td>
-                                <a href="{{ route('notification.edit', $notification->noti_id) }}"
-                                    class="btn btn-primary">{{ __('messages.edit') }}</a>
-                                {{-- <button type="button" class="btn btn-danger">削除</button> --}}
+                                <a class="btn btn-xs btn-warning" id="btnEdit" href="{{ route('notification.edit', $notification->noti_id) }}"><i class="fas fa-edit"></i></a>
                                 <form action="{{ route('notification.destroy', $notification->noti_id) }}" method="POST"
                                     style="display: inline-block;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger "
-                                        onclick="return confirm('Are you sure you want to delete this notification?')">{{ __('messages.delete') }}</button>
+                                    <button type="submit" class="btn btn-xs btn-outline-danger"
+                                        onclick="return confirm('Are you sure you want to delete this notification?')"><i class="fas fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
