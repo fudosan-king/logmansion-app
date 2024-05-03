@@ -35,13 +35,13 @@
                             <td>{{ $category->cat_name ?? '' }}</td>
                             <td>{{ \Carbon\Carbon::parse($category->updated_at)->format('d/m/Y') }}</td>
                             <td>
-                                <a href="{{ route('topic.edit', $category->cat_id) }}" class="btn btn-primary">{{__("messages.edit")}}</a>
+                                <a class="btn btn-xs btn-warning" id="btnEdit" href="{{ route('topic.edit', $category->cat_id) }}"><i class="fas fa-edit"></i></a>
                                 <form action="{{ route('topic.destroy', $category->cat_id) }}" method="POST"
                                     style="display: inline-block;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger "
-                                        onclick="return confirm('Are you sure you want to delete this category?')">{{ __("messages.delete")}}</button>
+                                    <button type="submit" class="btn btn-xs btn-outline-danger"
+                                        onclick="return confirm('Are you sure you want to delete this category?')"><i class="fas fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>

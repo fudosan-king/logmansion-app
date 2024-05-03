@@ -74,18 +74,18 @@ Route::group(['middleware' => ['auth', 'permission']], function(){
     });    
     Route::resource('estates', EstatesController::class);
 
-    Route::get('test', function(){
-        return "Permission Test with Sidebar";
-    })->name('test');
-    Route::get('test/aaa', function(){
-        return "AAAAAAAA Permission Test with Sidebar";
-    })->name('test');
+    // Route::get('test', function(){
+    //     return "Permission Test with Sidebar";
+    // })->name('test');
+    // Route::get('test/aaa', function(){
+    //     return "AAAAAAAA Permission Test with Sidebar";
+    // })->name('test');
 
-    Route::get('test2', function(){
-        return "Permission Test with Sidebar2";
-    })->name('test2');
-    Route::get('test3', function(){
-        return "Route for superuser without assigning";
-    })->name('test3');
+    // Route::get('test2', function(){
+    //     return "Permission Test with Sidebar2";
+    // })->name('test2');
+    // Route::get('test3', function(){
+    //     return "Route for superuser without assigning";
+    // })->name('test3');
 });
 

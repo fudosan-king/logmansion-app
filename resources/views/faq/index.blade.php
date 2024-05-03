@@ -49,16 +49,23 @@
                     @foreach ($faqs as $faq)
                         <tr>
                             <td>{{ $faq->faq_title }}</td>
-                            <td>{{ $faq->faq_active ? 'Active' : 'Deactive' }}</td>
                             <td>
-                                <a href="{{ route('faq.edit', $faq->faq_id) }}"
-                                    class="btn btn-primary btn-sm">{{ __('messages.edit') }}</a>
+                                @if ($faq->faq_active)
+                                    <div type="button" class="badge badge-primary">Active</div>
+                                @else
+                                    <div type="button" class="badge badge-secondary">Deactive</div>
+                                @endif
+                            </td>
+                            <td>
+                                <a class="btn btn-xs btn-warning" id="btnEdit"
+                                    href="{{ route('faq.edit', $faq->faq_id) }}"><i class="fas fa-edit"></i></a>
                                 <form action="{{ route('faq.destroy', $faq->faq_id) }}" method="POST"
                                     style="display: inline-block;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Are you sure you want to delete this faq?')">{{ __('messages.delete') }}</button>
+                                    <button type="submit" class="btn btn-xs btn-outline-danger"
+                                        onclick="return confirm('Are you sure you want to delete this FAQ?')"><i
+                                            class="fas fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>

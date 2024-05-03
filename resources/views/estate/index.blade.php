@@ -32,12 +32,12 @@
                 <div class="col-sm-12">
                     <div class="d-flex justify-content-between">
                         <div class="btn btn-primary mt-2 mb-2">Add new Estate</div>
-                        <div >
-                            <nav class="navbar navbar-light bg-light">
-                            <form class="form-inline"  method="GET" action="{{ request()->url() }}">
-                                <input name="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                            </form>
+                        <div class="w-50">
+                            <nav class="navbar navbar-light bg-light w-75">
+                              <form class="form-inline w-100"  method="GET" action="{{ request()->url() }}">
+                                  <input name="search" class="form-control mr-sm-2 w-75" type="search" placeholder="Search" aria-label="Search">
+                                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                              </form>
                             </nav>
                         </div>
                         <button type="button" class="btn btn-light y-2">Archive</button>
@@ -70,19 +70,10 @@
                       </tr>
                       @endforeach
                     </tbody>
-                    <tfoot>
-                      <tr>
-                        <th rowspan="1" colspan="1">Esate</th>
-                        <th rowspan="1" colspan="1">Status</th>
-                        <th rowspan="1" colspan="1">Next Schedule</th>
-                        <th rowspan="1" colspan="1">Client</th>
-                        <th rowspan="1" colspan="1">Action</th>
-                      </tr>
-                    </tfoot>
                   </table>
                 </div>
               </div>
-              <div class="row">
+              <div class="row d-flex justify-content-between">
                 {{ $estates->links() }}
               </div>
             </div>
