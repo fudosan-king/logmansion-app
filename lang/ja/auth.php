@@ -4,12 +4,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Authentication Language Lines
+    | 認証の言語行
     |--------------------------------------------------------------------------
     |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
+    | 次の言語行は、ユーザーに表示する必要があるさまざまなメッセージの認証中に使用されます。
+    | これらの言語行は、アプリケーションの要件に応じて自由に変更できます。
     |
     */
 
