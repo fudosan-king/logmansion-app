@@ -28,6 +28,11 @@ doc/api/
 
 /vendor/
 storage/
+
 /public/storage*
 /docker/*
 docker-compose.yml*
+
+# Ignore node_modules directory
+/node_modules
+

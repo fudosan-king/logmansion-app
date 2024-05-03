@@ -3,11 +3,11 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Notifications List</h1>
+    <h1>FAQ</h1>
 @stop
 
 @section('content')
-    <a href="{{ route('notification.create') }}" class="btn btn-success mb-4">Add New</a>
+    <a href="{{ route('faq.create') }}" class="btn btn-outline-success mb-2">Add New</a>
 
     @if (session('success'))
         <div aria-live="polite" aria-atomic="true" style="z-index: -1;">
@@ -19,13 +19,13 @@
             </div>
         </div>
     @endif
-
     <div class="card">
         <div class="card-header">
             <div class="card-tools">
-                <form action="{{ route('notification') }}" method="GET" class="form-inline">
+                <form action="{{ route('faq') }}" method="GET" class="form-inline">
                     <div class="input-group input-group-sm" style="width: 150px;">
-                        <input type="text" name="search" value="{{ $search }}" class="form-control float-right" placeholder="Search">
+                        <input type="text" name="search" class="form-control float-right" value="{{ $search }}"
+                            placeholder="Search">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-default">
                                 <i class="fas fa-search"></i>
@@ -40,32 +40,25 @@
             <table class="table table-hover table-bordered">
                 <thead>
                     <tr>
-                        <th scope="col">日付</th>
-                        <th scope="col">カテゴリ</th>
-                        <th scope="col">タイトル</th>
-                        <th scope="col">状態</th>
-                        <th scope="col">最終更新日</th>
-                        <th scope="col">アクション</th>
+                        <th>Title</th>
+                        <th>Active</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($notifications as $notification)
+                    @foreach ($faqs as $faq)
                         <tr>
-                            <td>{{ \Carbon\Carbon::parse($notification->noti_date)->format('Y/m/d') }}</td>
-                            <td>{{ $notification->category->cat_name ?? '' }}</td>
-                            <td>{{ $notification->noti_title ?? '' }}</td>
-                            <td>{{ $notification->noti_status == 1 ? '有効' : '' }}</td>
-                            <td>{{ \Carbon\Carbon::parse($notification->updated_at)->format('Y/m/d  ') }}</td>
+                            <td>{{ $faq->faq_title }}</td>
+                            <td>{{ $faq->faq_active ? 'Active' : 'Deactive' }}</td>
                             <td>
-                                <a href="{{ route('notification.edit', $notification->noti_id) }}"
-                                    class="btn btn-primary">{{ __('messages.edit') }}</a>
-                                {{-- <button type="button" class="btn btn-danger">削除</button> --}}
-                                <form action="{{ route('notification.destroy', $notification->noti_id) }}" method="POST"
+                                <a href="{{ route('faq.edit', $faq->faq_id) }}"
+                                    class="btn btn-primary btn-sm">{{ __('messages.edit') }}</a>
+                                <form action="{{ route('faq.destroy', $faq->faq_id) }}" method="POST"
                                     style="display: inline-block;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger "
-                                        onclick="return confirm('Are you sure you want to delete this notification?')">{{ __('messages.delete') }}</button>
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Are you sure you want to delete this faq?')">{{ __('messages.delete') }}</button>
                                 </form>
                             </td>
                         </tr>
@@ -74,7 +67,7 @@
             </table>
         </div>
         <div class="card-footer clearfix">
-            {{ $notifications->links('pagination::bootstrap-5') }}
+            {{ $faqs->links('pagination::bootstrap-5') }}
         </div>
     </div>
 @stop
