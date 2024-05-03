@@ -26,18 +26,6 @@ doc/api/
 .flutter-plugins
 .flutter-plugins-dependencies
 
-<<<<<<< HEAD
-/vendor/
-storage/
-
-/public/storage*
-/docker/*
-docker-compose.yml*
-
-# Ignore node_modules directory
-/node_modules
-
-=======
 
 # Ignore node_modules directory
 /node_modules
@@ -48,4 +36,3 @@ storage/
 public/storage*
 docker/*
 docker-compose.yml*
->>>>>>> bdeb12a3 (add gitignore)
