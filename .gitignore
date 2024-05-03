@@ -26,13 +26,13 @@ doc/api/
 .flutter-plugins
 .flutter-plugins-dependencies
 
-/vendor/
-storage/
-
-/public/storage*
-/docker/*
-docker-compose.yml*
 
 # Ignore node_modules directory
 /node_modules
 
+
+vendor/
+storage/
+public/storage*
+docker/*
+docker-compose.yml*

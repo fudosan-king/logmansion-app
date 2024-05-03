@@ -15,11 +15,12 @@ class EstatesController extends Controller
     public function index()
     {
         $search = request('search');
+        $per_page = request('per_page');
         $estates = Estate::orderBy('est_id', 'desc')
             ->when($search, function ($query, $search) {
                 return $query->where('est_name', 'like', '%' . $search . '%');
             })
-            ->paginate(config('conts.paging'));
+            ->paginate($per_page?$per_page:config('conts.paging'));
             
         return view('estate/index', [
             'estates' => $estates
