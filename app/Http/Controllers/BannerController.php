@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Banner;
 
 class BannerController extends Controller
@@ -23,7 +24,19 @@ class BannerController extends Controller
         $request->validate([
             'banner_title' => 'nullable|string',
             'banner_description' => 'nullable|string',
-            'banner_image' => 'required|image|max:2048',
+            'banner_image' => [
+                'required',
+                'image',
+                // 'dimensions:max_width=1200,max_height=600',
+                // function ($attribute, $value, $fail) {
+                //     [$width, $height] = getimagesize($value);
+        
+                //     if ($width / $height < 4/3 || $width / $height  > 3/2) {
+                //         $fail('Kích thước hình ảnh không hợp lệ. Chiều rộng phải nhỏ hơn chiều cao và tỷ lệ phải tương đương 3:2.');
+                //     }
+                // },
+                'max:2048',
+            ],
             'banner_url' => 'nullable|url',
             'banner_active' => 'boolean',
         ], [
@@ -75,6 +88,7 @@ class BannerController extends Controller
 
         if ($request->hasFile('banner_image')) {
             $imagePath = $request->file('banner_image')->store('banner', 'public');
+            Storage::disk('public')->delete($banner->banner_image);
             $banner->banner_image = $imagePath;
         }
 
