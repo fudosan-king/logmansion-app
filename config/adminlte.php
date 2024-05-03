@@ -387,14 +387,14 @@ return [
             'icon' => 'fas fa-fw fa-cogs',
         ],
         // Sidebar items:
-        [
-            'text' => 'Test',
-            'route' => 'test',
-        ],
-        [
-            'text' => 'Test2',
-            'route' => 'test2',
-        ],
+        // [
+        //     'text' => 'Test',
+        //     'route' => 'test',
+        // ],
+        // [
+        //     'text' => 'Test2',
+        //     'route' => 'test2',
+        // ],
     ],
 
     /*
