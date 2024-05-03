@@ -365,6 +365,16 @@ return [
                 ],
             ]
         ],
+        [
+            'text' => 'Banner',
+            'route' => 'banner',
+            'icon' => 'fas fa-fw fa-regular fa-images',
+        ],
+        [
+            'text' => 'FAQ',
+            'route' => 'faq',
+            'icon' => 'fas fa-fw fa-question',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

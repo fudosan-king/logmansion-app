@@ -8,10 +8,12 @@ use App\Models\Notification;
 
 class NotificationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $notifications = Notification::all();
-        return view('notifications.index')->with('notifications', $notifications);
+        $search = $request->input('search');
+        $notifications = Notification::where('noti_title', 'like', '%'.$search.'%')
+        ->paginate(10);
+        return view('notifications.index', compact('notifications', 'search'));
     }
 
     public function create()
@@ -29,6 +31,9 @@ class NotificationController extends Controller
             'noti_date' => 'required|date',
             'noti_status' => 'nullable',
             'noti_url' => 'nullable',
+        ], [
+            'required' => 'この項目は必須です。',
+            'date' => '無効な形式です。',
         ]);
         $data['noti_status'] = $request->has('noti_status');
         $notification = Notification::create($data);
@@ -45,15 +50,6 @@ class NotificationController extends Controller
     public function update(Request $request, $id)
     {
         $notification = Notification::findOrFail($id);
-
-        // $data = $request->validate([
-        //     'cat_id' => 'required',
-        //     'noti_title' => 'required',
-        //     'noti_content' => 'required',
-        //     'noti_date' => 'required|date',
-        //     'noti_status' => 'required|boolean',
-        //     'noti_url' => 'nullable|url',
-        // ]);
         $data = $request->validate([
             'cat_id' => 'required',
             'noti_title' => 'required',
@@ -61,6 +57,9 @@ class NotificationController extends Controller
             'noti_date' => 'required|date',
             'noti_status' => 'nullable',
             'noti_url' => 'nullable',
+        ], [
+            'required' => 'この項目は必須です。',
+            'date' => '無効な形式です。',
         ]);
         $data['noti_status'] = $request->has('noti_status');
         $notification->update($data);
