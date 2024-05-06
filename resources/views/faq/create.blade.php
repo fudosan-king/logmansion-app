@@ -13,7 +13,7 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="faq_title">Title</label>
+                        <label for="faq_title">Title*</label>
                         <input type="text" name="faq_title" id="faq_title"
                             class="form-control @error('faq_title') is-invalid @enderror" value="{{ old('faq_title') }}">
                         @error('faq_title')
@@ -21,7 +21,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="faq_content">Description</label>
+                        <label for="faq_content">Content*</label>
                         <textarea name="faq_content" id="faq_content"
                             class="form-control @error('faq_content') is-invalid @enderror">{{ old('faq_content') }}</textarea>
                         @error('faq_content')

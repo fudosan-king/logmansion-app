@@ -14,7 +14,7 @@
                 @method('PUT')
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="noti_title">タイトル</label>
+                        <label for="noti_title">タイトル *</label>
                         <input type="text" name="noti_title" id="noti_title"
                             class="form-control @error('noti_title') is-invalid @enderror"
                             value="{{ old('noti_title', $notification->noti_title) }}">
@@ -23,7 +23,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="cat_id">カテゴリ</label>
+                        <label for="cat_id">カテゴリ *</label>
                         <select name="cat_id" id="cat_id" class="form-control @error('cat_id') is-invalid @enderror">
                             <option value="">Select category</option>
                             @foreach ($categories as $category)
@@ -52,7 +52,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="noti_date">日付</label>
+                        <label for="noti_date">日付 *</label>
                         
                         <div class="input-group date" id="notidatepicker" data-target-input="nearest">
                             <input type="text" name="noti_date"  class="form-control datetimepicker-input @error('noti_date') is-invalid @enderror" 
