@@ -35,15 +35,15 @@ class BannerController extends Controller
                 //         $fail('Kích thước hình ảnh không hợp lệ. Chiều rộng phải nhỏ hơn chiều cao và tỷ lệ phải tương đương 3:2.');
                 //     }
                 // },
-                'max:2048',
+                'max:' . config('upload.max_image_size'),
             ],
             'banner_url' => 'nullable|url',
             'banner_active' => 'boolean',
         ], [
             'required' => 'この項目は必須です。',
             'date' => '無効な形式です。',
-            'image' => '無効な形式です。',
-            'max' => '無効な形式です。',
+            'image' => '無効な形式です。',  
+            'max' => '最大アップロードサイズ:' . config('upload.max_image_size') .' KB。',
             'boolean' => '無効な形式です。',
             'url' => '無効な形式です。',
         ]);
@@ -74,14 +74,14 @@ class BannerController extends Controller
         $request->validate([
             'banner_title' => 'nullable|string',
             'banner_description' => 'nullable|string',
-            'banner_image' => 'nullable|image|max:2048',
+            'banner_image' => 'nullable|image|max:' . config('upload.max_image_size'),
             'banner_url' => 'nullable|url',
             'banner_active' => 'boolean',
         ], [
             'required' => 'この項目は必須です。',
             'date' => '無効な形式です。',
             'image' => '無効な形式です。',
-            'max' => '無効な形式です。',
+            'max' => '最大アップロードサイズ: ' . config('upload.max_image_size') .' KB。',
             'boolean' => '無効な形式です。',
             'url' => '無効な形式です。',
         ]);

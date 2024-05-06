@@ -14,7 +14,7 @@
                 @method('PUT')
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="cat_name">タイトル</label>
+                        <label for="cat_name">タイトル *</label>
                         <input type="text" name="cat_name" id="cat_name"
                             class="form-control @error('cat_name') is-invalid @enderror"
                             value="{{ old('cat_name', $category->cat_name) }}">

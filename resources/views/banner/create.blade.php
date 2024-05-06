@@ -30,7 +30,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="banner_image">Image</label>
+                        <label for="banner_image">Image *</label>
                         <input type="file" name="banner_image" id="banner_image"
                             class="form-control-file 
                             @error('banner_image') is-invalid @enderror"
