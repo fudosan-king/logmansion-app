@@ -35,6 +35,7 @@ class EstatesController extends Controller
     public function create()
     {
         //
+        return view('estate/create');
     }
 
     /**
