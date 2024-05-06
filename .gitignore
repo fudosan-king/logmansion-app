@@ -12,7 +12,7 @@ pubspec.lock
 doc/api/
 
 # dotenv environment variables file
-.env*
+.env
 
 # Avoid committing generated Javascript files:
 *.dart.js
@@ -36,3 +36,4 @@ storage/
 public/storage*
 docker/*
 docker-compose.yml*
+l5-swagger.php*
