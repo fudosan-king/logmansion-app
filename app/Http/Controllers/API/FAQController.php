@@ -10,10 +10,10 @@ class FAQController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/faq",
-     *     tags={"faq"},
-     *     summary="Get list of banners",
-     *     description="Returns list of banners",
+     *     path="/api/faq",
+     *     tags={"FAQ"},
+     *     summary="Get list of FAQ",
+     *     description="Returns list of FAQ",
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
