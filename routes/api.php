@@ -2,6 +2,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\BannerController;
+use App\Http\Controllers\API\FAQController;
+
+Route::get('banners', [BannerController::class, 'index']);
+Route::get('faq', [FAQController::class, 'index']);
+
 
 /*
 |--------------------------------------------------------------------------
