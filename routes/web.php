@@ -9,6 +9,8 @@ use App\Http\Controllers\EstatesController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\FAQController;
+use App\Http\Controllers\ScheduleController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -87,5 +89,9 @@ Route::group(['middleware' => ['auth', 'permission']], function(){
     // Route::get('test3', function(){
     //     return "Route for superuser without assigning";
     // })->name('test3');
+    Route::get('/estateSchedule/{id}', [ScheduleController::class, 'edit'])->name('schedule.edit');
+    Route::post('/estateSchedule/store', [ScheduleController::class, 'store'])->name('schedule.store');
+    Route::post('/estateSchedule/update', [ScheduleController::class, 'update'])->name('schedule.update');
+    Route::delete('/estateSchedule/destroy/{id}', [ScheduleController::class, 'destroy'])->name('schedule.destroy');
 });
 
