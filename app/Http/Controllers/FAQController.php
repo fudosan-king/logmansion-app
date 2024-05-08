@@ -35,8 +35,8 @@ class FAQController extends Controller
         $faq->faq_content = $request->input('faq_content');
         $faq->faq_active = $request->input('faq_active', false);
         $faq->save();
-
-        return redirect()->route('faq')->with('success', 'FAQ created successfully');
+        toast('FAQ created successfully.','success');
+        return redirect()->route('faq');
     }
 
     public function edit($id)
@@ -61,14 +61,15 @@ class FAQController extends Controller
         $faq->faq_content = $request->input('faq_content');
         $faq->faq_active = $request->input('faq_active', false);
         $faq->save();
-
-        return redirect()->route('faq')->with('success', 'FAQ updated successfully');
+        toast('FAQ updated successfully.','success');
+        return redirect()->route('faq');
     }
 
     public function destroy($id)
     {
         $faq = FAQ::findOrFail($id);
         $faq->delete();
-        return redirect()->route('faq')->with('success', 'FAQ deleted successfully');
+        toast('FAQ deleted successfully.','success');
+        return redirect()->route('faq');
     }
 }
