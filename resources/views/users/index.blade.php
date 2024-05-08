@@ -27,6 +27,21 @@
                                 <span class="text-danger">{{$errors->first('name')}}</span>
                             @endif
                         </div>
+                        @php
+
+//dd(old('department'));
+                        @endphp
+                        <div class="form-group">
+                            <label for="department" class="form-label">Department<span class="text-danger">*</span></label>
+                            <select class="form-control select2"  id="select3" data-placeholder="Select Department" name="department">
+                            @foreach (config('conts.department') as $k=>$v)
+                                <option value="{{$k}}" {{ (old('department') && old('department') == $k) ? "selected" : ""}} >{{ucfirst($v)}}</option>
+                            @endforeach
+                            </select>
+                            @if($errors->has('department'))
+                            <span class="text-danger">{{$errors->first('department')}}</span>
+                            @endif
+                        </div>
                         <div class="form-group">
                             <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
                             <input type="email" class="form-control" name="email" placeholder="Enter Users Email" value="{{old('email')}}">
@@ -43,7 +58,9 @@
                         </div>
                         <div class="form-group">
                             <label for="roles" class="form-label">Roles</label>
-                            <select class="form-control select2" multiple="multiple" id="select2" data-placeholder="Select Roles" name="roles[]">
+                            <select class="form-control select2"
+                            {{-- multiple="multiple"  --}}
+                            id="select2" data-placeholder="Select Roles" name="roles[]">
                             @foreach ($roles as $role)
                                 <option value="{{$role->id}}">{{ucfirst($role->name)}}</option>
                             @endforeach
@@ -71,6 +88,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
+                                    <th>Department</th>
                                     <th>Email</th>
                                     <th>Date</th>
                                     <th>Roles</th>
@@ -94,6 +112,7 @@
 <script>
     $(function (){
         $('#select2').select2();
+        $('#select3').select2();
     });
     $.ajaxSetup({
         headers:{
@@ -107,11 +126,28 @@
             columns:[
                 {data:'id', name:'id'},
                 {data:'name', name:'name'},
+                {
+                    data:'department',  
+                    // name:'department',
+                    render: function (data)  {
+                        switch (data) {
+                            case 0:
+                                html = '<small class="badge badge-secondary">LogSuite</small>';
+                                break;
+                            case 1:
+                                html = '<small class="badge badge-warning">LogArchitect</small>';
+                                break;
+                        }
+                        return  html;
+                    },
+                },
                 {data:'email', name:'email'},
                 {data:'date', name:'date'},
                 {data:'roles', name:'roles'},
                 {data:'action', name:'action', bSortable:false, className:"text-center"},
             ], 
+
+            // data: dataSet,
             order:[[0, "desc"]]
         });
         $('body').on('click', '#btnDel', function(){
