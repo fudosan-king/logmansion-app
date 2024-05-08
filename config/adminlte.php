@@ -305,34 +305,33 @@ return [
 
         // Sidebar items:
         [
-            'text' => 'Dashboard',
+            'text' => 'ダッシュボード',
             'route' => 'dashboard',
             'icon' => 'fas fa-fw fa-home'
         ],
+        // [
+        //     'text'        => 'Users',
+        //     'icon'        => 'fas fa-fw fa-users',
+        //     'submenu'      =>[
+        //         [
+        //             'text' => 'All',
+        //             'route' => 'users.index',
+        //             'active' => ['users', 'users/*'],
+        //         ],
+        //         [
+        //             'text' => 'Roles',
+        //             'route' => 'users.roles.index',
+        //             'active' => ['users/roles/*'],
+        //         ],
+        //         [
+        //             'text' => 'Permissions',
+        //             'route' => 'users.permissions.index',
+        //             'active' => ['users/permissions/*'],
+        //         ],
+        //     ]    
+        // ],
         [
-            'text'        => 'Users',
-            'icon'        => 'fas fa-fw fa-users',
-            'submenu'      =>[
-                [
-                    'text' => 'All',
-                    'route' => 'users.index',
-                    'active' => ['users', 'users/*'],
-                ],
-                [
-                    'text' => 'Roles',
-                    'route' => 'users.roles.index',
-                    'active' => ['users/roles/*'],
-                ],
-                [
-                    'text' => 'Permissions',
-                    'route' => 'users.permissions.index',
-                    'active' => ['users/permissions/*'],
-                ],
-            ]
-           
-        ],
-        [
-            'text'        => 'Estates',
+            'text'        => '物件',
             'icon'        => 'fas fa-fw fa-list-alt',
             'submenu'      =>[
                 [
@@ -349,7 +348,7 @@ return [
            
         ],
         [
-            'text' => 'Notification',
+            'text' => 'お知らせ',
             // 'url'  => 'notification',
             'icon' => 'fas fa-fw fa-bell',
             'submenu'      =>[
@@ -366,12 +365,12 @@ return [
             ]
         ],
         [
-            'text' => 'Banner',
+            'text' => 'バナー',
             'route' => 'banner',
             'icon' => 'fas fa-fw fa-regular fa-images',
         ],
         [
-            'text' => 'FAQ',
+            'text' => 'よくある質問',
             'route' => 'faq',
             'icon' => 'fas fa-fw fa-question',
         ],
@@ -386,6 +385,13 @@ return [
             // 'url'  => 'settings',
             'icon' => 'fas fa-fw fa-cogs',
         ],
+        [
+            'text' => 'ユーザー',
+            'icon' => 'fas fa-fw fa-users',
+            'route' => 'users.index',
+            'active' => ['users', 'users/*'],
+        ],
+       
         // Sidebar items:
         // [
         //     'text' => 'Test',

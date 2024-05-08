@@ -14,4 +14,5 @@ return [
     'schedule'  => '決済までの流れ',
     'warranty'  => '保証期',
     'paging'  => 10,
+    "user" => "削除",
 ];
