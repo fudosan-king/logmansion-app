@@ -155,7 +155,7 @@
         //function deleteSchedule
         function deleteSchedule(scheduleId, element) {
             $.ajax({
-                url: "/estateSchedule/destroy/" + scheduleId,
+                url: "/estate/schedule/destroy/" + scheduleId,
                 type: "DELETE",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

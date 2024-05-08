@@ -76,22 +76,10 @@ Route::group(['middleware' => ['auth', 'permission']], function(){
     });    
     Route::resource('estates', EstatesController::class);
 
-    // Route::get('test', function(){
-    //     return "Permission Test with Sidebar";
-    // })->name('test');
-    // Route::get('test/aaa', function(){
-    //     return "AAAAAAAA Permission Test with Sidebar";
-    // })->name('test');
 
-    // Route::get('test2', function(){
-    //     return "Permission Test with Sidebar2";
-    // })->name('test2');
-    // Route::get('test3', function(){
-    //     return "Route for superuser without assigning";
-    // })->name('test3');
-    Route::get('/estateSchedule/{id}', [ScheduleController::class, 'edit'])->name('schedule.edit');
-    Route::post('/estateSchedule/store', [ScheduleController::class, 'store'])->name('schedule.store');
-    Route::post('/estateSchedule/update', [ScheduleController::class, 'update'])->name('schedule.update');
-    Route::delete('/estateSchedule/destroy/{id}', [ScheduleController::class, 'destroy'])->name('schedule.destroy');
+    Route::get('/estate/schedule/{id}', [ScheduleController::class, 'edit'])->name('schedule.edit');
+    Route::post('/estate/schedule/store', [ScheduleController::class, 'store'])->name('schedule.store');
+    Route::post('/estate/schedule/update', [ScheduleController::class, 'update'])->name('schedule.update');
+    Route::delete('/estate/schedule/destroy/{id}', [ScheduleController::class, 'destroy'])->name('schedule.destroy');
 });
 
