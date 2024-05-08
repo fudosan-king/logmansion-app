@@ -57,8 +57,8 @@ class BannerController extends Controller
         $banner->banner_url = $request->input('banner_url');
         $banner->banner_active = $request->input('banner_active', false);
         $banner->save();
-
-        return redirect()->route('banner')->with('success', 'Banner created successfully');
+        toast('Banner created successfully.','success');
+        return redirect()->route('banner');
     }
 
     public function edit($id)
@@ -97,14 +97,15 @@ class BannerController extends Controller
         $banner->banner_url = $request->input('banner_url');
         $banner->banner_active = $request->input('banner_active', false);
         $banner->save();
-
-        return redirect()->route('banner')->with('success', 'Banner updated successfully');
+        toast('Banner updated successfully.','success');
+        return redirect()->route('banner');
     }
 
     public function destroy($id)
     {
         $banner = Banner::findOrFail($id);
         $banner->delete();
-        return redirect()->route('banner')->with('success', 'Banner deleted successfully');
+        toast('Banner deleted successfully.','success');
+        return redirect()->route('banner');
     }
 }
