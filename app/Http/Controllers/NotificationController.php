@@ -37,7 +37,8 @@ class NotificationController extends Controller
         ]);
         $data['noti_status'] = $request->has('noti_status');
         $notification = Notification::create($data);
-        return redirect()->route('notification')->with('success', 'Notification created successfully');
+        toast('Notification created successfully.','success');
+        return redirect()->route('notification');
     }
 
     public function edit($id)
@@ -64,14 +65,16 @@ class NotificationController extends Controller
         $data['noti_status'] = $request->has('noti_status');
         $notification->update($data);
 
-        return redirect()->route('notification')->with('success', 'Notification updated successfully');
+        toast('Notification updated successfully.','success');
+        return redirect()->route('notification');
     }
 
     public function destroy($id)
     {
         $notification = Notification::findOrFail($id);
         $notification->delete();
-        return redirect()->route('notification')->with('success', 'Notification deleted successfully');
+        toast('Notification deleted successfully.','success');
+        return redirect()->route('notification');
     }
 
     public function topicIndex()
@@ -91,7 +94,8 @@ class NotificationController extends Controller
             'cat_name' => 'required',
         ]);
         $notification = NotiCategory::create($data);
-        return redirect()->route('topic')->with('success', 'Category created successfully');
+        toast('Category created successfully.','success');
+        return redirect()->route('topic');
     }
 
     public function topicEdit($id)
@@ -107,14 +111,15 @@ class NotificationController extends Controller
             'cat_name' => 'required',
         ]);
         $category->update($data);
-
-        return redirect()->route('topic')->with('success', 'Category updated successfully');
+        toast('Category updated successfully.','success');
+        return redirect()->route('topic');
     }
 
     public function topicDestroy($id)
     {
         $category = NotiCategory::findOrFail($id);
         $category->delete();
-        return redirect()->route('topic')->with('success', 'Category deleted successfully');
+        toast('Category deleted successfully.','success');
+        return redirect()->route('topic');
     }
 }
