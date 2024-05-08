@@ -62,7 +62,7 @@
                         <td>
                             <div class="action_bar" style="">
                                 <i class="fas fa-hammer"></i>
-                                <i class="fas fa-calendar"></i>
+                                <a href="{{route('schedule.edit', ['id' => $estate->est_id])}}"><i class="fas fa-calendar"></i></a>
                                 <i class="fas fa-file-upload"></i>
                                 <i class="fas fa-trash-alt text-danger"></i>
                             </div>
