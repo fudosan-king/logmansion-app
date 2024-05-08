@@ -10,7 +10,7 @@ class BannerController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/banners",
+     *     path="/api/banners",
      *     tags={"Banners"},
      *     summary="Get list of banners",
      *     description="Returns list of banners",

@@ -24,7 +24,7 @@
     <div class="card">
         <div class="card-header">
             <div class="card-tools">
-                <a href="{{ route('banner.create') }}" class="btn btn-outline-success mr-2">Add New</a>
+                <a href="{{ route('banner.create') }}" class="btn btn-primary mr-2">Add New</a>
             </div>
         </div>
         <div class="card-body table-responsive p-0">
