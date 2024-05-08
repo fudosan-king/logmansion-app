@@ -68,11 +68,15 @@ Route::group(['middleware' => ['auth', 'permission']], function(){
     });    
     Route::resource('users', UsersController::class);
     
-  
-    Route::group(['prefix'=> 'estates', 'as' => 'estates.'], function(){
-      
-    });    
-    Route::resource('estates', EstatesController::class);
+    Route::group(['prefix' => 'estates', 'as' => 'estates.'], function(){
+        Route::get('/', [EstatesController::class, 'index'])->name('index');
+        Route::get('/create', [EstatesController::class, 'create'])->name('create');
+        Route::post('/store', [EstatesController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [EstatesController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [EstatesController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [EstatesController::class, 'destroy'])->name('destroy');
+    });
+       
 
     // Route::get('test', function(){
     //     return "Permission Test with Sidebar";
