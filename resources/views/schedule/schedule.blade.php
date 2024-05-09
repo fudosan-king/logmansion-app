@@ -158,7 +158,7 @@
         </div>
 
         <div class="card-footer">
-            <a href="{{route('estate.index')}}" class="btn btn-default go-back float-left">{{ __('messages.cancel') }}</a>
+            <a href="{{ URL::previous() }}" class="btn btn-default go-back float-left">{{ __('messages.cancel') }}</a>
             <button type="" class="btn btn-primary float-right save-schedule">{{ __('messages.save') }}</button>
             <button type="" class="btn btn-primary float-right add-schedule">{{ __('messages.add') }}</button>
         </div>
