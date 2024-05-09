@@ -21,11 +21,15 @@
                 {{-- Configured sidebar links --}}
                 
                 @php 
-                $menu = $adminlte->menu('sidebar'); 
-                if (isset(Auth::user()->roles[0]->name) && Auth::user()->roles[0]->name != config('permission.superadmin')) {
-                    unset($menu[3]);
-                }
+                     $menu = $adminlte->menu('sidebar'); 
+                    // if (isset(Auth::user()->roles[0]->name) && Auth::user()->roles[0]->name != config('permission.superadmin')) {
+                    //     unset($menu[3]);
+                    // }
                 @endphp 
+
+{{-- @php
+// echo "<pre>"; print_r($menu); echo "</pre>";
+@endphp --}}
 
                 @each('adminlte::partials.sidebar.menu-item', $menu, 'item')
             </ul>

@@ -22,7 +22,7 @@
 
 @elseif ($sidebarItemHelper->isLink($item))
 
-    {{-- Link --}}
+{{-- Link --}}
     @include('adminlte::partials.sidebar.menu-item-link')
 
 @endif

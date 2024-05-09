@@ -51,7 +51,7 @@ class ScheduleController extends Controller
             }
         }
 
-        return redirect()->route('estates.index');
+        return redirect()->route('estate.index');
     }
 
     /**
@@ -73,14 +73,16 @@ class ScheduleController extends Controller
      */
     public function edit($id)
     {
-        Estate::findOrFail($id);
+        $estate = Estate::findOrFail($id);
+        $estateName = $estate->est_name;
         $estateId = $id;
         $findSchedule = $data = EstateSchedule::where('est_id', $id)->get();
+
         if (count($findSchedule->toArray()) == 0) {
-            return view('schedule.schedule', compact('estateId'));
+            return view('schedule.schedule', compact('estateId', 'estateName'));
         } else {
             $getAllSchedule = EstateSchedule::where('est_id', $id)->orderBy('position')->get();
-            return view('schedule.edit', compact('estateId', 'getAllSchedule'));
+            return view('schedule.edit', compact('estateId', 'estateName', 'getAllSchedule'));
         }
     }
 
@@ -118,7 +120,7 @@ class ScheduleController extends Controller
             }
         }
 
-        return redirect()->route('estates.index');
+        return redirect()->route('estate.index');
     }
 
     /**
