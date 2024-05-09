@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('estate_banners', function (Blueprint $table) {
-            $table->string('banner_title')->nullable()->after('banner_id');
+        Schema::table('estate_schedules', function (Blueprint $table) {
+            $table->integer('position')->after('schedule_active')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('estate_banners', function (Blueprint $table) {
-            $table->dropColumn('banner_title');
+        Schema::table('estate_schedules', function (Blueprint $table) {
+            $table->dropColumn('position');
         });
     }
 };

@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'max_image_size' => 8,
+    'max_image_size' => 2048,
 ];

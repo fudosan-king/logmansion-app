@@ -47,6 +47,7 @@ class UsersController extends Controller
     {
         $this->validate($request, [
             'name' => 'required', 
+            'department' => 'required', 
             'email' => 'required|email:rfc,dns|unique:users,email'
         ]);
         if($request->has('roles'))

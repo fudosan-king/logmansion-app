@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <a href="{{ route('faq.create') }}" class="btn btn-outline-success mb-2">Add New</a>
+    <a href="{{ route('faq.create') }}" class="btn btn-primary mb-2">Add New</a>
 
     @if (session('success'))
         <div aria-live="polite" aria-atomic="true" style="z-index: -1;">

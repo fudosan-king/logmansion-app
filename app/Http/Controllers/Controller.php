@@ -8,15 +8,13 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
    
     
-    /**
-     * @license Apache 2.0
-     */
+   
 
     /**
      * @OA\Info(
      *     description="This is a sample Userstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).",
      *     version="1.0.0",
-     *     title="Swagger ManhDanBlogs",
+     *     title="Logmansion",
      *     termsOfService="http://swagger.io/terms/",
      *     @OA\Contact(
      *         email="apiteam@swagger.io"
@@ -27,7 +25,7 @@ use Illuminate\Routing\Controller as BaseController;
      *     )
      * )
      *  @OA\Server(
-     *      url="http://127.0.0.1:8000/api/",
+     *      url="http://localhost/api/",
      *      description="Development Environment"
      *  )
      *

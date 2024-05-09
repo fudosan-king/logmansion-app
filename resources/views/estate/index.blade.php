@@ -64,7 +64,7 @@
                               <a href="{{route('estates.edit',['id'=>$estate->est_id])}}">
                                 <i class="fas fa-hammer"></i>
                               </a>
-                              <i class="fas fa-calendar"></i>
+                              <a href="{{route('schedule.edit', ['id' => $estate->est_id])}}"><i class="fas fa-calendar"></i></a>
                               <i class="fas fa-file-upload"></i>
                               <a href="{{route('estates.destroy',$estate->est_id)}}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this estate?')) { document.getElementById('delete-form-{{$estate->est_id}}').submit(); }">
                                 <form id="delete-form-{{$estate->est_id}}" action="{{route('estates.destroy',$estate->est_id)}}" method="POST" style="display: none;">
