@@ -1,55 +1,44 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Category')
 
 @section('content_header')
-    <h1>Notification category list</h1>
+    <h1>Category</h1>
 @stop
 
 @section('content')
-    <a href="{{ route('topic.create') }}" class="btn btn-primary mb-2">Add New</a>
-
-    @if (session('success'))
-        <div aria-live="polite" aria-atomic="true" style="z-index: -1;">
-            <div class="toast" data-autohide="true" data-delay="10000" style="position: absolute; top: 0; right: 0;">
-                <div class="toast-header alert-success">
-                    <strong class="mr-auto"><i class="fa fa-grav"></i> {{ session('success') }}</strong>
-                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+   <div class="container-fluid">
+    <div class="row">
+        <div id="errorBox"></div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h5>List</h5>
+                    </div>
+                    <div class="card-tools">
+                        <a href="{{ route('topic.create') }}" class="btn btn-primary">新規追加</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!--DataTable-->
+                    <div class="table-responsive">
+                        <table id="tblData" class="table table-bordered table-striped dataTable dtr-inline">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>カテゴリ</th>
+                                    <th>最終更新日</th>
+                                    <th>アクション</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    @endif
-    <div class="card">
-        <div class="card-body table-responsive p-0">
-            <table class="table table-hover table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">カテゴリ</th>
-                        <th scope="col">最終更新日</th>
-                        <th scope="col">アクション</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($categories as $category)
-                        <tr>
-                            <td>{{ $category->cat_name ?? '' }}</td>
-                            <td>{{ \Carbon\Carbon::parse($category->updated_at)->format('d/m/Y') }}</td>
-                            <td>
-                                <a class="btn btn-xs btn-warning" id="btnEdit" href="{{ route('topic.edit', $category->cat_id) }}"><i class="fas fa-edit"></i></a>
-                                <form action="{{ route('topic.destroy', $category->cat_id) }}" method="POST"
-                                    style="display: inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-xs btn-outline-danger"
-                                        onclick="return confirm('Are you sure you want to delete this category?')"><i class="fas fa-trash"></i></button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
     </div>
+   </div>
 @stop
 
 @section('css')
@@ -57,7 +46,56 @@
 @stop
 
 @section('js')
-    <script>
-        $('.toast').toast('show');
-    </script>
+<script>
+    $(function (){
+        $('#select2').select2();
+    });
+    $.ajaxSetup({
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+    $(document).ready(function(){
+        var table = $('#tblData').DataTable({
+            reponsive:true, processing:true, serverSide:true, autoWidth:false, 
+            ajax:"{{route('topic.index')}}", 
+            columns:[
+                {data:'cat_id', name:'cat_id'},
+                {data:'cat_name', name:'cat_name'},
+                {data:'updated_at', name:'updated_at'},
+                {data:'action', name:'action', bSortable:false, className:"text-center"},
+            ], 
+            order:[[0, "desc"]]
+        });
+        $('body').on('click', '#btnDel', function(){
+            //confirmation
+            var id = $(this).data('id');
+            if(confirm('ID'+id+'を削除しますか？')==true)
+            {
+                var route = "{{route('topic.destroy', ':id')}}"; 
+                route = route.replace(':id', id);
+                $.ajax({
+                    url:route, 
+                    type:"delete", 
+                    success:function(res){
+                        console.log(res);
+                        $("#tblData").DataTable().ajax.reload();
+                    },
+                    error:function(res){
+                        // $('#errorBox').html('<div class="alert alert-dander">'+response.message+'</div>');
+                        var errorMessage = res.responseJSON.message;
+                        alert(errorMessage);
+                    }
+                });
+            }else{
+                //do nothing
+            }
+        });
+    });
+    
+   
+</script>
 @stop
+
+@section('plugins.Datatables', true)
+@section('plugins.Select2', true)
