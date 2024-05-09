@@ -3,7 +3,7 @@
 @section('title', 'Estate Schedule')
 
 @section('content_header')
-<h1>Estate List Schedule</h1>
+<h1>スケジュール</h1>
 @stop
 
 @section('content')
@@ -12,7 +12,7 @@
     <form>
         <div class="col-md-10 mx-auto">
             <div class="card-body text-center">
-                <div class="mx-auto mb-4">THE SNAMAISON表参道（ザ・サンメゾン表参道） 3階</div>
+                <div class="mx-auto mb-4 estate-name">{{$estateName}}</div>
 
                 <div class="form-group row mx-auto schedule-title">
 
@@ -202,6 +202,11 @@
     .save-schedule {
         margin-left: 30px;
     }
+
+    .estate-name {
+        font-size: 25px;
+        font-weight: 600;
+    }
 </style>
 @stop
 
@@ -271,11 +276,21 @@
                 var currentDate = new Date($(this).val());
 
                 if (currentDate > maxDate) {
-                    alert('Invalid date! Please select the largest date.');
+                    alert('「引渡し日」に他のスケジュールより前の日付が入力されています。「引渡し日」には、他のスケジュールで入力した日付以降の日付を登録してください。');
                     lastInput.val('');
                     return false;
                 }
             });
+        });
+
+        //event check name schedule empty
+        $('input[name="schedule-name"]').on('change', function() {
+           var scheduleName = $(this).val().trim();
+           if (scheduleName == '') {
+                alert('この項目 「※」は必須です。');
+                $(this).val('');
+                $(this).focus();
+           }
         });
 
 
@@ -292,7 +307,7 @@
 
                 $(element).find('input[type="text"], input[type="date"], textarea').each(function() {
                     var fieldName = $(this).attr('name');
-                    var fieldValue = $(this).val();
+                    var fieldValue = $(this).val().trim();
                     schedule[fieldName] = fieldValue;
                     schedule['index'] = index;
                 });
@@ -302,7 +317,7 @@
                     error = true;
                     return false;
                 } else if (schedule['schedule-date'] > lastDate) {
-                    alert('The last schedule date must be the largest');
+                    alert('「引き渡し日」より後の日付が入力されています。「引き渡し日」より前の日付を登録してください。');
                     error = true;
                     return false;
                 }
