@@ -13,4 +13,5 @@ return [
     "notification" =>       "お知らせ",
     "banner" =>    "バナー",
     "faq" =>   "よくある質問",
+    "add" => "追加"
 ];
