@@ -71,18 +71,18 @@ class CreateSuperUserSeeder extends Seeder
         $permission = Permission::create(['name' => 'faq.destroy','guard_name' => 'web']);
 
 
-        $permission = Permission::create(['name' => 'schedule.edit.create','guard_name' => 'web']); 
-        $permission = Permission::create(['name' => 'schedule.edit.store','guard_name' => 'web']); 
-        $permission = Permission::create(['name' => 'schedule.edit.edit','guard_name' => 'web']); 
-        $permission = Permission::create(['name' => 'schedule.edit.update','guard_name' => 'web']); 
-        $permission = Permission::create(['name' => 'schedule.edit.destroy','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'schedule.create','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'schedule.store','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'schedule.edit','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'schedule.update','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'schedule.destroy','guard_name' => 'web']); 
 
-        $permission = Permission::create(['name' => 'catelogue','guard_name' => 'web']);
-        $permission = Permission::create(['name' => 'catelogue.create','guard_name' => 'web']); 
-        $permission = Permission::create(['name' => 'catelogue.store','guard_name' => 'web']); 
-        $permission = Permission::create(['name' => 'catelogue.edit','guard_name' => 'web']); 
-        $permission = Permission::create(['name' => 'catelogue.update','guard_name' => 'web']); 
-        $permission = Permission::create(['name' => 'catelogue.destroy','guard_name' => 'web']);
+        $permission = Permission::create(['name' => 'catalogue','guard_name' => 'web']);
+        $permission = Permission::create(['name' => 'catalogue.create','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'catalogue.store','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'catalogue.edit','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'catalogue.update','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'catalogue.destroy','guard_name' => 'web']);
 
         $permission = Permission::create(['name' => 'estcontact','guard_name' => 'web']);
         $permission = Permission::create(['name' => 'estcontact.create','guard_name' => 'web']); 
