@@ -4,14 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use DataTables; 
 use App\Models\Banner;
 
 class BannerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $banners = Banner::all();
-        return view('banner.index', compact('banners'));
+        // $banners = Banner::all();
+        // return view('banner.index', compact('banners'));
+        if($request->ajax())
+        {
+            return $this->getBanners();
+        }
+        return view('banner.index');
     }
 
     public function create()
@@ -58,7 +65,7 @@ class BannerController extends Controller
         $banner->banner_active = $request->input('banner_active', false);
         $banner->save();
         toast('Banner created successfully.','success');
-        return redirect()->route('banner');
+        return redirect()->route('banner.index');
     }
 
     public function edit($id)
@@ -98,14 +105,46 @@ class BannerController extends Controller
         $banner->banner_active = $request->input('banner_active', false);
         $banner->save();
         toast('Banner updated successfully.','success');
-        return redirect()->route('banner');
+        return redirect()->route('banner.index');
     }
 
     public function destroy($id)
     {
-        $banner = Banner::findOrFail($id);
-        $banner->delete();
-        toast('Banner deleted successfully.','success');
-        return redirect()->route('banner');
+        try {
+            $banner = Banner::findOrFail($id);
+            $banner->delete();
+            return response(["message" => "Banner Deleted Successfully"], 200);
+        } catch(exception $e) {
+            return response(["message" => "Data Delete Error! Please Try again"], 201);
+        }
+    }
+
+    private function getBanners()
+    {
+        $data = Banner::all();
+        return DataTables::of($data)
+                ->addColumn('url', function($row){
+                    return "<a href=" . $row->banner_url . ">" . $row->banner_url . "</a>";
+                })
+                ->addColumn('image', function($row){
+                    $imageUrl = asset("storage/$row->banner_image");
+                    return '<img src="' . $imageUrl . '" alt="123" style="height: 100px;">';
+                })
+                ->addColumn('active', function($row){
+                    return $row->banner_active ? '表示' : '非表示';
+                })
+                ->addColumn('action', function($row){
+                    $action = ""; 
+                    if(Auth::user()->can('banner.edit'))
+                    {
+                        $action.="<a class='btn btn-xs btn-warning' id='btnEdit' href='".route('banner.edit', $row->banner_id)."'><i class='fas fa-edit'></i></a>"; 
+                    }
+                    if(Auth::user()->can('banner.destroy'))
+                    {
+                        $action.=" <button class='btn btn-xs btn-outline-danger' id='btnDel' data-id='".$row->banner_id."'><i class='fas fa-trash'></i></button>"; 
+                    }
+                    return $action;
+                })
+                ->rawColumns(['url', 'image','active', 'action'])->make('true');
     }
 }

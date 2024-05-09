@@ -9,6 +9,7 @@ use App\Http\Controllers\EstatesController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\FAQController;
+use App\Http\Controllers\TopicController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\CatalogueController;
 use App\Http\Controllers\EstContactController;
@@ -31,41 +32,23 @@ Route::get('/', function () {
 // Route::get('/schedule', function () {`
 //     return view('schedule.schedule');
 // });
+    Route::get('test', function(){
+        return view('test');
+    });
 
 Auth::routes();
 
 Route::group(['middleware' => ['auth', 'permission']], function(){
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');   
-    
-    Route::group(['prefix' => 'notification', 'as' => 'notification.'], function(){
-        Route::get('/', [NotificationController::class, 'index'])->name('index'); 
-        Route::get('/create', [NotificationController::class, 'create'])->name('create'); 
-        Route::post('/store', [NotificationController::class, 'store'])->name('store');
-        Route::get('/edit/{id}', [NotificationController::class, 'edit'])->name('edit');
-        Route::put('/update/{id}', [NotificationController::class, 'update'])->name('update');
-        Route::delete('/notifications/destroy/{id}', [NotificationController::class, 'destroy'])->name('destroy');
-    })->name('notification');;
+      
+    Route::resource('notification', NotificationController::class);
 
-    Route::get('/topic', [NotificationController::class, 'topicIndex'])->name('topic'); 
-    Route::get('/topic/create', [NotificationController::class, 'topicCreate'])->name('topic.create'); 
-    Route::post('/topic/store', [NotificationController::class, 'topicStore'])->name('topic.store');
-    Route::get('/topic/edit/{id}', [NotificationController::class, 'topicEdit'])->name('topic.edit');
-    Route::put('/topic/update/{id}', [NotificationController::class, 'topicUpdate'])->name('topic.update');
-    Route::delete('/topic/destroy/{id}', [NotificationController::class, 'topicDestroy'])->name('topic.destroy');
+    Route::resource('topic', TopicController::class);
       
-    Route::get('/banner', [BannerController::class, 'index'])->name('banner'); 
-    Route::get('/banner/create', [BannerController::class, 'create'])->name('banner.create'); 
-    Route::post('/banner/store', [BannerController::class, 'store'])->name('banner.store');
-    Route::get('/banner/edit/{id}', [BannerController::class, 'edit'])->name('banner.edit');
-    Route::put('/banner/update/{id}', [BannerController::class, 'update'])->name('banner.update');
-    Route::delete('/banner/destroy/{id}', [BannerController::class, 'destroy'])->name('banner.destroy');
+    Route::resource('banner', BannerController::class);
       
-    Route::get('/faq', [FAQController::class, 'index'])->name('faq'); 
-    Route::get('/faq/create', [FAQController::class, 'create'])->name('faq.create'); 
-    Route::post('/faq/store', [FAQController::class, 'store'])->name('faq.store');
-    Route::get('/faq/edit/{id}', [FAQController::class, 'edit'])->name('faq.edit');
-    Route::put('/faq/update/{id}', [FAQController::class, 'update'])->name('faq.update');
-    Route::delete('/faq/destroy/{id}', [FAQController::class, 'destroy'])->name('faq.destroy'); 
+    Route::resource('faq', FAQController::class);
+    
 
     Route::group(['prefix'=> 'users', 'as' => 'users.'], function(){
         Route::resource('permissions', PermissionsController::class);
