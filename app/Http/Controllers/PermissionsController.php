@@ -121,7 +121,7 @@ class PermissionsController extends Controller
         $data = Permission::get(); 
         return DataTables::of($data, $role_id)
             ->addColumn('chkBox', function($row) use ($role_id){
-                if($row->name=="dashboard")
+                if($row->name=="estates")
                 {
                     return "<input type='checkbox' name='permission[".$row->name."]' value=".$row->name." checked onclick='return false;'>";
                 }else{
