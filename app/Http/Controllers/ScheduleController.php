@@ -51,7 +51,7 @@ class ScheduleController extends Controller
             }
         }
 
-        return redirect()->route('estates.index');
+        return redirect()->route('estate.index');
     }
 
     /**
@@ -118,7 +118,7 @@ class ScheduleController extends Controller
             }
         }
 
-        return redirect()->route('estates.index');
+        return redirect()->route('estate.index');
     }
 
     /**
