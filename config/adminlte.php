@@ -304,11 +304,11 @@ return [
         ],
 
         // Sidebar items:
-        [
-            'text' => 'ダッシュボード',
-            'route' => 'dashboard',
-            'icon' => 'fas fa-fw fa-home'
-        ],
+        // [
+        //     'text' => 'ダッシュボード',
+        //     'route' => 'dashboard',
+        //     'icon' => 'fas fa-fw fa-home'
+        // ],
         // [
         //     'text'        => 'Users',
         //     'icon'        => 'fas fa-fw fa-users',
