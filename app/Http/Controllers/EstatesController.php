@@ -78,7 +78,7 @@ class EstatesController extends Controller
         $estate->est_usefulinfo_ward_url = $request->input('selected_ward_url');
         $estate->est_usefulinfo_ward_show = $request->input('showLinkstatus3') === 'on' ? 1 : 0;
         $estate->save();
-        return redirect()->route('estates.index');
+        return redirect()->route('estate.index');
     }   
 
     /**
@@ -133,7 +133,7 @@ class EstatesController extends Controller
         $estate->est_usefulinfo_ward_url = $request->input('selected_ward_url');
         $estate->est_usefulinfo_ward_show = $request->input('showLinkstatus3') === 'on' ? 1 : 0;
         $estate->save();
-        return redirect()->route('estates.edit',['id'=>$id]);
+        return redirect()->route('estate.edit',['id'=>$id]);
 
     }
 
@@ -148,6 +148,6 @@ class EstatesController extends Controller
         // soft delete estate
         $estate = Estate::find($id);
         $estate->delete();
-        return redirect()->route('estates.index');
+        return redirect()->route('estate.index');
     }
 }

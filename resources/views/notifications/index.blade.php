@@ -23,7 +23,7 @@
     <div class="card">
         <div class="card-header">
             <div class="card-tools">
-                <form action="{{ route('notification') }}" method="GET" class="form-inline">
+                <form action="{{ route('notification.index') }}" method="GET" class="form-inline">
                     <div class="input-group input-group-sm" style="width: 150px;">
                         <input type="text" name="search" value="{{ $search }}" class="form-control float-right" placeholder="Search">
                         <div class="input-group-append">

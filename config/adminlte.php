@@ -309,6 +309,78 @@ return [
         //     'route' => 'dashboard',
         //     'icon' => 'fas fa-fw fa-home'
         // ],
+        [
+            'text'        => '物件',
+            'icon'        => 'fas fa-fw fa-list-alt',
+            'submenu'      =>[
+                [
+                    'text' => 'Estates List',
+                    'route' => 'estate.index',
+                    'active' => ['estate', 'estate/*'],
+                ],
+                [
+                    'text' => 'Add Estate',
+                    'route' => 'estate.create',
+                    'active' => ['estate/create/*'],
+                ],
+            ]
+           
+        ],
+        [
+            'text' => 'お知らせ',
+            'url'  => 'notification',
+            'icon' => 'fas fa-fw fa-bell',
+            'submenu'      =>[
+                [
+                    'text' => 'All',
+                    'route' => 'notification.index',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'active' => ['notification', 'notification/*'],
+                ],
+                [   
+                    'text' => 'Category',
+                    'route' => 'topic',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                ],
+            ]
+        ],
+        [
+            'text' => 'バナー',
+            'route' => 'banner',
+            'icon' => 'fas fa-fw fa-regular fa-images',
+        ],
+        [
+            'text' => 'よくある質問',
+            'route' => 'faq',
+            'icon' => 'fas fa-fw fa-question',
+        ],
+        [
+            'text' => 'おすすめオーダー家具',
+            'route' => 'catalogue',
+            'icon' => 'fas fa-fw  fa-regular fa-book',
+        ],
+        [
+            'text' => 'お問い合わせ',
+            'route' => 'estcontact',
+            'icon' => 'fas fa-fw  fa-address-book',
+        ],
+        ['header' => 'account_settings'],
+        [
+            'text' => 'profile',
+            'url'  => 'profile',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => 'Settings',
+            // 'url'  => 'settings',
+            'icon' => 'fas fa-fw fa-cogs',
+        ],
+        [
+            'text' => 'ユーザー',
+            'icon' => 'fas fa-fw fa-users',
+            'route' => 'users.index',
+            'active' => ['users', 'users/*'],
+        ],
         // [
         //     'text'        => 'Users',
         //     'icon'        => 'fas fa-fw fa-users',
@@ -330,68 +402,6 @@ return [
         //         ],
         //     ]    
         // ],
-        [
-            'text'        => '物件',
-            'icon'        => 'fas fa-fw fa-list-alt',
-            'submenu'      =>[
-                [
-                    'text' => 'Estates List',
-                    'route' => 'estates.index',
-                    'active' => ['estates', 'estates/*'],
-                ],
-                [
-                    'text' => 'Add Estate',
-                    'route' => 'estates.create',
-                    'active' => ['estates/create/*'],
-                ],
-            ]
-           
-        ],
-        [
-            'text' => 'お知らせ',
-            // 'url'  => 'notification',
-            'icon' => 'fas fa-fw fa-bell',
-            'submenu'      =>[
-                [
-                    'text' => 'All',
-                    'route' => 'notification',
-                    'icon' => 'fas fa-fw fa-chevron-right',
-                ],
-                [   
-                    'text' => 'Category',
-                    'route' => 'topic',
-                    'icon' => 'fas fa-fw fa-chevron-right',
-                ],
-            ]
-        ],
-        [
-            'text' => 'バナー',
-            'route' => 'banner',
-            'icon' => 'fas fa-fw fa-regular fa-images',
-        ],
-        [
-            'text' => 'よくある質問',
-            'route' => 'faq',
-            'icon' => 'fas fa-fw fa-question',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url'  => 'profile',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'Settings',
-            // 'url'  => 'settings',
-            'icon' => 'fas fa-fw fa-cogs',
-        ],
-        [
-            'text' => 'ユーザー',
-            'icon' => 'fas fa-fw fa-users',
-            'route' => 'users.index',
-            'active' => ['users', 'users/*'],
-        ],
-       
         // Sidebar items:
         // [
         //     'text' => 'Test',

@@ -31,7 +31,7 @@
               <div class="row">
                 <div class="col-sm-12">
                     <div class="d-flex justify-content-between">
-                        <a href="{{route('estates.create')}}" class="btn btn-primary mt-2 mb-2">Add new Estate</a>
+                        <a href="{{route('estate.create')}}" class="btn btn-primary mt-2 mb-2">Add new Estate</a>
                         <div class="w-50">
                             <nav class="navbar navbar-light bg-light w-75">
                               <form class="form-inline w-100"  method="GET" action="{{ request()->url() }}">
@@ -61,13 +61,13 @@
                         <td>山田二郎</td>
                         <td>
                             <div class="action_bar" style="">
-                              <a href="{{route('estates.edit',['id'=>$estate->est_id])}}">
+                              <a href="{{route('estate.edit',['id'=>$estate->est_id])}}">
                                 <i class="fas fa-hammer"></i>
                               </a>
                               <a href="{{route('schedule.edit', ['id' => $estate->est_id])}}"><i class="fas fa-calendar"></i></a>
                               <i class="fas fa-file-upload"></i>
-                              <a href="{{route('estates.destroy',$estate->est_id)}}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this estate?')) { document.getElementById('delete-form-{{$estate->est_id}}').submit(); }">
-                                <form id="delete-form-{{$estate->est_id}}" action="{{route('estates.destroy',$estate->est_id)}}" method="POST" style="display: none;">
+                              <a href="{{route('estate.destroy',$estate->est_id)}}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this estate?')) { document.getElementById('delete-form-{{$estate->est_id}}').submit(); }">
+                                <form id="delete-form-{{$estate->est_id}}" action="{{route('estate.destroy',$estate->est_id)}}" method="POST" style="display: none;">
                                   @csrf
                                   @method('DELETE')
                                 </form>
