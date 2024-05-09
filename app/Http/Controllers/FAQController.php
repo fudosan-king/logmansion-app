@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use DataTables; 
 use App\Models\FAQ;
 
 class FAQController extends Controller
 {
     public function index(Request $request)
     {
-        $search = $request->input('search');
-        $faqs = Faq::where('faq_title', 'like', '%'.$search.'%')
-                    ->paginate(10);
-        return view('faq.index', compact('faqs', 'search'));
+        if($request->ajax())
+        {
+            return $this->getFAQs();
+        }
+        return view('faq.index');
     }
 
     public function create()
@@ -36,7 +40,7 @@ class FAQController extends Controller
         $faq->faq_active = $request->input('faq_active', false);
         $faq->save();
         toast('FAQ created successfully.','success');
-        return redirect()->route('faq');
+        return redirect()->route('faq.index');
     }
 
     public function edit($id)
@@ -62,14 +66,42 @@ class FAQController extends Controller
         $faq->faq_active = $request->input('faq_active', false);
         $faq->save();
         toast('FAQ updated successfully.','success');
-        return redirect()->route('faq');
+        return redirect()->route('faq.index');
     }
 
     public function destroy($id)
     {
-        $faq = FAQ::findOrFail($id);
-        $faq->delete();
-        toast('FAQ deleted successfully.','success');
-        return redirect()->route('faq');
+        try {
+            $faq = FAQ::findOrFail($id);
+            $faq->delete();
+            return response(["message" => "Deleted Successfully"], 200);
+        } catch(exception $e) {
+            return response(["message" => "Data Delete Error! Please Try again"], 201);
+        }
+    }
+
+    private function getFAQs()
+    {
+        $data = FAQ::all();
+        return DataTables::of($data)
+                ->addColumn('date', function($row){
+                    return Carbon::parse($row->created_at)->format('d M, Y h:i:s A');
+                })
+                ->addColumn('active', function($row){
+                    return $row->faq_active ? '表示' : '非表示';
+                })
+                ->addColumn('action', function($row){
+                    $action = ""; 
+                    if(Auth::user()->can('faq.edit'))
+                    {
+                        $action.="<a class='btn btn-xs btn-warning' id='btnEdit' href='".route('faq.edit', $row->faq_id)."'><i class='fas fa-edit'></i></a>"; 
+                    }
+                    if(Auth::user()->can('faq.destroy'))
+                    {
+                        $action.=" <button class='btn btn-xs btn-outline-danger' id='btnDel' data-id='".$row->faq_id."'><i class='fas fa-trash'></i></button>"; 
+                    }
+                    return $action;
+                })
+                ->rawColumns(['name', 'date','roles', 'action'])->make('true');
     }
 }

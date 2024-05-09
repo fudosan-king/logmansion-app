@@ -17,8 +17,8 @@
                 <div class="form-group row mx-auto schedule-title">
 
                     <div class="col-sm-3">
-                        <label for="" class="col-form-label">スケジュール名</label>
-                        <span class="red-required">※</span>
+                        <label for="" class="col-form-label">スケsssジュール名</label>
+                        <span class="red-required">※123</span>
                     </div>
 
                     <div class="col-sm-3">

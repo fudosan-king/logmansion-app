@@ -339,19 +339,19 @@ return [
                 ],
                 [   
                     'text' => 'Category',
-                    'route' => 'topic',
+                    'route' => 'topic.index',
                     'icon' => 'fas fa-fw fa-chevron-right',
                 ],
             ]
         ],
         [
             'text' => 'バナー',
-            'route' => 'banner',
+            'route' => 'banner.index',
             'icon' => 'fas fa-fw fa-regular fa-images',
         ],
         [
             'text' => 'よくある質問',
-            'route' => 'faq',
+            'route' => 'faq.index',
             'icon' => 'fas fa-fw fa-question',
         ],
         [
