@@ -82,8 +82,9 @@
         </div>
 
         <div class="card-footer">
-            <button type="" class="btn btn-primary float-left add-schedule">Add Schedule</button>
-            <button type="" class="btn btn-primary float-right save-schedule">保存</button>
+            <a href="{{route('estates.index')}}" class="btn btn-default go-back float-left">{{ __('messages.cancel') }}</a>
+            <button type="" class="btn btn-primary float-right save-schedule">{{ __('messages.save') }}</button>
+            <button type="" class="btn btn-primary float-right add-schedule">{{ __('messages.add') }}</button>
         </div>
     </form>
 </div>
@@ -119,6 +120,10 @@
     }
     .red-required {
         color: red;
+    }
+
+    .save-schedule {
+        margin-left: 30px;
     }
 </style>
 @stop
@@ -244,7 +249,7 @@
                 });
 
                 if (schedule['schedule-date'] == '' || schedule['schedule-name'] == '') {
-                    alert('この項目は必須です。');
+                    alert('この項目 「※」は必須です。');
                     error = true;
                     return false;
                 } else if (schedule['schedule-date'] > lastDate) {
