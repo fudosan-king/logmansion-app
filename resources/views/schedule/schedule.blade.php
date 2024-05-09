@@ -264,6 +264,17 @@
                 dateFormat: 'Y/m/d',
                 allowInput: true
             });
+
+            $('input[name="schedule-date"]').on('change', function() {
+                var scheduleDate = $(this).val();
+                var lastDate = $('.datepicker:last').val();
+                if (lastDate != '' && scheduleDate > lastDate) {
+                    alert('「引き渡し日」より後の日付が入力されています。\n「引き渡し日」より前の日付を登録してください。');
+                    $(this).val('');
+                    return false;
+                }
+
+            });
         });
 
         //event check date last schedule
@@ -276,7 +287,7 @@
                 var currentDate = new Date($(this).val());
 
                 if (currentDate > maxDate) {
-                    alert('「引渡し日」に他のスケジュールより前の日付が入力されています。「引渡し日」には、他のスケジュールで入力した日付以降の日付を登録してください。');
+                    alert('「引渡し日」に他のスケジュールより前の日付が入力されています。\n「引渡し日」には、他のスケジュールで入力した日付以降の日付を登録してください。');
                     lastInput.val('');
                     return false;
                 }
@@ -285,12 +296,23 @@
 
         //event check name schedule empty
         $('input[name="schedule-name"]').on('change', function() {
-           var scheduleName = $(this).val().trim();
-           if (scheduleName == '') {
+            var scheduleName = $(this).val().trim();
+            if (scheduleName == '') {
                 alert('この項目 「※」は必須です。');
                 $(this).val('');
                 $(this).focus();
-           }
+            }
+        });
+
+        $('input[name="schedule-date"]').on('change', function() {
+            var scheduleDate = $(this).val();
+            var lastDate = $('.datepicker:last').val();
+            if (lastDate != '' && scheduleDate > lastDate) {
+                alert('「引き渡し日」より後の日付が入力されています。\n「引き渡し日」より前の日付を登録してください。');
+                $(this).val('');
+                return false;
+            }
+
         });
 
 
@@ -316,15 +338,11 @@
                     alert('この項目 「※」は必須です。');
                     error = true;
                     return false;
-                } else if (schedule['schedule-date'] > lastDate) {
-                    alert('「引き渡し日」より後の日付が入力されています。「引き渡し日」より前の日付を登録してください。');
-                    error = true;
-                    return false;
                 }
                 schedules.push(schedule);
             });
 
-            
+
             if (error) {
                 return false;
             }
