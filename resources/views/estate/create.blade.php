@@ -15,7 +15,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12" >
-        <form action="{{route('estates.store')}}" method="post">
+        <form action="{{route('estate.store')}}" method="post">
             @csrf
             <div class="card" id="step1">
                 <div class="card-header">

@@ -14,7 +14,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12" >
-        <form action="{{route('estates.update',['id'=>$estate->est_id])}}" method="POST">
+        <form action="{{route('estate.update',['id'=>$estate->est_id])}}" method="POST">
             @csrf
             @method('PUT')
             <div class="card" id="step1">

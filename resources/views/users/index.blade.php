@@ -132,10 +132,10 @@
                     render: function (data)  {
                         switch (data) {
                             case 0:
-                                html = '<small class="badge badge-secondary">LogSuite</small>';
+                                html = 'LogSuite';
                                 break;
                             case 1:
-                                html = '<small class="badge badge-warning">LogArchitect</small>';
+                                html = 'LogArchitect';
                                 break;
                         }
                         return  html;
