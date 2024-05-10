@@ -27,4 +27,6 @@ return [
     'department' => '部門',
     'role' => '役割',
     'date' => '日付',
+    'password' => 'パスワード',
+    'save' => '保存',
 ];
