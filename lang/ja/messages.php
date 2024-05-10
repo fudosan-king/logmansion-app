@@ -20,4 +20,11 @@ return [
     "download" => "印刷",
     "archive" => "アーカイブ",
     'user-list' => 'ユーザ一覧',
+    'name' => 'お名前',
+    'mail' => '住所',
+    'tel' => 'お電話番号',
+    'action' => 'アクション',
+    'department' => '部門',
+    'role' => '役割',
+    'date' => '日付',
 ];

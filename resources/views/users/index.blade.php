@@ -87,12 +87,12 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Department</th>
-                                    <th>Email</th>
-                                    <th>Date</th>
-                                    <th>Roles</th>
-                                    <th>Action</th>
+                                    <th>{{__('messages.name')}}</th>
+                                    <th>{{__('messages.department')}}</th>
+                                    <th>{{__('messages.mail')}}</th>
+                                    <th>{{__('messages.date')}}</th>
+                                    <th>{{__('messages.role')}}</th>
+                                    <th>{{__('messages.action')}}</th>
                                 </tr>
                             </thead>
                         </table>
