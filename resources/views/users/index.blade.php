@@ -7,6 +7,8 @@
 @stop
 
 @section('content')
+
+
    <div class="container-fluid">
     <div class="row">
         <div id="errorBox"></div>
@@ -16,7 +18,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">
-                            <h5>Add New</h5>
+                            <h5>{{__('messages.addnew')}}</h5>
                         </div>
                     </div>
                     <div class="card-body">
@@ -28,8 +30,6 @@
                             @endif
                         </div>
                         @php
-
-//dd(old('department'));
                         @endphp
                         <div class="form-group">
                             <label for="department" class="form-label">Department<span class="text-danger">*</span></label>
@@ -77,7 +77,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <h5>List</h5>
+                        <h5>{{__('messages.user-list')}}</h5>
                     </div>
                 </div>
                 <div class="card-body">
@@ -119,7 +119,13 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     })
-    $(document).ready(function(){
+    jQuery(function($){
+       $.extend( $.fn.dataTable.defaults, {
+         language: { url: "json/japanese.json" }
+       });
+    });
+    
+    $(document).ready(function(){ 
         var table = $('#tblData').DataTable({
             reponsive:true, processing:true, serverSide:true, autoWidth:false, 
             ajax:"{{route('users.index')}}", 
@@ -128,7 +134,7 @@
                 {data:'name', name:'name'},
                 {
                     data:'department',  
-                    // name:'department',
+                    name:'department',
                     render: function (data)  {
                         switch (data) {
                             case 0:

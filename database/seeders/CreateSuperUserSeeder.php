@@ -49,27 +49,26 @@ class CreateSuperUserSeeder extends Seeder
         $permission = Permission::create(['name' => 'notification.update','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'notification.destroy','guard_name' => 'web']);
 
-        $permission = Permission::create(['name' => 'topic','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'topic.index','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'topic.create','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'topic.store','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'topic.edit','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'topic.update','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'topic.destroy','guard_name' => 'web']); 
 
-        $permission = Permission::create(['name' => 'banner','guard_name' => 'web']);
+        $permission = Permission::create(['name' => 'banner.index','guard_name' => 'web']);
         $permission = Permission::create(['name' => 'banner.create','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'banner.store','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'banner.edit','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'banner.update','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'banner.destroy','guard_name' => 'web']); 
 
-        $permission = Permission::create(['name' => 'faq','guard_name' => 'web']);
+        $permission = Permission::create(['name' => 'faq.index','guard_name' => 'web']);
         $permission = Permission::create(['name' => 'faq.create','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'faq.store','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'faq.edit','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'faq.update','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'faq.destroy','guard_name' => 'web']);
-
 
         $permission = Permission::create(['name' => 'schedule.create','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'schedule.store','guard_name' => 'web']); 
@@ -77,14 +76,14 @@ class CreateSuperUserSeeder extends Seeder
         $permission = Permission::create(['name' => 'schedule.update','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'schedule.destroy','guard_name' => 'web']); 
 
-        $permission = Permission::create(['name' => 'catalogue','guard_name' => 'web']);
+        $permission = Permission::create(['name' => 'catalogue.index','guard_name' => 'web']);
         $permission = Permission::create(['name' => 'catalogue.create','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'catalogue.store','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'catalogue.edit','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'catalogue.update','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'catalogue.destroy','guard_name' => 'web']);
 
-        $permission = Permission::create(['name' => 'estcontact','guard_name' => 'web']);
+        $permission = Permission::create(['name' => 'estcontact.index','guard_name' => 'web']);
         $permission = Permission::create(['name' => 'estcontact.create','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'estcontact.store','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'estcontact.edit','guard_name' => 'web']); 

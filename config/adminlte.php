@@ -311,19 +311,20 @@ return [
         // ],
         [
             'text'        => '物件',
+            'route' => 'estate.index',
             'icon'        => 'fas fa-fw fa-list-alt',
-            'submenu'      =>[
-                [
-                    'text' => 'Estates List',
-                    'route' => 'estate.index',
-                    'active' => ['estate', 'estate/*'],
-                ],
-                [
-                    'text' => 'Add Estate',
-                    'route' => 'estate.create',
-                    'active' => ['estate/create/*'],
-                ],
-            ]
+            // 'submenu'      =>[
+            //     [
+            //         'text' => '物件一覧',
+            //         'route' => 'estate.index',
+            //         'active' => ['estate', 'estate/*'],
+            //     ],
+            //     [
+            //         'text' => 'Add Estate',
+            //         'route' => 'estate.create',
+            //         'active' => ['estate/create/*'],
+            //     ],
+            // ]
            
         ],
         [
@@ -332,13 +333,13 @@ return [
             'icon' => 'fas fa-fw fa-bell',
             'submenu'      =>[
                 [
-                    'text' => 'All',
+                    'text' => 'お知らせ一覧',
                     'route' => 'notification.index',
                     'icon' => 'fas fa-fw fa-chevron-right',
                     'active' => ['notification', 'notification/*'],
                 ],
                 [   
-                    'text' => 'Category',
+                    'text' => 'カテゴリー',
                     'route' => 'topic.index',
                     'icon' => 'fas fa-fw fa-chevron-right',
                 ],
