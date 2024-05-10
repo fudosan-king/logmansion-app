@@ -23,7 +23,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                            <label for="name" class="form-label">{{__('messages.name')}} <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="name" placeholder="Enter Full Name" value="{{old('name')}}">
                             @if($errors->has('name'))
                                 <span class="text-danger">{{$errors->first('name')}}</span>
@@ -32,7 +32,7 @@
                         @php
                         @endphp
                         <div class="form-group">
-                            <label for="department" class="form-label">Department<span class="text-danger">*</span></label>
+                            <label for="department" class="form-label">{{__('messages.department')}}<span class="text-danger">*</span></label>
                             <select class="form-control select2"  id="select3" data-placeholder="Select Department" name="department">
                             @foreach (config('conts.department') as $k=>$v)
                                 <option value="{{$k}}" {{ (old('department') && old('department') == $k) ? "selected" : ""}} >{{ucfirst($v)}}</option>
@@ -43,21 +43,21 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                            <label for="email" class="form-label">{{__('messages.mail')}} <span class="text-danger">*</span></label>
                             <input type="email" class="form-control" name="email" placeholder="Enter Users Email" value="{{old('email')}}">
                             @if($errors->has('email'))
                                 <span class="text-danger">{{$errors->first('email')}}</span>
                             @endif
                         </div>
                         <div class="form-group">
-                            <label for="password" class="form-label">Password</label>
+                            <label for="password" class="form-label">{{__('messages.password')}}</label>
                             <input type="password" class="form-control" name="password" placeholder="Enter Users Password" value="{{old('password')}}">
                             @if($errors->has('password'))
                                 <span class="text-danger">{{$errors->first('password')}}</span>
                             @endif
                         </div>
                         <div class="form-group">
-                            <label for="roles" class="form-label">Roles</label>
+                            <label for="roles" class="form-label">{{__('messages.role')}}</label>
                             <select class="form-control select2"
                             {{-- multiple="multiple"  --}}
                             id="select2" data-placeholder="Select Roles" name="roles[]">
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">{{__('messages.save')}}</button>
                     </div>
                 </div>
             </form>
