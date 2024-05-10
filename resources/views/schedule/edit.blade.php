@@ -93,45 +93,6 @@
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<style>
-    .form-group textarea {
-        height: 38px;
-        resize: none;
-    }
-
-    .remove-icon {
-        position: relative;
-    }
-
-    .remove-icon span {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 20px;
-        cursor: pointer;
-    }
-
-    .schedule-title {
-        margin-bottom: 35px;
-    }
-
-    .schedule-row {
-        margin-bottom: 25px;
-    }
-
-    .red-required {
-        color: red;
-    }
-
-    .save-schedule {
-        margin-left: 30px;
-    }
-
-    .estate-name {
-        font-size: 25px;
-        font-weight: 600;
-    }
-</style>
 @stop
 
 @section('js')
@@ -193,7 +154,7 @@
                 <div class="form-group row mx-auto schedule-row">
                     <input type="hidden" name="schedule-id" value="">
                     <div class="col-sm-3">
-                        <input type="text" name="schedule-name"  class="form-control" value="">
+                        <input type="text" name="schedule-name"  class="form-control" value="" maxlength="255">
                     </div>
                     
                     <div class="col-sm-3">
@@ -201,7 +162,7 @@
                     </div>
                     
                     <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description" ></textarea>
+                        <textarea class="form-control" name="schedule-description" maxlength="255"></textarea>
                     </div>
                     <div class="col-sm-1 remove-icon">
                         <span class="icon"><i class="fas fa-times-circle"></i></span>
