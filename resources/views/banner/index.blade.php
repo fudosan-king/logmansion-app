@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Banner')
+@section('title', 'バナー')
 
 @section('content_header')
-    <h1>Banner</h1>
+    <h1>バナー</h1>
 @stop
 
 @section('content')
@@ -56,6 +56,11 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     })
+    jQuery(function($){
+       $.extend( $.fn.dataTable.defaults, {
+         language: { url: "json/japanese.json" }
+       });
+    });
     $(document).ready(function(){
         var table = $('#tblData').DataTable({
             reponsive:true, processing:true, serverSide:true, autoWidth:false, 
@@ -65,7 +70,7 @@
                 {data:'image', name:'image'},
                 {data:'url', name:'banner_url'},
                 {data:'active', name:'banner_active'},
-                {data:'action', name:'action', bSortable:false, className:"text-center"},
+                {data:'action', name:'action', bSortable:true, className:"text-center"},
             ], 
             order:[[0, "desc"]]
         });
