@@ -37,7 +37,7 @@
                 <div class="form-group row mx-auto schedule-row">
                     <input type="hidden" name="schedule-id" value="{{$schedule['schedule_id']}}">
                     <div class="col-sm-3">
-                        <input type="text" name="schedule-name" class="form-control" value="{{$schedule['schedule_name']}}">
+                        <input type="text" name="schedule-name" class="form-control" value="{{$schedule['schedule_name']}}" maxlength="255">
                     </div>
 
                     <div class="col-sm-3">
@@ -46,7 +46,7 @@
                     </div>
 
                     <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description">{{$schedule['schedule_description']}}</textarea>
+                        <textarea class="form-control" name="schedule-description" maxlength="255">{{$schedule['schedule_description']}}</textarea>
                     </div>
 
                     <div class="col-sm-1 remove-icon">
@@ -59,7 +59,7 @@
                 <div class="form-group row mx-auto schedule-row">
                     <input type="hidden" name="schedule-id" value="{{$schedule['schedule_id']}}">
                     <div class="col-sm-3">
-                        <input type="text" name="schedule-name" class="form-control" value="{{$schedule['schedule_name']}}" readonly>
+                        <input type="text" name="schedule-name" class="form-control" value="{{$schedule['schedule_name']}}" readonly maxlength="255">
                     </div>
 
                     <div class="col-sm-3">
@@ -67,7 +67,7 @@
                         <input type="date" name="schedule-date" class="form-control datepicker" value="{{$dateValue}}">
                     </div>
                     <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description">{{$schedule['schedule_description']}}</textarea>
+                        <textarea class="form-control" name="schedule-description" maxlength="255">{{$schedule['schedule_description']}}</textarea>
                     </div>
                 </div>
 
