@@ -34,7 +34,7 @@
                 <div class="form-group row mx-auto schedule-row">
 
                     <div class="col-sm-3">
-                        <input type="text" name="schedule-name" class="form-control" value="申し込み">
+                        <input type="text" name="schedule-name" class="form-control" value="申し込み" maxlength="255">
                     </div>
 
                     <div class="col-sm-3">
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description"></textarea>
+                        <textarea class="form-control" name="schedule-description" maxlength="255"></textarea>
                     </div>
                     <div class="col-sm-1 remove-icon">
                         <span class="icon"><i class="fas fa-times-circle"></i></span>
@@ -52,7 +52,7 @@
                 <div class="form-group row mx-auto schedule-row">
 
                     <div class="col-sm-3">
-                        <input type="text" name="schedule-name" class="form-control" value="事前審査">
+                        <input type="text" name="schedule-name" class="form-control" value="事前審査" maxlength="255">
                     </div>
 
                     <div class="col-sm-3">
@@ -60,7 +60,7 @@
                     </div>
 
                     <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description"></textarea>
+                        <textarea class="form-control" name="schedule-description" maxlength="255"></textarea>
                     </div>
                     <div class="col-sm-1 remove-icon">
                         <span class="icon"><i class="fas fa-times-circle"></i></span>
@@ -70,7 +70,7 @@
                 <div class="form-group row mx-auto schedule-row">
 
                     <div class="col-sm-3">
-                        <input type="text" name="schedule-name" class="form-control" value="契約">
+                        <input type="text" name="schedule-name" class="form-control" value="契約" maxlength="255">
                     </div>
 
                     <div class="col-sm-3">
@@ -78,7 +78,7 @@
                     </div>
 
                     <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description"></textarea>
+                        <textarea class="form-control" name="schedule-description" maxlength="255"></textarea>
                     </div>
                     <div class="col-sm-1 remove-icon">
                         <span class="icon"><i class="fas fa-times-circle"></i></span>
@@ -88,7 +88,7 @@
                 <div class="form-group row mx-auto schedule-row">
 
                     <div class="col-sm-3">
-                        <input type="text" name="schedule-name" class="form-control" value="本申し込み">
+                        <input type="text" name="schedule-name" class="form-control" value="本申し込み" maxlength="255">
                     </div>
 
                     <div class="col-sm-3">
@@ -96,7 +96,7 @@
                     </div>
 
                     <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description"></textarea>
+                        <textarea class="form-control" name="schedule-description" maxlength="255"></textarea>
                     </div>
                     <div class="col-sm-1 remove-icon">
                         <span class="icon"><i class="fas fa-times-circle"></i></span>
@@ -106,7 +106,7 @@
                 <div class="form-group row mx-auto schedule-row">
 
                     <div class="col-sm-3">
-                        <input type="text" name="schedule-name" class="form-control" value="金消契約">
+                        <input type="text" name="schedule-name" class="form-control" value="金消契約" maxlength="255">
                     </div>
 
                     <div class="col-sm-3">
@@ -114,7 +114,7 @@
                     </div>
 
                     <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description"></textarea>
+                        <textarea class="form-control" name="schedule-description" maxlength="255"></textarea>
                     </div>
                     <div class="col-sm-1 remove-icon">
                         <span class="icon"><i class="fas fa-times-circle"></i></span>
@@ -124,7 +124,7 @@
                 <div class="form-group row mx-auto schedule-row">
 
                     <div class="col-sm-3">
-                        <input type="text" name="schedule-name" class="form-control" value="決済">
+                        <input type="text" name="schedule-name" class="form-control" value="決済" maxlength="255">
                     </div>
 
                     <div class="col-sm-3">
@@ -132,7 +132,7 @@
                     </div>
 
                     <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description"></textarea>
+                        <textarea class="form-control" name="schedule-description" maxlength="255"></textarea>
                     </div>
                     <div class="col-sm-1 remove-icon">
                         <span class="icon"><i class="fas fa-times-circle"></i></span>
@@ -142,14 +142,14 @@
                 <div class="form-group row mx-auto schedule-row">
 
                     <div class="col-sm-3">
-                        <input type="text" name="schedule-name" class="form-control" value="引渡し" readonly>
+                        <input type="text" name="schedule-name" class="form-control" value="引渡し" readonly maxlength="255">
                     </div>
 
                     <div class="col-sm-3">
                         <input type="date" name="schedule-date" class="form-control datepicker">
                     </div>
                     <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description"></textarea>
+                        <textarea class="form-control" name="schedule-description" maxlength="255"></textarea>
                     </div>
                 </div>
 
@@ -241,7 +241,7 @@
                 <div class="form-group row mx-auto schedule-row">
                     
                     <div class="col-sm-3">
-                        <input type="text" name="schedule-name"  class="form-control" value="">
+                        <input type="text" name="schedule-name"  class="form-control" value="" maxlength="255">
                     </div>
                     
                     <div class="col-sm-3">
@@ -249,7 +249,7 @@
                     </div>
                     
                     <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description" ></textarea>
+                        <textarea class="form-control" name="schedule-description" maxlength="255" ></textarea>
                     </div>
                     <div class="col-sm-1 remove-icon">
                         <span class="icon"><i class="fas fa-times-circle"></i></span>
