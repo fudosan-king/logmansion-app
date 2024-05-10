@@ -63,13 +63,13 @@
         {{-- Login field --}}
         <div class="row">
             <div class="col-7">
-                <div class="icheck-primary" title="{{ __('adminlte::adminlte.remember_me_hint') }}">
+                {{-- <div class="icheck-primary" title="{{ __('adminlte::adminlte.remember_me_hint') }}">
                     <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
-                    <label for="remember">
+                        <label for="remember">
                         {{ __('adminlte::adminlte.remember_me') }}
                     </label>
-                </div>
+                </div> --}}
             </div>
 
             <div class="col-5">
@@ -94,11 +94,11 @@
     @endif
 
     {{-- Register link --}}
-    @if($register_url)
+    {{-- @if($register_url)
         <p class="my-0">
             <a href="{{ $register_url }}">
                 {{ __('adminlte::adminlte.register_a_new_membership') }}
             </a>
         </p>
-    @endif
+    @endif --}}
 @stop

@@ -20,7 +20,7 @@
         @yield('content_top_nav_right')
 
         {{-- Configured right links --}}
-        @each('adminlte::partials.navbar.menu-item', $adminlte->menu('navbar-right'), 'item')
+        {{-- @each('adminlte::partials.navbar.menu-item', $adminlte->menu('navbar-right'), 'item') --}}
 
         {{-- User menu link --}}
         @if(Auth::user())
@@ -32,9 +32,9 @@
         @endif
 
         {{-- Right sidebar toggler link --}}
-        @if(config('adminlte.right_sidebar'))
+        {{-- @if(config('adminlte.right_sidebar'))
             @include('adminlte::partials.navbar.menu-item-right-sidebar-toggler')
-        @endif
+        @endif --}}
     </ul>
 
 </nav>
