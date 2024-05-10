@@ -84,9 +84,6 @@ class FAQController extends Controller
     {
         $data = FAQ::all();
         return DataTables::of($data)
-                ->addColumn('date', function($row){
-                    return Carbon::parse($row->created_at)->format('d M, Y h:i:s A');
-                })
                 ->addColumn('active', function($row){
                     return $row->faq_active ? '表示' : '非表示';
                 })
@@ -102,6 +99,13 @@ class FAQController extends Controller
                     }
                     return $action;
                 })
-                ->rawColumns(['name', 'date','roles', 'action'])->make('true');
+                ->rawColumns(['active', 'action'])
+                ->addColumn('searchable', function ($row) {
+                    return [
+                        $row->faq_id,
+                        $row->faq_title,
+                    ];
+                })
+                ->make('true');
     }
 }

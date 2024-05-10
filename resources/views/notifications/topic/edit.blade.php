@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Category')
+@section('title', 'カテゴリ')
 
 @section('content_header')
-    <h1>Edit Category</h1>
+    <h1>カテゴリー編集</h1>
 @stop
 
 @section('content')

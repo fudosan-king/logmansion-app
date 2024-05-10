@@ -5,7 +5,7 @@
 /* Hoa  edit schedule*/
 .form-group textarea {
     height: 38px;
-    resize: none;
+    /* resize: none; */
 }
 
 .remove-icon {

@@ -34,7 +34,8 @@ class NotificationController extends Controller
             'noti_content' => 'nullable',
             'noti_date' => 'required|date',
             'noti_status' => 'nullable',
-            'noti_url' => 'nullable',
+            'noti_url' => 'nullable|url',
+            'url' => '無効な形式です。',
         ], [
             'required' => 'この項目は必須です。',
             'date' => '無効な形式です。',
@@ -61,10 +62,11 @@ class NotificationController extends Controller
             'noti_content' => 'nullable',
             'noti_date' => 'required|date',
             'noti_status' => 'nullable',
-            'noti_url' => 'nullable',
+            'noti_url' => 'nullable|url',
         ], [
             'required' => 'この項目は必須です。',
             'date' => '無効な形式です。',
+            'url' => '無効な形式です。',
         ]);
         $data['noti_status'] = $request->has('noti_status');
         $notification->update($data);
@@ -108,6 +110,17 @@ class NotificationController extends Controller
                     $action.=" <button class='btn btn-xs btn-outline-danger' id='btnDel' data-id='".$row->noti_id."'><i class='fas fa-trash'></i></button>"; 
                     return $action;
                 })
-                ->rawColumns(['noti_date', 'cat_name', 'updated_at','active', 'action'])->make('true');
+                ->rawColumns(['noti_date', 'cat_name', 'updated_at','active', 'action'])
+                ->addColumn('searchable', function ($row) {
+                    return [
+                        $row->noti_id,
+                        $row->noti_date,
+                        $row->noti_title,
+                        $row->category->cat_name ?? '',
+                        $row->updated_at,
+                        Carbon::parse($row->updated_at)->format('Y-m-d')
+                    ];
+                })
+                ->make('true');
     }
 }

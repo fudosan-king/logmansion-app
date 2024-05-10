@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'お知らせ')
 
 @section('content_header')
-    <h1>Add New Notification</h1>
+    <h1>お知らせ新規追加</h1>
 @stop
 
 @section('content')

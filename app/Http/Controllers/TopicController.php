@@ -87,6 +87,14 @@ class TopicController extends Controller
                     }
                     return $action;
                 })
-                ->rawColumns(['url', 'image','active', 'action'])->make('true');
+                ->rawColumns(['action'])
+                ->addColumn('searchable', function ($row) {
+                    return [
+                        $row->cat_id,
+                        $row->cat_name,
+                        Carbon::parse($row->updated_at)->format('Y-m-d'),
+                    ];
+                })
+                ->make('true');
     }
 }
