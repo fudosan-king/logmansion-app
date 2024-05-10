@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Category')
+@section('title', 'カテゴリー')
 
 @section('content_header')
-    <h1>Category</h1>
+    <h1>カテゴリー</h1>
 @stop
 
 @section('content')
@@ -55,6 +55,11 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     })
+    jQuery(function($){
+       $.extend( $.fn.dataTable.defaults, {
+         language: { url: "json/japanese.json" }
+       });
+    });
     $(document).ready(function(){
         var table = $('#tblData').DataTable({
             reponsive:true, processing:true, serverSide:true, autoWidth:false, 

@@ -12,8 +12,6 @@ class BannerController extends Controller
 {
     public function index(Request $request)
     {
-        // $banners = Banner::all();
-        // return view('banner.index', compact('banners'));
         if($request->ajax())
         {
             return $this->getBanners();
@@ -112,6 +110,7 @@ class BannerController extends Controller
     {
         try {
             $banner = Banner::findOrFail($id);
+            Storage::disk('public')->delete($banner->banner_image);
             $banner->delete();
             return response(["message" => "Banner Deleted Successfully"], 200);
         } catch(exception $e) {
@@ -145,6 +144,13 @@ class BannerController extends Controller
                     }
                     return $action;
                 })
-                ->rawColumns(['url', 'image','active', 'action'])->make('true');
+                ->rawColumns(['url', 'image','active', 'action'])
+                ->addColumn('searchable', function ($row) {
+                    return [
+                        $row->banner_title,
+                        $row->banner_url,
+                    ];
+                })
+                ->make('true');
     }
 }

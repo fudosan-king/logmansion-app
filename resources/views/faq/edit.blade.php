@@ -3,7 +3,7 @@
 @section('title', 'よくある質問')
 
 @section('content_header')
-    <h1>バナー編集</h1>
+    <h1>FAQ新規追加</h1>
 @stop
 
 @section('content')
