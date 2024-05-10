@@ -29,13 +29,13 @@ class AuthController extends Controller
      *                  @OA\Property(
      *                      property="client_email",
      *                      type="string",
-     *                      example="example@example.com"
+     *                      example="client1@gmail.com"
      *                  ),
      *                  @OA\Property(
      *                      property="client_password",
      *                      type="string",
      *                      format="password",
-     *                      example="password"
+     *                      example="super1234"
      *                  ),
      *                  required={"client_email", "client_password"}
      *              )
@@ -70,10 +70,11 @@ class AuthController extends Controller
         $credentials = $request->only('client_email', 'client_password');
         if (Client::where('client_email', $credentials['client_email'])->exists()) {
             try {
-                $token = auth('clients')->attempt([
-                    'client_email' => $credentials['client_email'], 
-                    'password' => $credentials['client_password']
-                ]);
+                // $token = auth('clients')->attempt([
+                //     'client_email' => $credentials['client_email'], 
+                //     'password' => $credentials['client_password']
+                // ]);
+                $token = auth('clients')->login(Client::where('client_email', $credentials['client_email'])->first());
                 if (!$token) {
                     return response()->json(['error' => 'invalid_credentials'], 401);
                 }
@@ -87,93 +88,109 @@ class AuthController extends Controller
         }
     }
 
-/**
- * @OA\Post(
- *      path="/api/client/change-password",
- *      operationId="changePassword",
- *      tags={"Client"},
- *      summary="Change client's password",
- *      description="Change client's password",
- *      @OA\RequestBody(
- *          required=true,
- *          @OA\JsonContent(
- *              required={"password", "password_confirmation"},
- *              @OA\Property(
- *                  property="password",
- *                  type="string",
- *                  format="password",
- *                  description="New password"
- *              ),
- *              @OA\Property(
- *                  property="password_confirmation",
- *                  type="string",
- *                  format="password",
- *                  description="Password confirmation"
- *              ),
- *          ),
- *      ),
- *      @OA\Response(
- *          response=200,
- *          description="Password changed successfully",
- *          @OA\JsonContent(
- *              @OA\Property(
- *                  property="token",
- *                  type="string",
- *                  description="JWT token"
- *              ),
- *              @OA\Property(
- *                  property="message",
- *                  type="string",
- *                  example="Password changed successfully"
- *              )
- *          )
- *      ),
- *      @OA\Response(
- *          response=401,
- *          description="Unauthorized",
- *          @OA\JsonContent(
- *              @OA\Property(
- *                  property="error",
- *                  type="string",
- *                  example="Unauthorized"
- *              ),
- *          )
- *      ),
- *      @OA\Response(
- *          response=400,
- *          description="Bad request",
- *          @OA\JsonContent(
- *              @OA\Property(
- *                  property="error",
- *                  type="string",
- *                  example="The given data was invalid."
- *              ),
- *          )
- *      ),
- *      security={
- *          {"bearerAuth": {}}
- *      }
- * )
- */
+    /**
+     * @OA\Post(
+     *      path="/api/client/change-password",
+     *      operationId="changePassword",
+     *      tags={"Client"},
+     *      summary="Change client's password",
+     *      description="Change client's password",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              required={"password", "password_confirmation"},
+     *              @OA\Property(
+     *                  property="password",
+     *                  type="string",
+     *                  format="password",
+     *                  description="New password"
+     *              ),
+     *              @OA\Property(
+     *                  property="password_confirmation",
+     *                  type="string",
+     *                  format="password",
+     *                  description="Password confirmation"
+     *              ),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Password changed successfully",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="token",
+     *                  type="string",
+     *                  description="JWT token"
+     *              ),
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="Password changed successfully"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="error",
+     *                  type="string",
+     *                  example="Unauthorized"
+     *              ),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad request",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="error",
+     *                  type="string",
+     *                  example="The given data was invalid."
+     *              ),
+     *          )
+     *      ),
+     *      security={
+     *          {"bearerAuth": {}}
+     *      }
+     * )
+     */
     public function changePassword(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'password' => 'required|min:6|confirmed',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
-        }
-
-        $user = Auth::guard('clients')->user();return Auth::guard('clients');
-        if (!$user) {
+        try {
+            $validator = Validator::make($request->all(), [
+                'password' => 'required|min:6|confirmed',
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
+    
+            $id = JWTAuth::parseToken()->authenticate()->id;
+            $user = Client::where('client_id', $id)->first();
+            if (!$user) {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+    
+            $user->client_password = bcrypt($request->password);
+            $user->save();
+    
+            return response()->json(['message' => 'Password changed successfully']);
+        } catch (\Exception $e) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+    }
 
-        $user->client_password = bcrypt($request->password);
-        $user->save();
-
-        return response()->json(['message' => 'Password changed successfully']);
+    public function profile(Request $request)
+    {
+        try {
+            $id = JWTAuth::parseToken()->authenticate()->id;
+            $client = Client::where('client_id', $id)->first();
+            return response()->json(['user' => $client], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
     }
     
     public function logout()

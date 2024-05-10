@@ -9,7 +9,10 @@ use App\Http\Controllers\API\AuthController;
 Route::get('banners', [BannerController::class, 'index']);
 Route::get('faq', [FAQController::class, 'index']);
 Route::post('login', [AuthController::class, 'login']);
-Route::post('change-password', [AuthController::class, 'changePassword']);
+
+Route::get('client/profile', [AuthController::class, 'profile']);
+Route::post('client/change-password', [AuthController::class, 'changePassword']);
+
 
 Route::group(['middleware' => ['auth:clients']], function(){
 });
