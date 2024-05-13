@@ -68,24 +68,20 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('client_email', 'client_password');
-        if (Client::where('client_email', $credentials['client_email'])->exists()) {
-            try {
-                // $token = auth('clients')->attempt([
-                //     'client_email' => $credentials['client_email'], 
-                //     'password' => $credentials['client_password']
-                // ]);
-                $token = auth('clients')->login(Client::where('client_email', $credentials['client_email'])->first());
-                if (!$token) {
-                    return response()->json(['error' => 'invalid_credentials'], 401);
-                }
-            } catch (JWTException $e) {
-                return response()->json(['error' => 'could_not_create_token'], 500);
+        try {
+            $token = auth('clients')->attempt([
+                'client_email' => $credentials['client_email'], 
+                'password' => $credentials['client_password']
+            ]);
+            $token = auth('clients')->login(Client::where('client_email', $credentials['client_email'])->first());
+            if (!$token) {
+                return response()->json(['error' => 'invalid_credentials'], 401);
             }
-
-            return response()->json(compact('token'));
-        } else {
-            return response()->json(['error' => 'invalid_credentials'], 401);
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'could_not_create_token'], 500);
         }
+
+        return response()->json(compact('token'));
     }
 
     /**
@@ -98,7 +94,13 @@ class AuthController extends Controller
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(
-     *              required={"password", "password_confirmation"},
+     *              required={"old_password", "password", "password_confirmation"},
+     *              @OA\Property(
+     *                  property="old_password",
+     *                  type="string",
+     *                  format="old_password",
+     *                  description="Password"
+     *              ),
      *              @OA\Property(
      *                  property="password",
      *                  type="string",
@@ -160,7 +162,13 @@ class AuthController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
+                'old_password' => 'required',
                 'password' => 'required|min:6|confirmed',
+            ], [
+                'old_password.required' => 'パスワードを入力してください。',
+                'password.required' => '新しいパスワードを入力してください。',
+                'password.min' => '新しいパスワードは少なくとも6文字でなければなりません。',
+                'password.confirmed' => '新しいパスワードが一致しません。',
             ]);
     
             if ($validator->fails()) {
@@ -172,6 +180,9 @@ class AuthController extends Controller
             if (!$user) {
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
+            if (!Hash::check($request->old_password, $user->client_password)) {
+                return response()->json(['error' => "Wrong password"], 401);
+            }
     
             $user->client_password = bcrypt($request->password);
             $user->save();
@@ -182,6 +193,92 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *      path="/api/client/profile",
+     *      operationId="client",
+     *      tags={"Client"},
+     *      summary="Get user profile",
+     *      description="Get the authenticated user's profile",
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="user",
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="client_id",
+     *                      type="integer",
+     *                      example="2"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="est_id",
+     *                      type="integer",
+     *                      example="2"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="client_name",
+     *                      type="string",
+     *                      example="Nguyen Van B"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="client_f_name",
+     *                      type="string",
+     *                      example=null
+     *                  ),
+     *                  @OA\Property(
+     *                      property="client_l_name",
+     *                      type="string",
+     *                      example=null
+     *                  ),
+     *                  @OA\Property(
+     *                      property="client_furigana",
+     *                      type="string",
+     *                      example=null
+     *                  ),
+     *                  @OA\Property(
+     *                      property="client_email",
+     *                      type="string",
+     *                      example="client2@gmail.com"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="client_tel",
+     *                      type="string",
+     *                      example=null
+     *                  ),
+     *                  @OA\Property(
+     *                      property="created_at",
+     *                      type="string",
+     *                      example=null
+     *                  ),
+     *                  @OA\Property(
+     *                      property="updated_at",
+     *                      type="string",
+     *                      example=null
+     *                  ),
+     *                  @OA\Property(
+     *                      property="deleted_at",
+     *                      type="string",
+     *                      example=null
+     *                  )
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="error",
+     *                  type="string",
+     *                  example="Unauthorized"
+     *              )
+     *          )
+     *      )
+     * )
+     */
     public function profile(Request $request)
     {
         try {
@@ -192,6 +289,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
     }
+
     
     public function logout()
     {

@@ -157,33 +157,14 @@ return [
         */
         'securityDefinitions' => [
             'securitySchemes' => [
-                'sanctum' => [ // Unique name of security
-                    'type' => 'apiKey', // Valid values are "basic", "apiKey" or "oauth2".
-                    'description' => 'Enter token in format (Bearer <token>)',
-                    'name' => 'Authorization', // The name of the header or query parameter to be used.
-                    'in' => 'header', // The location of the API key. Valid values are "query" or "header".
-                    'scheme' => 'bearer',
-                ],
-                'api_key' => [
-                    'type' => 'apiKey',
-                    'name' => 'api_key',
-                    'in' => 'header',
-                ],
                 'bearer' => [
-                    'type' => 'apiKey',
-                    'name' => 'Authorization',
-                    'in' => 'header',
-                ],
-                'jwt' => [
                     'type' => 'apiKey',
                     'name' => 'Authorization',
                     'in' => 'header',
                 ],
             ],
             'security' => [
-                'api_key' => [],
                 'bearer' => [],
-                'jwt' => [],
             ],
         ],
 
