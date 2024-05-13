@@ -14,6 +14,15 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12" >
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form action="{{route('estate.update',['id'=>$estate->est_id])}}" method="POST">
             @csrf
             @method('PUT')
@@ -24,19 +33,19 @@
                 <div class="form-horizontal">
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="estateName" class="col-sm-2 col-form-label">Estate name</label>
+                            <label for="estateName" class="col-sm-2 col-form-label">物件名</label>
                             <div class="col-sm-10">
-                                <input value="{{$estate->est_name}}" type="text" class="form-control" name="est_name" id="estateName" placeholder="Estate name" />
+                                <input value="{{$estate->est_name}}" type="text" class="form-control" name="est_name" id="estateName" placeholder="物件名" />
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="roomNo" class="col-sm-2 col-form-label">Room no</label>
+                            <label for="roomNo" class="col-sm-2 col-form-label">建物名・号室</label>
                             <div class="col-sm-10">
-                                <input value="{{$estate->est_room_no}}" type="text" class="form-control" name="est_room_no" id="roomNo" placeholder="Room No" />
+                                <input value="{{$estate->est_room_no}}" type="text" class="form-control" name="est_room_no" id="roomNo" placeholder="建物名・号室" />
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="address" class="col-sm-2 col-form-label">Address</label>
+                            <label for="address" class="col-sm-2 col-form-label">住所</label>
                             <div class="col-sm-10 row">
                                 <input value="{{$estate->est_zip}}" type="text" class="form-control col-sm-4 m-2" name="zip22" size="7" maxlength="7" ">
                                 <span class="mt-3">郵便番号入力補助</span>
@@ -131,7 +140,7 @@
                         </div> -->
                     </div>
                     <div class="card-footer d-flex justify-content-center">
-                        <button type="submit" class="btn btn-info" id="finish_step2">Update Estate</button>
+                        <button type="submit" class="btn btn-info" id="finish_step2">保存</button>
                     </div>
                 </form>
             </div>
@@ -146,16 +155,49 @@
 
 @section('js')
     <script>
-        // lắng nghe sự kiện onkeyup của input có name là zip22
         $('[name="zip22"]').on('keyup', function() {
-            AjaxZip3.zip2addr(this,'','pref21','addr21','strt21')
-            let pref = $('input[name="pref21"]').val();
-            let city = $('input[name="addr21"]').val();
-            let ward = $('input[name="strt21"]').val();
-            $('#selected_prefectures').val(pref);
-            $('#selected_city').val(city);
-            $('#selected_ward').val(ward);
-            getURL();
+            $('[name="pref21"]').val('');
+            $('[name="addr21"]').val('');
+            $('[name="strt21"]').val('');
+            $('[name="street"]').val('');
+            $('#selected_prefectures').val('');
+            $('#selected_city').val('');
+            $('#selected_ward').val('');
+            AjaxZip3.zip2addr(this,'','pref21','addr21','strt21');
+            let checkInterval = setInterval(function() {
+                if ($('[name="pref21"]').val() && $('[name="addr21"]').val()) {
+                    clearInterval(checkInterval);
+                    let pref = $('input[name="pref21"]').val();
+                    let city = $('input[name="addr21"]').val();
+                    let ward = $('input[name="strt21"]').val();
+                    if(city.length>=6){
+                        let firstText = city.substring(0, city.length / 2);
+                        let secondText = city.substring(city.length / 2);
+                        if(ward){
+                            $('#select_street').val(ward);
+                        }
+                        city = firstText;
+                        ward = secondText; 
+                        $('input[name="addr21"]').val(firstText);
+                        $('input[name="strt21"]').val(ward);
+                    }
+                    if(city.length==5){
+                        let firstText = city.substring(0, 3);
+                        let secondText = city.substring(3);
+                        if(ward){
+                            $('#select_street').val(ward);
+                        }
+                        city = firstText;
+                        ward = secondText; 
+                        $('input[name="addr21"]').val(firstText);
+                        $('input[name="strt21"]').val(ward);
+                    }
+                    $('#selected_prefectures').val(pref);
+                    $('#selected_city').val(city);
+                    $('#selected_ward').val(ward);
+                    getURL();
+                }
+            }, 200);
         });
         $('[name="pref21"]').on('keyup', function() {
             $('#selected_prefectures').val(this.value);
@@ -231,6 +273,31 @@
                 $('#selected_ward_url').val('');
             }
         }
+        // // handle  for 5 special provine
+        // $('input[name="zip22"]').on('change', function() {
+        //     const zipValue = $(this).val().trim(); 
+        //     const validZipPrefixes = ['220', '210', '228', '330', '260'];
+        //     const zipPrefix = zipValue.substring(0, 3);
+        //     const isMatched = validZipPrefixes.includes(zipPrefix);
+        //     if (isMatched) {
+        //         //Lấy giá trị input có id select_city tách đôi ra
+        //         const selectCityInput = $('#select_city');
+        //         const cityValue = selectCityInput.val();
+        //         const cityLength = cityValue.length;
+        //         if (cityLength % 2 === 0) {
+        //             const firstHalf = cityValue.substring(0, cityLength / 2);
+        //             const secondHalf = cityValue.substring(cityLength / 2);
+        //             // Do something with firstHalf and secondHalf
+        //             console.log(firstHalf,secondHalf)
+        //         }
+        //     } else {
+        //         return;
+        //     }
+
+        //     alert(message); // Hiển thị thông báo
+        // });
+    
+
     </script>
     <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 @stop
