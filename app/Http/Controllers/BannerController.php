@@ -27,7 +27,7 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'banner_title' => 'nullable|string',
+            'banner_title' => 'nullable|max:255',
             'banner_description' => 'nullable|string',
             'banner_image' => [
                 'required',
@@ -42,18 +42,20 @@ class BannerController extends Controller
                 // },
                 'max:' . config('upload.max_image_size'),
             ],
-            'banner_url' => 'nullable|url',
+            'banner_url' => 'nullable|url|max:255',
             'banner_active' => 'boolean',
         ], [
             'required' => 'この項目は必須です。',
             'date' => '無効な形式です。',
             'image' => '無効な形式です。',  
-            'max' => '最大アップロードサイズ:' . config('upload.max_image_size') .' KB。',
+            'banner_image.max' => '最大アップロードサイズ:' . config('upload.max_image_size') .' KB。',
             'boolean' => '無効な形式です。',
             'url' => '無効な形式です。',
+            'max' => '最大255文字まで入力してください。',
         ]);
 
-        $imagePath = $request->file('banner_image')->store('banner', 'public');
+        // $imagePath = $request->file('banner_image')->store('banner', 'public');
+        $imagePath = $this->storeUploadedFile($request->file('banner_image'));
 
         $banner = new Banner();
         $banner->banner_title = $request->input('banner_title');
@@ -77,24 +79,27 @@ class BannerController extends Controller
         $banner = Banner::findOrFail($id);
 
         $request->validate([
-            'banner_title' => 'nullable|string',
+            'banner_title' => 'nullable|string|max:255',
             'banner_description' => 'nullable|string',
             'banner_image' => 'nullable|image|max:' . config('upload.max_image_size'),
-            'banner_url' => 'nullable|url',
+            'banner_url' => 'nullable|url|max:255',
             'banner_active' => 'boolean',
         ], [
             'required' => 'この項目は必須です。',
             'date' => '無効な形式です。',
             'image' => '無効な形式です。',
-            'max' => '最大アップロードサイズ: ' . config('upload.max_image_size') .' KB。',
+            'banner_image.max' => '最大アップロードサイズ: ' . config('upload.max_image_size') .' KB。',
             'boolean' => '無効な形式です。',
             'url' => '無効な形式です。',
+            'max' => '最大255文字まで入力してください。',
         ]);
 
         if ($request->hasFile('banner_image')) {
-            $imagePath = $request->file('banner_image')->store('banner', 'public');
-            Storage::disk('public')->delete($banner->banner_image);
-            $banner->banner_image = $imagePath;
+            $imagePath = $this->storeUploadedFile($request->file('banner_image'));
+            if ($imagePath != null) {
+                Storage::disk('public')->delete($banner->banner_image);
+                $banner->banner_image = $imagePath;
+            }
         }
 
         $banner->banner_title = $request->input('banner_title');
@@ -152,5 +157,20 @@ class BannerController extends Controller
                     ];
                 })
                 ->make('true');
+    }
+
+    public function storeUploadedFile($file) {
+        $originalName = $file->getClientOriginalName();
+        $fileNameWithoutExtension = pathinfo($originalName, PATHINFO_FILENAME);
+        $limitedFileName = mb_substr($fileNameWithoutExtension, 0, 50);
+        $extension = $file->getClientOriginalExtension();
+        $fileName = $limitedFileName . '_' . time() . '.' . $extension;
+        $imagePath = $file->storeAs('banner', $fileName, 'public');
+        try {
+            $imagePath = $file->storeAs('banner', $fileName, 'public');
+            return $imagePath;
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 }
