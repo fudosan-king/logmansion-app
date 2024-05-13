@@ -16,7 +16,7 @@ class CreateCatalogueTable extends Migration
         Schema::create('catalogue', function (Blueprint $table) {
             $table->increments('cata_id');
             $table->string('cata_title')->nullable();
-            $table->string('cata_description')->nullable();
+            $table->longText('cata_description')->nullable();
             $table->string('cata_image')->nullable();
             $table->string('cata_url')->nullable();
             $table->integer('cata_active')->default('0')->comment("有効 0:draft | 1:publish");

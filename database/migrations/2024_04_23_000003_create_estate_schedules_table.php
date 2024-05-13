@@ -17,7 +17,7 @@ class CreateEstateSchedulesTable extends Migration
             $table->increments('schedule_id');
             $table->integer('est_id')->nullable();
             $table->string('schedule_name')->nullable();
-            $table->string('schedule_description')->nullable();
+            $table->longText('schedule_description')->nullable();
             $table->date('schedule_date')->nullable();
             $table->integer('schedule_active')->default('1')->comment("0:not active | 1:active");
             $table->timestamps();
