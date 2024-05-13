@@ -46,21 +46,17 @@ class EstatesController extends Controller
      */
     public function store(Request $request)
     {
+        $messages = [
+            // 'est_name.required' => 'The estate name field is required.',
+            // 'est_name.max' => 'The estate name may not be greater than 255 characters.',
+            // 'est_room_no.required' => 'The room number field is required.',
+            'est_name.unique'=>'The estate name must not match',
+            'est_room_no.unique'=>'The room number must not match',
+        ];
         $validatedData = $request->validate([
-            'est_name' => 'required|max:255',
-            'est_room_no' => 'required|integer'
-            // 'zip22' => 'required|regex:/\b\d{3}[-]\d{4}\b/',
-            // 'pref21' => 'required|max:255',
-            // 'addr21' => 'required|max:255',
-            // 'strt21' => 'required|max:255',
-            // 'street' => 'required|max:255',
-            // 'selected_pref_url' => 'required|url',
-            // 'showLinkstatus1' => 'required|in:on,off',
-            // 'selected_city_url' => 'required|url',
-            // 'showLinkstatus2' => 'required|in:on,off',
-            // 'selected_ward_url' => 'required|url',
-            // 'showLinkstatus3' => 'required|in:on,off',
-        ]);
+            'est_name' => 'required|max:255|unique:estate_data',
+            'est_room_no' => 'required|unique:estate_data'
+        ],$messages);
         $estate = new Estate();
         // Step 1
         $estate->est_name = $request->input('est_name');
@@ -78,6 +74,7 @@ class EstatesController extends Controller
         $estate->est_usefulinfo_ward_url = $request->input('selected_ward_url');
         $estate->est_usefulinfo_ward_show = $request->input('showLinkstatus3') === 'on' ? 1 : 0;
         $estate->save();
+        toast('Estate created successfully.','success');
         return redirect()->route('estate.index');
     }   
 
@@ -115,8 +112,21 @@ class EstatesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $messages = [
+            'est_name.unique'=>'The estate name must not match',
+            'est_room_no.unique'=>'The room number must not match',
+        ];
+        $validatedData = $request->validate([
+            'est_name' => 'required|max:255|unique:estate_data,est_name,' . $id . ',est_id',
+            'est_room_no' => 'required|unique:estate_data,est_room_no,' . $id . ',est_id'
+        ], $messages);
+        
         $estate = Estate::find($id);
+        if (!$estate) {
+            //handle estate not found
+            toast('Data Error','error');
+            return redirect()->route('estate.index');
+        }
         //update estate
         $estate->est_name = $request->input('est_name');
         $estate->est_room_no = $request->input('est_room_no');
@@ -133,6 +143,7 @@ class EstatesController extends Controller
         $estate->est_usefulinfo_ward_url = $request->input('selected_ward_url');
         $estate->est_usefulinfo_ward_show = $request->input('showLinkstatus3') === 'on' ? 1 : 0;
         $estate->save();
+        toast('Estate update successfully.','success');
         return redirect()->route('estate.edit',['id'=>$id]);
 
     }
