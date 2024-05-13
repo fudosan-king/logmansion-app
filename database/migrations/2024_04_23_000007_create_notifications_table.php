@@ -17,7 +17,7 @@ class CreateNotificationsTable extends Migration
             $table->increments('noti_id');
             $table->integer('cat_id')->nullable();
             $table->string('noti_title')->nullable();
-            $table->string('noti_content')->nullable()->comment("本文");
+            $table->longText('noti_content')->nullable()->comment("本文");
             $table->date('noti_date')->nullable()->comment("日付");
             $table->integer('noti_status')->default('0')->comment("有効 0:draft | 1:publish");
             $table->string('noti_url')->nullable();

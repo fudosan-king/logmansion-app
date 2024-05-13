@@ -90,7 +90,7 @@
                                     <th>{{__('messages.name')}}</th>
                                     <th>{{__('messages.department')}}</th>
                                     <th>{{__('messages.mail')}}</th>
-                                    <th>{{__('messages.date')}}</th>
+                                    {{-- <th>{{__('messages.date')}}</th> --}}
                                     <th>{{__('messages.role')}}</th>
                                     <th>{{__('messages.action')}}</th>
                                 </tr>
@@ -148,7 +148,7 @@
                     },
                 },
                 {data:'email', name:'email'},
-                {data:'date', name:'date'},
+                // {data:'date', name:'date'},
                 {data:'roles', name:'roles'},
                 {data:'action', name:'action', bSortable:false, className:"text-center"},
             ], 
