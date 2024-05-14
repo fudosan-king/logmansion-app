@@ -72,9 +72,9 @@
                     </div>
                     <div class="form-group">
                         <label for="noti_url">URL</label>
-                        <input type="text" name="noti_url" id="noti_url"
+                        <input type="url" name="noti_url" id="noti_url" placeholder="{{ asset('/') }}"
                             class="form-control @error('noti_url') is-invalid @enderror"
-                            value="{{ $notification->noti_url ?? "" }}">
+                            value="{{ old('noti_url', $notification->noti_url) }}">
                         @error('noti_url')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

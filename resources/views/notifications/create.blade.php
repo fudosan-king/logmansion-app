@@ -66,7 +66,7 @@
                     <div class="form-group">
                         <label for="noti_url">URL</label>
                         <input type="url" name="noti_url" id="noti_url"
-                            class="form-control @error('noti_url') is-invalid @enderror" placeholder="https://example.com" value="{{ old('noti_url') }}">
+                            class="form-control @error('noti_url') is-invalid @enderror" placeholder="{{ asset('/') }}" value="{{ old('noti_url') }}">
                         @error('noti_url')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
