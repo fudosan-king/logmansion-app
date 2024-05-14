@@ -41,18 +41,18 @@
                         </div>
                         <div class="form-group">
                             <label for="email" class="form-label">{{__('messages.mail')}} <span class="text-danger">*</span></label>
-                            <input type="email" class="form-control" name="email" placeholder="ユーザーのメールアドレスを入力してください。" value="{{$user->email}}">
+                            <input readonly ="email" class="form-control" name="email" placeholder="ユーザーのメールアドレスを入力してください。" value="{{$user->email}}">
                             @if($errors->has('email'))
                                 <span class="text-danger">{{$errors->first('email')}}</span>
                             @endif
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="password" class="form-label">{{__('messages.password')}}</label>
                             <input type="password" class="form-control" name="password" placeholder="ユーザーパスワードを入力してください。" value="{{$user->password}}">
                             @if($errors->has('password'))
                                 <span class="text-danger">{{$errors->first('password')}}</span>
                             @endif
-                        </div>
+                        </div> --}}
                         <div class="form-group">
                             <label for="roles" class="form-label">{{__('messages.role')}}</label>
                             <select class="form-control select2" 
