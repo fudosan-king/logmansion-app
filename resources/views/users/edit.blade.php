@@ -41,7 +41,7 @@
                         </div>
                         <div class="form-group">
                             <label for="email" class="form-label">{{__('messages.mail')}} <span class="text-danger">*</span></label>
-                            <input disabled type="email" class="form-control" name="email" placeholder="ユーザーのメールアドレスを入力してください。" value="{{$user->email}}">
+                            <input readonly ="email" class="form-control" name="email" placeholder="ユーザーのメールアドレスを入力してください。" value="{{$user->email}}">
                             @if($errors->has('email'))
                                 <span class="text-danger">{{$errors->first('email')}}</span>
                             @endif
