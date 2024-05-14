@@ -62,7 +62,7 @@
         $('body').on('click', '#btnDel', function(){
             //confirmation
             var id = $(this).data('id');
-            if(confirm('ID'+id+'を削除しますか？')==true)
+            if(confirm('カテゴリーを削除しますか？')==true)
             {
                 var route = "{{route('topic.destroy', ':id')}}"; 
                 route = route.replace(':id', id);
