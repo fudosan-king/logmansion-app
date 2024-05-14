@@ -57,7 +57,7 @@
                         <label for="noti_date">日付</label>
                         <span class="red-required">※</span>
                         <?php $dateValue = date('Y-m-d', strtotime($notification->noti_date)); ?>
-                        <input type="date" name="noti_date" class="form-control datepicker @error('noti_date') is-invalid @enderror" value="{{$dateValue}}" disabled>
+                        <input type="date" class="form-control datepicker @error('noti_date') is-invalid @enderror" value="{{$dateValue}}" disabled>
                         {{-- <div class="input-group date" id="notidatepicker" data-target-input="nearest">
                             <input type="text" name="noti_date"  class="form-control datetimepicker-input @error('noti_date') is-invalid @enderror" 
                             value="{{ $notification->noti_date ? substr($notification->noti_date, 0, 10) : '' }}"

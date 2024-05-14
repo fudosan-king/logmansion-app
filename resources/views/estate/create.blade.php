@@ -33,21 +33,23 @@
                 <div class="form-horizontal">
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="estateName" class="col-sm-2 col-form-label">物件名</label>
+                            <label for="estateName" class="col-sm-2 col-form-label">物件名 <span class="text-danger">※</span></label>
                             <div class="col-sm-10">
-                                <input required maxlength="255" type="text" value="{{old('est_name')}}" class="form-control" name="est_name" id="estateName" placeholder="物件名" />
+                                <!-- <input required maxlength="255" type="text" value="{{old('est_name')}}" class="form-control" name="est_name" id="estateName" placeholder="物件名" /> -->
+                                <input required maxlength="255" type="text" value="{{old('est_name')}}" class="form-control" name="est_name" id="estateName" placeholder="物件名" 
+                                oninvalid="this.setCustomValidity('これは必須項目です。')" oninput="this.setCustomValidity('')" />
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="roomNo" class="col-sm-2 col-form-label">建物名・号室</label>
+                            <label for="roomNo" class="col-sm-2 col-form-label">建物名・号室 <span class="text-danger">※</span></label>
                             <div class="col-sm-10">
-                                <input required type="text" value="{{old('est_room_no')}}" class="form-control" name="est_room_no" id="roomNo" placeholder="建物名・号室" />
+                                <input required type="text" value="{{old('est_room_no')}}" class="form-control" name="est_room_no" id="roomNo" placeholder="建物名・号室" oninvalid="this.setCustomValidity('これは必須項目です。')" oninput="this.setCustomValidity('')"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="address" class="col-sm-2 col-form-label">住所</label>
+                            <label for="address" class="col-sm-2 col-form-label">住所 <span class="text-danger">※</span></label>
                             <div class="col-sm-10 row">
-                                <input type="text" value="{{old('zip22')}}" class="form-control col-sm-4 m-2" name="zip22" size="7" maxlength="7" placeholder="Zip Code">
+                                <input required type="text" value="{{old('zip22')}}" class="form-control col-sm-4 m-2" name="zip22" size="7" maxlength="7" placeholder="Zip Code" oninvalid="this.setCustomValidity('これは必須項目です。')" oninput="this.setCustomValidity('')">
                                 <span class="mt-3">郵便番号入力補助</span>
                                 <div class="row container mr-1">
                                     <div class="form-group col-sm-3">
