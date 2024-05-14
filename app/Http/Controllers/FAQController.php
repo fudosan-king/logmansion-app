@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use DataTables; 
-use App\Models\FAQ;
+use App\Models\Faq;
 
 class FAQController extends Controller
 {
