@@ -22,7 +22,7 @@ class NotificationFactory extends Factory
     public function definition()
     {
         return [
-            'cat_id' => $this->faker->numberBetween(1, 10), // Thay 10 bằng số lượng danh mục thực tế
+            'cat_id' => $this->faker->numberBetween(1, 10), // ID từ 1 đến 10
             'noti_title' => $this->faker->sentence,
             'noti_content' => $this->faker->paragraph,
             'noti_date' => $this->faker->date,
