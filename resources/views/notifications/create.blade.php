@@ -41,7 +41,7 @@
                     </div>
                     <div class="form-check">
                         <input name="noti_status" type="checkbox" class="form-check-input" {{ old('noti_status') == true ? 'checked' : '' }}>
-                        <label>有効</label>
+                        <label>表示</label>
                         @error('noti_status')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
