@@ -163,26 +163,25 @@
                     let pref = $('input[name="pref21"]').val();
                     let city = $('input[name="addr21"]').val();
                     let ward = $('input[name="strt21"]').val();
-                    if(city.length>=6){
-                        let firstText = city.substring(0, city.length / 2);
-                        let secondText = city.substring(city.length / 2);
-                        if(ward){
-                            $('#select_street').val(ward);
+                    
+                    if(city.length>=5){
+                        if(city.endsWith("市") || city.endsWith("県")){
+                            //do nothing
+                        }else{
+                            if(ward){
+                                $('#select_street').val(ward);
+                            }
+                            if (city.includes('県')) {
+                                const parts = city.split('県');
+                                city = parts[0] + '県';
+                                ward = parts[1];
+                            } else if (city.includes('市')) {
+                                const parts = city.split('市');
+                                city = parts[0] + '市';
+                                ward = parts[1];
+                            }
                         }
-                        city = firstText;
-                        ward = secondText; 
-                        $('input[name="addr21"]').val(firstText);
-                        $('input[name="strt21"]').val(ward);
-                    }
-                    if(city.length==5){
-                        let firstText = city.substring(0, 3);
-                        let secondText = city.substring(3);
-                        if(ward){
-                            $('#select_street').val(ward);
-                        }
-                        city = firstText;
-                        ward = secondText; 
-                        $('input[name="addr21"]').val(firstText);
+                        $('input[name="addr21"]').val(city);
                         $('input[name="strt21"]').val(ward);
                     }
                     $('#selected_prefectures').val(pref);
@@ -192,28 +191,6 @@
                 }
             }, 200);
         });
-        // $('[name="zip22"]').on('keyup', function() {
-        //     $('input[name="pref21"]').val('');
-        //     $('input[name="addr21"]').val('');
-        //     $('input[name="strt21"]').val('');
-        //     AjaxZip3.zip2addr(this,'','pref21','addr21','strt21')
-        //     let pref = $('input[name="pref21"]').val();
-        //     let city = $('input[name="addr21"]').val();
-        //     let ward = $('input[name="strt21"]').val();
-        //     $('#selected_prefectures').val(pref);
-        //     $('#selected_city').val(city);
-        //     $('#selected_ward').val(ward);
-        //     getURL();
-        // });
-        // $('[name="zip22"]').on('focusout', function() {
-        //     let pref = $('input[name="pref21"]').val();
-        //     let city = $('input[name="addr21"]').val();
-        //     let ward = $('input[name="strt21"]').val();
-        //     $('#selected_prefectures').val(pref);
-        //     $('#selected_city').val(city);
-        //     $('#selected_ward').val(ward);
-        //     getURL();
-        // });
         $('[name="pref21"]').on('keyup', function() {
             $('#selected_prefectures').val(this.value);
         });
