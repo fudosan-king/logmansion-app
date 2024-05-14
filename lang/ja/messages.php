@@ -21,7 +21,7 @@ return [
     "archive" => "アーカイブ",
     'user-list' => 'ユーザ一覧',
     'name' => 'お名前',
-    'mail' => '住所',
+    'mail' => 'メール',
     'tel' => 'お電話番号',
     'action' => 'アクション',
     'department' => '部門',
