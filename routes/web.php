@@ -13,6 +13,7 @@ use App\Http\Controllers\TopicController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\CatalogueController;
 use App\Http\Controllers\EstContactController;
+use App\Http\Controllers\DocumentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -70,6 +71,12 @@ Route::group(['middleware' => ['auth', 'permission']], function(){
     Route::post('/estate/schedule/store', [ScheduleController::class, 'store'])->name('schedule.store');
     Route::post('/estate/schedule/update', [ScheduleController::class, 'update'])->name('schedule.update');
     Route::delete('/estate/schedule/destroy/{id}', [ScheduleController::class, 'destroy'])->name('schedule.destroy');
+
+    Route::get('/estate/doc/{id}', [DocumentController::class, 'edit'])->name('doc.edit');
+    Route::post('/estate/doc/store', [DocumentController::class, 'store'])->name('doc.store');
+    Route::post('/estate/doc/permanent', [DocumentController::class, 'docPermanent'])->name('doc.permanent');
+    Route::post('/estate/doc/update', [DocumentController::class, 'update'])->name('doc.update');
+    Route::delete('/estate/doc/destroy/{id}', [DocumentController::class, 'destroy'])->name('doc.destroy');
 
     Route::get('/catalogue', [CatalogueController::class, 'index'])->name('catalogue'); 
     Route::get('/catalogue/create', [CatalogueController::class, 'create'])->name('catalogue.create'); 
