@@ -30,11 +30,12 @@
                             @endif
                         </div>
                         @php
+                        // dd(config('conts.department'));
                         @endphp
                         <div class="form-group">
                             <label for="department" class="form-label">{{__('messages.department')}}<span class="text-danger">*</span></label>
                             <select class="form-control select2"  id="select3" data-placeholder="Select Department" name="department">
-                            @foreach (config('conts.department') as $k=>$v)
+                            @foreach (config('const.department') as $k=>$v)
                                 <option value="{{$k}}" {{ (old('department') && old('department') == $k) ? "selected" : ""}} >{{ucfirst($v)}}</option>
                             @endforeach
                             </select>
@@ -113,13 +114,7 @@
     $(function (){
         $('#select2').select2();
         $('#select3').select2();
-    });
-    $.ajaxSetup({
-        headers:{
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    })
-    
+    });    
     $(document).ready(function(){ 
         var table = $('#tblData').DataTable({
             reponsive:true, processing:true, serverSide:true, autoWidth:false, 
