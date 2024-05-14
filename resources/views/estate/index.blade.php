@@ -70,11 +70,11 @@
                               <a href="{{route('estate.edit',['id'=>$estate['est_id']])}}">
                                 <i class="fas fa-hammer"></i>
                               </a>
-
-                              <a href="{{route('schedule.edit', ['id' => $estate->est_id])}}"><i class="fas fa-calendar"></i></a>
-                              <a href="{{route('doc.edit', ['id' => $estate->est_id])}}"><i class="fas fa-file-upload"></i></a>
-                              <a href="{{route('estate.destroy',$estate->est_id)}}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this estate?')) { document.getElementById('delete-form-{{$estate->est_id}}').submit(); }">
-                                <form id="delete-form-{{$estate->est_id}}" action="{{route('estate.destroy',$estate->est_id)}}" method="POST" style="display: none;">
+                              
+                              <a href="{{route('schedule.edit', ['id' => $estate['est_id']])}}"><i class="fas fa-calendar"></i></a>
+                              <a href="{{route('doc.edit', ['id' => $estate['est_id']])}}"><i class="fas fa-file-upload"></i></a>
+                              <a href="{{route('estate.destroy',$estate['est_id'])}}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this estate?')) { document.getElementById('delete-form-{{$estate['est_id']}}').submit(); }">
+                                <form id="delete-form-{{$estate['est_id']}}" action="{{route('estate.destroy',$estate['est_id'])}}" method="POST" style="display: none;">
                                   @csrf
                                   @method('DELETE')
                                 </form>
