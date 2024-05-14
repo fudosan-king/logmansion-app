@@ -1,0 +1,43 @@
+.red-required {
+    color: red;
+}
+
+/* Hoa  edit schedule*/
+.form-group textarea {
+    height: 38px;
+    /* resize: none; */
+}
+
+.remove-icon {
+    position: relative;
+}
+
+.remove-icon span {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.schedule-title {
+    margin-bottom: 35px;
+}
+
+.schedule-row {
+    margin-bottom: 25px;
+}
+
+.red-required {
+    color: red;
+}
+
+.save-schedule {
+    margin-left: 30px;
+}
+
+.estate-name {
+    font-size: 25px;
+    font-weight: 600;
+}
+/* end Hoa */

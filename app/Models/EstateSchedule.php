@@ -19,6 +19,7 @@ class EstateSchedule extends Model
         'schedule_description',
         'schedule_date',
         'schedule_active',
+        'position'
     ];
 
     protected $dates = ['schedule_date', 'created_at', 'updated_at', 'deleted_at'];

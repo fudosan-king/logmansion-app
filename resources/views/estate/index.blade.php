@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Estates')
+@section('title', '物件一覧')
 
 @section('content_header')
-    <h1>Estate list</h1>
+    <h1>物件一覧</h1>
 @stop
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
@@ -30,26 +30,29 @@
             <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
               <div class="row">
                 <div class="col-sm-12">
-                    <div class="d-flex justify-content-between">
-                        <div class="btn btn-primary mt-2 mb-2">Add new Estate</div>
+                    <div class="d-flex justify-content-between my-2">
+                        <a href="{{route('estate.create')}}" class="btn btn-primary mt-2 mb-2">物件新規追加</a>
                         <div class="w-50">
-                            <nav class="navbar navbar-light bg-light w-75">
+                            <nav class="navbar navbar-light bg-light w-100">
                               <form class="form-inline w-100"  method="GET" action="{{ request()->url() }}">
-                                  <input name="search" class="form-control mr-sm-2 w-75" type="search" placeholder="Search" aria-label="Search">
-                                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                                  <input name="search" value="{{ request()->input('search') }}" class="form-control mr-sm-2 w-75" type="search" placeholder="検索" aria-label="Search">
+                                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">検索</button>
+                                  @if(request()->has('search'))
+                                    <a href="{{route('estate.index')}}" class="btn btn-outline-danger ml-2" type="submit">キャンセル</a>
+                                  @endif
                               </form>
                             </nav>
                         </div>
-                        <button type="button" class="btn btn-light y-2">Archive</button>
+                        <button type="button" class="btn btn-light y-2">アーカイブ</button>
                     </div>
-                  <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
+                  <table id="tblData" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example2_info">
                     <thead>
                       <tr>
-                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Estate name</th>
-                        <th class="sorting sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" aria-sort="descending">Status</th>
-                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Next Schedule</th>
-                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Client</th>
-                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Action</th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >物件名</th>
+                        <th class="sorting sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="descending">ステータス</th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >次スケジュール</th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >クライアント</th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >アクション</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -61,10 +64,18 @@
                         <td>山田二郎</td>
                         <td>
                             <div class="action_bar" style="">
+                              <a href="{{route('estate.edit',['id'=>$estate->est_id])}}">
                                 <i class="fas fa-hammer"></i>
-                                <i class="fas fa-calendar"></i>
-                                <i class="fas fa-file-upload"></i>
+                              </a>
+                              <a href="{{route('schedule.edit', ['id' => $estate->est_id])}}"><i class="fas fa-calendar"></i></a>
+                              <i class="fas fa-file-upload"></i>
+                              <a href="{{route('estate.destroy',$estate->est_id)}}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this estate?')) { document.getElementById('delete-form-{{$estate->est_id}}').submit(); }">
+                                <form id="delete-form-{{$estate->est_id}}" action="{{route('estate.destroy',$estate->est_id)}}" method="POST" style="display: none;">
+                                  @csrf
+                                  @method('DELETE')
+                                </form>
                                 <i class="fas fa-trash-alt text-danger"></i>
+                              </a>
                             </div>
                         </td>
                       </tr>
@@ -87,5 +98,15 @@
 
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script>
+      $(document).ready(function(){
+        $('#tblData').DataTable({
+          "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Japanese.json"
+          }
+        });
+      })
+    </script>
 @stop
+
+@section('plugins.Datatables', true)

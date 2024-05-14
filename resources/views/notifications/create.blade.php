@@ -1,19 +1,20 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'お知らせ')
 
 @section('content_header')
-    <h1>Add New Notification</h1>
+    <h1>お知らせ新規追加</h1>
 @stop
 
 @section('content')
     <div class="card card-primary"> 
         <form action="{{ route('notification.store') }}" method="POST">
-            <div class="col-md-10 mx-auto">
+            <div class="col-md-8 mx-auto">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="noti_title">タイトル *</label>
+                        <label for="noti_title">タイトル</label>
+                        <span class="red-required">※</span>
                         <input type="text" name="noti_title" id="noti_title"
                             class="form-control @error('noti_title') is-invalid @enderror"
                             value="">
@@ -22,7 +23,8 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="cat_id">カテゴリ *</label>
+                        <label for="cat_id">カテゴリ</label>
+                        <span class="red-required">※</span>
                         <select name="cat_id" id="cat_id" class="form-control @error('cat_id') is-invalid @enderror">
                             @foreach ($categories as $category)
                                 <option value="{{ $category->cat_id }}">{{ $category->cat_name }}</option>
@@ -47,8 +49,8 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="noti_date">日付 *</label>
-   
+                        <label for="noti_date">日付</label>
+                        <span class="red-required">※</span>
                         <div class="input-group date" id="notidatepicker" data-target-input="nearest">
                             <input type="text" name="noti_date"  class="form-control datetimepicker-input @error('noti_date') is-invalid @enderror" 
                             data-target="#notidatepicker" />
@@ -73,10 +75,11 @@
                     </div>
                 </div>
             </div>
-
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary" style="width:150px">{{ __("messages.save") }}</button>
-                <a href="{{url()->previous()}}"  class="btn btn-default float" style="width:150px;margin-left:10px">@lang('messages.cancel')</a>
+            <div class="card-footer d-flex justify-content-center">
+                <div class="col-md-8">
+                    <a href="{{ url()->previous() }}" class="btn btn-default">{{ __('messages.cancel') }}</a>
+                    <button type="submit" class="btn btn-primary float-right">{{ __("messages.submit") }}</button>
+                </div>
             </div>
         </form>
     </div>

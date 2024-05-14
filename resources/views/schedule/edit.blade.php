@@ -31,127 +31,51 @@
                     </div>
                 </div>
 
-                <div class="form-group row mx-auto schedule-row">
+                @foreach($getAllSchedule as $schedule)
 
+                @if ($schedule['schedule_name'] != '引渡し')
+                <div class="form-group row mx-auto schedule-row">
+                    <input type="hidden" name="schedule-id" value="{{$schedule['schedule_id']}}">
                     <div class="col-sm-3">
-                        <input type="text" name="schedule-name" class="form-control" value="申し込み" maxlength="255">
+                        <input type="text" name="schedule-name" class="form-control" value="{{$schedule['schedule_name']}}" maxlength="255">
                     </div>
 
                     <div class="col-sm-3">
-                        <input type="date" name="schedule-date" class="form-control datepicker">
+                        <?php $dateValue = date('Y-m-d', strtotime($schedule['schedule_date'])); ?>
+                        <input type="date" name="schedule-date" class="form-control datepicker" value="{{$dateValue}}">
                     </div>
 
                     <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description" maxlength="255"></textarea>
+                        <textarea class="form-control" name="schedule-description" maxlength="255">{{$schedule['schedule_description']}}</textarea>
                     </div>
+
                     <div class="col-sm-1 remove-icon">
                         <span class="icon"><i class="fas fa-times-circle"></i></span>
                     </div>
                 </div>
 
+                @else
+
                 <div class="form-group row mx-auto schedule-row">
-
+                    <input type="hidden" name="schedule-id" value="{{$schedule['schedule_id']}}">
                     <div class="col-sm-3">
-                        <input type="text" name="schedule-name" class="form-control" value="事前審査" maxlength="255">
+                        <input type="text" name="schedule-name" class="form-control" value="{{$schedule['schedule_name']}}" readonly maxlength="255">
                     </div>
 
                     <div class="col-sm-3">
-                        <input type="date" name="schedule-date" class="form-control datepicker">
+                        <?php $dateValue = date('Y-m-d', strtotime($schedule['schedule_date'])); ?>
+                        <input type="date" name="schedule-date" class="form-control datepicker" value="{{$dateValue}}">
                     </div>
-
                     <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description" maxlength="255"></textarea>
-                    </div>
-                    <div class="col-sm-1 remove-icon">
-                        <span class="icon"><i class="fas fa-times-circle"></i></span>
+                        <textarea class="form-control" name="schedule-description" maxlength="255">{{$schedule['schedule_description']}}</textarea>
                     </div>
                 </div>
 
-                <div class="form-group row mx-auto schedule-row">
+                @endif
 
-                    <div class="col-sm-3">
-                        <input type="text" name="schedule-name" class="form-control" value="契約" maxlength="255">
-                    </div>
+                @endforeach
 
-                    <div class="col-sm-3">
-                        <input type="date" name="schedule-date" class="form-control datepicker">
-                    </div>
 
-                    <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description" maxlength="255"></textarea>
-                    </div>
-                    <div class="col-sm-1 remove-icon">
-                        <span class="icon"><i class="fas fa-times-circle"></i></span>
-                    </div>
-                </div>
-
-                <div class="form-group row mx-auto schedule-row">
-
-                    <div class="col-sm-3">
-                        <input type="text" name="schedule-name" class="form-control" value="本申し込み" maxlength="255">
-                    </div>
-
-                    <div class="col-sm-3">
-                        <input type="date" name="schedule-date" class="form-control datepicker">
-                    </div>
-
-                    <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description" maxlength="255"></textarea>
-                    </div>
-                    <div class="col-sm-1 remove-icon">
-                        <span class="icon"><i class="fas fa-times-circle"></i></span>
-                    </div>
-                </div>
-
-                <div class="form-group row mx-auto schedule-row">
-
-                    <div class="col-sm-3">
-                        <input type="text" name="schedule-name" class="form-control" value="金消契約" maxlength="255">
-                    </div>
-
-                    <div class="col-sm-3">
-                        <input type="date" name="schedule-date" class="form-control datepicker">
-                    </div>
-
-                    <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description" maxlength="255"></textarea>
-                    </div>
-                    <div class="col-sm-1 remove-icon">
-                        <span class="icon"><i class="fas fa-times-circle"></i></span>
-                    </div>
-                </div>
-
-                <div class="form-group row mx-auto schedule-row">
-
-                    <div class="col-sm-3">
-                        <input type="text" name="schedule-name" class="form-control" value="決済" maxlength="255">
-                    </div>
-
-                    <div class="col-sm-3">
-                        <input type="date" name="schedule-date" class="form-control datepicker">
-                    </div>
-
-                    <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description" maxlength="255"></textarea>
-                    </div>
-                    <div class="col-sm-1 remove-icon">
-                        <span class="icon"><i class="fas fa-times-circle"></i></span>
-                    </div>
-                </div>
-
-                <div class="form-group row mx-auto schedule-row">
-
-                    <div class="col-sm-3">
-                        <input type="text" name="schedule-name" class="form-control" value="引渡し" readonly maxlength="255">
-                    </div>
-
-                    <div class="col-sm-3">
-                        <input type="date" name="schedule-date" class="form-control datepicker">
-                    </div>
-                    <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description" maxlength="255"></textarea>
-                    </div>
-                </div>
 
 
             </div>
@@ -169,45 +93,6 @@
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<style>
-    .form-group textarea {
-        height: 38px;
-        resize: none;
-    }
-
-    .remove-icon {
-        position: relative;
-    }
-
-    .remove-icon span {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 20px;
-        cursor: pointer;
-    }
-
-    .schedule-title {
-        margin-bottom: 35px;
-    }
-
-    .schedule-row {
-        margin-bottom: 25px;
-    }
-
-    .red-required {
-        color: red;
-    }
-
-    .save-schedule {
-        margin-left: 30px;
-    }
-
-    .estate-name {
-        font-size: 25px;
-        font-weight: 600;
-    }
-</style>
 @stop
 
 @section('js')
@@ -217,10 +102,19 @@
 
         //function remove schedule
         function attachRemoveEvent() {
-            $('.remove-icon').off('click').on('click', function() {
-                $(this).closest('.form-group.row.mx-auto').remove();
+            $('.form-group.row.mx-auto').find('.remove-icon').off('click').on('click', function() {
+                var scheduleId = $(this).closest('.form-group.row.mx-auto').find('input[name="schedule-id"]').val();
+                var element = $(this).closest('.form-group.row.mx-auto');
+                if (scheduleId == '') {
+                    element.remove();
+                } else {
+                    if (confirm("スケジュールを削除しますか？")) {
+                        deleteSchedule(scheduleId, element);
+                    }
+                }
             });
         }
+
 
         //function format date
         function formatDate() {
@@ -230,16 +124,35 @@
             });
         }
 
+        //function deleteSchedule
+        function deleteSchedule(scheduleId, element) {
+            $.ajax({
+                url: "/estate/schedule/destroy/" + scheduleId,
+                type: "DELETE",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    if (response == true) {
+                        element.remove();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:", error);
+                }
+            });
+        }
+
         //call function when loaded DOM
         attachRemoveEvent();
         formatDate();
 
         //event add schedule
-        $('.add-schedule').on('click', function(e) {
+        $('.add-schedule').off('click').on('click', function(e) {
             e.preventDefault();
             var newBlock = `
                 <div class="form-group row mx-auto schedule-row">
-                    
+                    <input type="hidden" name="schedule-id" value="">
                     <div class="col-sm-3">
                         <input type="text" name="schedule-name"  class="form-control" value="" maxlength="255">
                     </div>
@@ -249,7 +162,7 @@
                     </div>
                     
                     <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description" maxlength="255" ></textarea>
+                        <textarea class="form-control" name="schedule-description" maxlength="255"></textarea>
                     </div>
                     <div class="col-sm-1 remove-icon">
                         <span class="icon"><i class="fas fa-times-circle"></i></span>
@@ -259,11 +172,11 @@
 
             $('.form-group.row.mx-auto.schedule-row').first().before(newBlock);
 
-            attachRemoveEvent();
             flatpickr($('.form-group.row.mx-auto.schedule-row:first').find('.datepicker'), {
                 dateFormat: 'Y/m/d',
                 allowInput: true
             });
+            attachRemoveEvent();
 
             $('input[name="schedule-date"]').on('change', function() {
                 var scheduleDate = $(this).val();
@@ -304,6 +217,7 @@
             }
         });
 
+
         $('input[name="schedule-date"]').on('change', function() {
             var scheduleDate = $(this).val();
             var lastDate = $('.datepicker:last').val();
@@ -317,7 +231,7 @@
 
 
         //event save schedule
-        $('.save-schedule').on('click', function(e) {
+        $('.save-schedule').off('click').on('click', function(e) {
             e.preventDefault();
 
             var schedules = [];
@@ -327,7 +241,7 @@
             $('.form-group').each(function(index, element) {
                 var schedule = {};
 
-                $(element).find('input[type="text"], input[type="date"], textarea').each(function() {
+                $(element).find('input[type="text"], input[name="schedule-id"], input[type="date"], textarea').each(function() {
                     var fieldName = $(this).attr('name');
                     var fieldValue = $(this).val().trim();
                     schedule[fieldName] = fieldValue;
@@ -342,13 +256,12 @@
                 schedules.push(schedule);
             });
 
-
             if (error) {
                 return false;
             }
             var hiddenForm = $('<form method="POST" style="display:none;"></form>');
             var id = $('#estateId').val();
-            hiddenForm.attr('action', '{{ route('schedule.store') }}');
+            hiddenForm.attr('action', '{{ route('schedule.update') }}');
 
             $(this).append(hiddenForm);
             hiddenForm.append('<input type="hidden" name="_token" value="' + $('meta[name="csrf-token"]').attr('content') + '">');

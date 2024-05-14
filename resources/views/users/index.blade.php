@@ -1,12 +1,14 @@
 @extends('adminlte::page')
 
-@section('title', 'Users | Dashboard')
+@section('title', __('messages.user') .' | '. __('messages.dashboard'))
 
 @section('content_header')
-    <h1>Users</h1>
+    <h1>{{ __('messages.user') }}</h1>
 @stop
 
 @section('content')
+
+
    <div class="container-fluid">
     <div class="row">
         <div id="errorBox"></div>
@@ -16,42 +18,57 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">
-                            <h5>Add New</h5>
+                            <h5>{{__('messages.addnew')}}</h5>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                            <label for="name" class="form-label">{{__('messages.name')}} <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="name" placeholder="Enter Full Name" value="{{old('name')}}">
                             @if($errors->has('name'))
                                 <span class="text-danger">{{$errors->first('name')}}</span>
                             @endif
                         </div>
+                        @php
+                        @endphp
                         <div class="form-group">
-                            <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                            <label for="department" class="form-label">{{__('messages.department')}}<span class="text-danger">*</span></label>
+                            <select class="form-control select2"  id="select3" data-placeholder="Select Department" name="department">
+                            @foreach (config('conts.department') as $k=>$v)
+                                <option value="{{$k}}" {{ (old('department') && old('department') == $k) ? "selected" : ""}} >{{ucfirst($v)}}</option>
+                            @endforeach
+                            </select>
+                            @if($errors->has('department'))
+                            <span class="text-danger">{{$errors->first('department')}}</span>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">{{__('messages.mail')}} <span class="text-danger">*</span></label>
                             <input type="email" class="form-control" name="email" placeholder="Enter Users Email" value="{{old('email')}}">
                             @if($errors->has('email'))
                                 <span class="text-danger">{{$errors->first('email')}}</span>
                             @endif
                         </div>
                         <div class="form-group">
-                            <label for="password" class="form-label">Password</label>
+                            <label for="password" class="form-label">{{__('messages.password')}}</label>
                             <input type="password" class="form-control" name="password" placeholder="Enter Users Password" value="{{old('password')}}">
                             @if($errors->has('password'))
                                 <span class="text-danger">{{$errors->first('password')}}</span>
                             @endif
                         </div>
                         <div class="form-group">
-                            <label for="roles" class="form-label">Roles</label>
-                            <select class="form-control select2" multiple="multiple" id="select2" data-placeholder="Select Roles" name="roles[]">
+                            <label for="roles" class="form-label">{{__('messages.role')}}</label>
+                            <select class="form-control select2"
+                            {{-- multiple="multiple"  --}}
+                            id="select2" data-placeholder="Select Roles" name="roles[]">
                             @foreach ($roles as $role)
-                                <option value="{{$role->id}}">{{ucfirst($role->name)}}</option>
+                                <option selected value="{{$role->id}}">{{ucfirst($role->name)}}</option>
                             @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">{{__('messages.save')}}</button>
                     </div>
                 </div>
             </form>
@@ -60,7 +77,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <h5>List</h5>
+                        <h5>{{__('messages.user-list')}}</h5>
                     </div>
                 </div>
                 <div class="card-body">
@@ -70,11 +87,12 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Date</th>
-                                    <th>Roles</th>
-                                    <th>Action</th>
+                                    <th>{{__('messages.name')}}</th>
+                                    <th>{{__('messages.department')}}</th>
+                                    <th>{{__('messages.mail')}}</th>
+                                    {{-- <th>{{__('messages.date')}}</th> --}}
+                                    <th>{{__('messages.role')}}</th>
+                                    <th>{{__('messages.action')}}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -94,24 +112,48 @@
 <script>
     $(function (){
         $('#select2').select2();
+        $('#select3').select2();
     });
     $.ajaxSetup({
         headers:{
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     })
-    $(document).ready(function(){
+    jQuery(function($){
+       $.extend( $.fn.dataTable.defaults, {
+         language: { url: "json/japanese.json" }
+       });
+    });
+    
+    $(document).ready(function(){ 
         var table = $('#tblData').DataTable({
             reponsive:true, processing:true, serverSide:true, autoWidth:false, 
             ajax:"{{route('users.index')}}", 
             columns:[
                 {data:'id', name:'id'},
                 {data:'name', name:'name'},
+                {
+                    data:'department',  
+                    name:'department',
+                    render: function (data)  {
+                        switch (data) {
+                            case 0:
+                                html = 'LogSuite';
+                                break;
+                            case 1:
+                                html = 'LogArchitect';
+                                break;
+                        }
+                        return  html;
+                    },
+                },
                 {data:'email', name:'email'},
-                {data:'date', name:'date'},
+                // {data:'date', name:'date'},
                 {data:'roles', name:'roles'},
                 {data:'action', name:'action', bSortable:false, className:"text-center"},
             ], 
+
+            // data: dataSet,
             order:[[0, "desc"]]
         });
         $('body').on('click', '#btnDel', function(){

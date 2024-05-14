@@ -17,7 +17,7 @@ class CreateEstateContactsTable extends Migration
             $table->increments('contact_id');
             $table->integer('client_id')->nullable();
             $table->string('contact_title')->nullable();
-            $table->string('contact_description')->nullable();
+            $table->longText('contact_description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

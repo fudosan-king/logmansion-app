@@ -194,7 +194,7 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-light-primary elevation-1',
+    'classes_sidebar' => 'sidebar-dark-primary elevation-1',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
@@ -217,7 +217,7 @@ return [
     'sidebar_collapse_auto_size' => true,
     'sidebar_collapse_remember' => true,
     'sidebar_collapse_remember_no_transition' => true,
-    'sidebar_scrollbar_theme' => 'os-theme-light',
+    'sidebar_scrollbar_theme' => 'os-theme-dark',
     'sidebar_scrollbar_auto_hide' => 'l',
     'sidebar_nav_accordion' => true,
     'sidebar_nav_animation_speed' => 300,
@@ -255,13 +255,13 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'dashboard',
+    'dashboard_url' => 'estate',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
-    'profile_url' => true,
+    'profile_url' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -304,88 +304,105 @@ return [
         ],
 
         // Sidebar items:
+        // [
+        //     'text' => 'ダッシュボード',
+        //     'route' => 'dashboard',
+        //     'icon' => 'fas fa-fw fa-home'
+        // ],
         [
-            'text' => 'Dashboard',
-            'route' => 'dashboard',
-            'icon' => 'fas fa-fw fa-home'
-        ],
-        [
-            'text'        => 'Users',
-            'icon'        => 'fas fa-fw fa-users',
-            'submenu'      =>[
-                [
-                    'text' => 'All',
-                    'route' => 'users.index',
-                    'active' => ['users', 'users/*'],
-                ],
-                [
-                    'text' => 'Roles',
-                    'route' => 'users.roles.index',
-                    'active' => ['users/roles/*'],
-                ],
-                [
-                    'text' => 'Permissions',
-                    'route' => 'users.permissions.index',
-                    'active' => ['users/permissions/*'],
-                ],
-            ]
-           
-        ],
-        [
-            'text'        => 'Estates',
+            'text'        => '物件',
+            'route' => 'estate.index',
             'icon'        => 'fas fa-fw fa-list-alt',
-            'submenu'      =>[
-                [
-                    'text' => 'Estates List',
-                    'route' => 'estates.index',
-                    'active' => ['estates', 'estates/*'],
-                ],
-                [
-                    'text' => 'Add Estate',
-                    'route' => 'estates.create',
-                    'active' => ['estates/create/*'],
-                ],
-            ]
+            // 'submenu'      =>[
+            //     [
+            //         'text' => '物件一覧',
+            //         'route' => 'estate.index',
+            //         'active' => ['estate', 'estate/*'],
+            //     ],
+            //     [
+            //         'text' => 'Add Estate',
+            //         'route' => 'estate.create',
+            //         'active' => ['estate/create/*'],
+            //     ],
+            // ]
            
         ],
         [
-            'text' => 'Notification',
-            // 'url'  => 'notification',
+            'text' => 'お知らせ',
+            'url'  => 'notification',
             'icon' => 'fas fa-fw fa-bell',
             'submenu'      =>[
                 [
-                    'text' => 'All',
-                    'route' => 'notification',
+                    'text' => 'お知らせ一覧',
+                    'route' => 'notification.index',
                     'icon' => 'fas fa-fw fa-chevron-right',
+                    'active' => ['notification', 'notification/*'],
                 ],
                 [   
-                    'text' => 'Category',
-                    'route' => 'topic',
+                    'text' => 'カテゴリー',
+                    'route' => 'topic.index',
                     'icon' => 'fas fa-fw fa-chevron-right',
                 ],
             ]
         ],
         [
-            'text' => 'Banner',
-            'route' => 'banner',
+            'text' => 'バナー',
+            'route' => 'banner.index',
             'icon' => 'fas fa-fw fa-regular fa-images',
         ],
         [
-            'text' => 'FAQ',
-            'route' => 'faq',
+            'text' => 'よくある質問',
+            'route' => 'faq.index',
             'icon' => 'fas fa-fw fa-question',
         ],
-        ['header' => 'account_settings'],
         [
-            'text' => 'profile',
-            'url'  => 'profile',
-            'icon' => 'fas fa-fw fa-user',
+            'text' => 'おすすめオーダー家具',
+            'route' => 'catalogue',
+            'icon' => 'fas fa-fw  fa-regular fa-book',
         ],
+        [
+            'text' => 'お問い合わせ',
+            'route' => 'estcontact',
+            'icon' => 'fas fa-fw  fa-address-book',
+        ],
+        // ['header' => 'account_settings'],
+        // [
+        //     'text' => 'profile',
+        //     'url'  => 'profile',
+        //     'icon' => 'fas fa-fw fa-user',
+        // ],
         [
             'text' => 'Settings',
             // 'url'  => 'settings',
             'icon' => 'fas fa-fw fa-cogs',
         ],
+        [
+            'text' => 'ユーザー',
+            'icon' => 'fas fa-fw fa-users',
+            'route' => 'users.index',
+            'active' => ['users', 'users/*'],
+        ],
+        // [
+        //     'text'        => 'Users',
+        //     'icon'        => 'fas fa-fw fa-users',
+        //     'submenu'      =>[
+        //         [
+        //             'text' => 'All',
+        //             'route' => 'users.index',
+        //             'active' => ['users', 'users/*'],
+        //         ],
+        //         [
+        //             'text' => 'Roles',
+        //             'route' => 'users.roles.index',
+        //             'active' => ['users/roles/*'],
+        //         ],
+        //         [
+        //             'text' => 'Permissions',
+        //             'route' => 'users.permissions.index',
+        //             'active' => ['users/permissions/*'],
+        //         ],
+        //     ]    
+        // ],
         // Sidebar items:
         // [
         //     'text' => 'Test',

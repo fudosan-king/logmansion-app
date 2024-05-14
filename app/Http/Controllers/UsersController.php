@@ -47,6 +47,7 @@ class UsersController extends Controller
     {
         $this->validate($request, [
             'name' => 'required', 
+            'department' => 'required', 
             'email' => 'required|email:rfc,dns|unique:users,email'
         ]);
         if($request->has('roles'))
@@ -148,7 +149,8 @@ class UsersController extends Controller
                     {
                         foreach($row->roles as $next)
                         {
-                            $role.='<span class="badge badge-primary">'.ucfirst($next->name).'</span> ';
+                            // $role.='<span class="badge badge-primary">'.ucfirst($next->name).'</span> ';
+                            $role.=ucfirst($next->name);
                         }
                     }
                     return $role;

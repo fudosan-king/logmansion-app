@@ -28,7 +28,7 @@
     </a>
 
     {{-- User menu dropdown --}}
-    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="width: 300px">
 
         {{-- User menu header --}}
         @if(!View::hasSection('usermenu_header') && config('adminlte.usermenu_header'))
@@ -73,7 +73,7 @@
                 <i class="fa fa-fw fa-power-off text-red"></i>
                 {{ __('adminlte::adminlte.log_out') }}
             </a>
-            <form id="logout-form" action="{{ $logout_url }}" method="POST" style="display: none;">
+            <form id="logout-form" action="{{ $logout_url }}" method="POST" style="display: none;" style="margin-left:110px">
                 @if(config('adminlte.logout_method'))
                     {{ method_field(config('adminlte.logout_method')) }}
                 @endif
