@@ -48,19 +48,6 @@
 
 @section('js')
 <script>
-    $(function (){
-        $('#select2').select2();
-    });
-    $.ajaxSetup({
-        headers:{
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    })
-    jQuery(function($){
-       $.extend( $.fn.dataTable.defaults, {
-         language: { url: "json/japanese.json" }
-       });
-    });
     $(document).ready(function(){
         var table = $('#tblData').DataTable({
             reponsive:true, processing:true, serverSide:true, autoWidth:false, 

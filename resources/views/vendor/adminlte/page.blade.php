@@ -52,6 +52,22 @@
 @stop
 
 @section('adminlte_js')
+    <script>
+    $(function (){
+        $('#select2').select2();
+    });
+    $.ajaxSetup({
+        headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+    jQuery(function($){
+        $.extend( $.fn.dataTable.defaults, {
+        language: { url: "json/japanese.json" }
+        });
+    });
+    </script>
+
     @stack('js')
     @yield('js')
 @stop
