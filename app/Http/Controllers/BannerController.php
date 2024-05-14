@@ -128,7 +128,7 @@ class BannerController extends Controller
         $data = Banner::all();
         return DataTables::of($data)
                 ->addColumn('url', function($row){
-                    return "<a href=" . $row->banner_url . ">" . $row->banner_url . "</a>";
+                    return "<a href=" . $row->banner_url . " target='_blank'>" . $row->banner_url . "</a>";
                 })
                 ->addColumn('image', function($row){
                     $imageUrl = asset("storage/$row->banner_image");
