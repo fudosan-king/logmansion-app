@@ -20,7 +20,7 @@ class EstatesController extends Controller
             ->when($search, function ($query, $search) {
                 return $query->where('est_name', 'like', '%' . $search . '%');
             })
-            ->paginate($per_page?$per_page:config('conts.paging'));
+            ->paginate($per_page?$per_page:config('const.paging'));
 
         return view('estate/index', [
             'estates' => $estates
