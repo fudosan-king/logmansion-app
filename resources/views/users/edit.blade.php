@@ -31,7 +31,7 @@
                         <div class="form-group">
                             <label for="department" class="form-label">{{__('messages.department')}}<span class="text-danger">*</span></label>
                             <select class="form-control select2"  id="select3" data-placeholder="Select Department" name="department">
-                            @foreach (config('conts.department') as $k=>$v)
+                            @foreach (config('const.department') as $k=>$v)
                                 <option value="{{$k}}" {{ ($user->department == $k) ? "selected" : ""}} >{{ucfirst($v)}}</option>
                             @endforeach
                             </select>
