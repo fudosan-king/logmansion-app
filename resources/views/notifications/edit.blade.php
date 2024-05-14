@@ -57,7 +57,7 @@
                         <label for="noti_date">日付</label>
                         <span class="red-required">※</span>
                         <?php $dateValue = date('Y-m-d', strtotime($notification->noti_date)); ?>
-                        <input type="date" name="noti_date" class="form-control datepicker @error('noti_date') is-invalid @enderror" value="{{$dateValue}}">
+                        <input type="date" name="noti_date" class="form-control datepicker @error('noti_date') is-invalid @enderror" value="{{$dateValue}}" readonly>
                         {{-- <div class="input-group date" id="notidatepicker" data-target-input="nearest">
                             <input type="text" name="noti_date"  class="form-control datetimepicker-input @error('noti_date') is-invalid @enderror" 
                             value="{{ $notification->noti_date ? substr($notification->noti_date, 0, 10) : '' }}"
@@ -83,7 +83,7 @@
             </div>
             <div class="card-footer d-flex justify-content-center">
                 <div class="col-md-8">
-                    <a href="{{ url()->previous() }}" class="btn btn-default">{{ __('messages.cancel') }}</a>
+                    <a href="{{ route('notification.index') }}" class="btn btn-default">{{ __('messages.cancel') }}</a>
                     <button type="submit" class="btn btn-primary float-right">{{ __("messages.submit") }}</button>
                 </div>
             </div>

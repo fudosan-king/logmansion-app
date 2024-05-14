@@ -81,7 +81,7 @@
         $('body').on('click', '#btnDel', function(){
             //confirmation
             var id = $(this).data('id');
-            if(confirm('ID'+id+'を削除しますか？')==true)
+            if(confirm('お知らせを削除しますか？')==true)
             {
                 var route = "{{route('notification.destroy', ':id')}}"; 
                 route = route.replace(':id', id);

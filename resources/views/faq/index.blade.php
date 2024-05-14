@@ -75,7 +75,7 @@
         $('body').on('click', '#btnDel', function(){
             //confirmation
             var id = $(this).data('id');
-            if(confirm('ID'+id+'を削除しますか？')==true)
+            if(confirm('よくある質問を削除しますか？')==true)
             {
                 var route = "{{route('faq.destroy', ':id')}}"; 
                 route = route.replace(':id', id);
