@@ -77,6 +77,15 @@
                         <div class="col-sm-1 remove-icon">
                             <span class="icon"><i class="fas fa-times-circle"></i></span>
                         </div>
+                        <div class="col-sm-1 download-pdf">
+                            <span class="icon">
+                            @php $file_name = basename($doc['doc_file']); $cleaned_file_name = preg_replace('/^\d{14}_/', '', $file_name); @endphp
+                                <a href="{{ Storage::url($doc['doc_file']) }}" download="{{ $cleaned_file_name }}">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                            </span>
+                        </div>
+
                     </div>
 
 
@@ -114,12 +123,19 @@
                         </div>
                         <div class="col-sm-3">
                             <p class="pdf-name">
-                                @php $cleaned_file_name = substr($file_name = basename($getDocPayment->doc_file), strrpos($file_name, '_') + 1); @endphp
+                            @php $file_name = basename($getDocPayment->doc_file); $cleaned_file_name = preg_replace('/^\d{14}_/', '', $file_name); @endphp
                                 {{$cleaned_file_name}}
                             </p>
                         </div>
                         <div class="col-sm-1 remove-icon-permanent">
                             <span class="icon"><i class="fas fa-trash"></i>
+                            </span>
+                        </div>
+                        <div class="col-sm-1 download-pdf icon-permanent">
+                            <span class="icon">
+                                <a href="{{ Storage::url($getDocPayment->doc_file) }}" download="{{ $cleaned_file_name }}">
+                                    <i class="fas fa-download"></i>
+                                </a>
                             </span>
                         </div>
                     </div>
@@ -160,12 +176,19 @@
                         </div>
                         <div class="col-sm-3">
                             <p class="pdf-name">
-                                @php $cleaned_file_name = substr($file_name = basename($getWarrantyPeriod->doc_file), strrpos($file_name, '_') + 1); @endphp
+                            @php $file_name = basename($getWarrantyPeriod->doc_file); $cleaned_file_name = preg_replace('/^\d{14}_/', '', $file_name); @endphp
                                 {{$cleaned_file_name}}
                             </p>
                         </div>
                         <div class="col-sm-1 remove-icon-permanent">
                             <span class="icon"><i class="fas fa-trash"></i>
+                            </span>
+                        </div>
+                        <div class="col-sm-1 download-pdf icon-permanent">
+                            <span class="icon">
+                                <a href="{{ Storage::url($getWarrantyPeriod->doc_file) }}" download="{{ $cleaned_file_name }}">
+                                    <i class="fas fa-download"></i>
+                                </a>
                             </span>
                         </div>
                     </div>
@@ -217,14 +240,31 @@
     }
 
     .remove-icon,
-    .remove-icon-permanent {
+    .remove-icon-permanent,
+    .download-pdf {
         position: relative;
     }
 
-    .remove-icon span,
+    .remove-icon span {
+        position: absolute;
+        top: 36%;
+        transform: translateY(-50%);
+        font-size: 20px;
+        cursor: pointer;
+    }
+
     .remove-icon-permanent span {
         position: absolute;
         top: 50%;
+        transform: translateY(-50%);
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .download-pdf span {
+        position: absolute;
+        top: 36%;
+        left: 0;
         transform: translateY(-50%);
         font-size: 20px;
         cursor: pointer;
@@ -254,6 +294,19 @@
 
     .pdf-name {
         margin-top: 27px;
+    }
+
+    .download-pdf > a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .download-pdf .fas {
+        color: black;
+    }
+
+    .icon-permanent span {
+        top: 50%;
     }
 </style>
 @stop
@@ -335,7 +388,7 @@
 
         //call function when loaded DOM
         attachRemoveEvent();
-        var maxUpload = 1;
+        var maxUpload = $('.doc-section').length;
         //event add doc
         $('.add-doc').on('click', function(e) {
             e.preventDefault();
@@ -381,6 +434,8 @@
                     <div class="col-sm-1 remove-icon">
                         <span class="icon"><i class="fas fa-times-circle"></i></span>
                     </div>
+                    <div class="col-sm-1 download-pdf">
+                    </div>
                 </div>
             </div>
             `;
@@ -408,6 +463,12 @@
 
             formData.append('estateId', estateId);
             formData.append('_token', csrfToken);
+
+            var rows = $('.doc-section .doc-row');
+
+            if (rows.length === 0) {
+                return false;
+            }
 
             $('.doc-section .doc-row').each(function(index, row) {
                 var docFile = $(row).find('.form-group input[type="file"]')[0].files[0];
