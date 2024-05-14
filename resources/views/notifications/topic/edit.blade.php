@@ -28,7 +28,7 @@
             </div>
             <div class="card-footer d-flex justify-content-center">
                 <div class="col-md-8">
-                    <a href="{{ url()->previous() }}" class="btn btn-default">{{ __('messages.cancel') }}</a>
+                    <a href="{{ route('topic.index') }}" class="btn btn-default">{{ __('messages.cancel') }}</a>
                     <button type="submit" class="btn btn-primary float-right">{{ __("messages.submit") }}</button>
                 </div>
             </div>

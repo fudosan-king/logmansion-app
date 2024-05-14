@@ -64,7 +64,7 @@
         $('body').on('click', '#btnDel', function(){
             //confirmation
             var id = $(this).data('id');
-            if(confirm('削除しますか？')==true)
+            if(confirm('バナーを削除しますか？')==true)
             {
                 var route = "{{route('banner.destroy', ':id')}}"; 
                 route = route.replace(':id', id);
