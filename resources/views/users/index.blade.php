@@ -62,7 +62,7 @@
                             {{-- multiple="multiple"  --}}
                             id="select2" data-placeholder="Select Roles" name="roles[]">
                             @foreach ($roles as $role)
-                                <option value="{{$role->id}}">{{ucfirst($role->name)}}</option>
+                                <option selected value="{{$role->id}}">{{ucfirst($role->name)}}</option>
                             @endforeach
                             </select>
                         </div>
