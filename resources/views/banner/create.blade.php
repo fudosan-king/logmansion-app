@@ -33,7 +33,7 @@
                         <label for="banner_image">画像</label>
                         <span class="red-required">※</span>
                         <div class="input-group">
-                            <input type="file" class="custom-file-input @error('banner_image') is-invalid @enderror" name="banner_image" id="banner_image" onchange="previewImage(this)">
+                            <input type="file" class="custom-file-input @error('banner_image') is-invalid @enderror" name="banner_image" id="banner_image" accept="image/*" onchange="previewImage(this)">
                             <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                             @error('banner_image')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -48,8 +48,8 @@
                     </div>
                     <div class="form-group">
                         <label for="noti_url">URL</label>
-                        <input type="text" name="banner_url" id="banner_url"
-                            class="form-control @error('banner_url') is-invalid @enderror" value="{{ old('banner_url') }}">
+                        <input type="url" name="banner_url" id="banner_url"
+                            class="form-control @error('banner_url') is-invalid @enderror" value="{{ old('banner_url') }}" placeholder="{{ asset('/') }}">
                         @error('banner_url')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -57,7 +57,7 @@
                     <div class="form-group">
                         <input type="checkbox" name="banner_active" id="banner_active" value="1"
                             {{ old('banner_active') ? 'checked' : '' }}>
-                        <label for="banner_active">ステータス</label>
+                        <label for="banner_active">表示</label>
                         @error('banner_active')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -66,7 +66,7 @@
             </div>
             <div class="card-footer d-flex justify-content-center">
                 <div class="col-md-8">
-                    <a href="{{ url()->previous() }}" class="btn btn-default">{{ __('messages.cancel') }}</a>
+                    <a href="{{ route('banner.index') }}" class="btn btn-default">{{ __('messages.cancel') }}</a>
                     <button type="submit" class="btn btn-primary float-right">{{ __('messages.submit') }}</button>
                 </div>
             </div>

@@ -31,7 +31,7 @@
                         <div class="form-group">
                             <label for="department" class="form-label">{{__('messages.department')}}<span class="text-danger">*</span></label>
                             <select class="form-control select2"  id="select3" data-placeholder="Select Department" name="department">
-                            @foreach (config('conts.department') as $k=>$v)
+                            @foreach (config('const.department') as $k=>$v)
                                 <option value="{{$k}}" {{ ($user->department == $k) ? "selected" : ""}} >{{ucfirst($v)}}</option>
                             @endforeach
                             </select>
@@ -41,7 +41,7 @@
                         </div>
                         <div class="form-group">
                             <label for="email" class="form-label">{{__('messages.mail')}} <span class="text-danger">*</span></label>
-                            <input disabled type="email" class="form-control" name="email" placeholder="ユーザーのメールアドレスを入力してください。" value="{{$user->email}}">
+                            <input readonly ="email" class="form-control" name="email" placeholder="ユーザーのメールアドレスを入力してください。" value="{{$user->email}}">
                             @if($errors->has('email'))
                                 <span class="text-danger">{{$errors->first('email')}}</span>
                             @endif

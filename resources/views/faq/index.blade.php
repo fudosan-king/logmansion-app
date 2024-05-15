@@ -47,19 +47,6 @@
 
 @section('js')
 <script>
-    $(function (){
-        $('#select2').select2();
-    });
-    $.ajaxSetup({
-        headers:{
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    })
-    jQuery(function($){
-       $.extend( $.fn.dataTable.defaults, {
-         language: { url: "json/japanese.json" }
-       });
-    });
     $(document).ready(function(){
         var table = $('#tblData').DataTable({
             reponsive:true, processing:true, serverSide:true, autoWidth:false, 
@@ -75,7 +62,7 @@
         $('body').on('click', '#btnDel', function(){
             //confirmation
             var id = $(this).data('id');
-            if(confirm('ID'+id+'を削除しますか？')==true)
+            if(confirm('よくある質問を削除しますか？')==true)
             {
                 var route = "{{route('faq.destroy', ':id')}}"; 
                 route = route.replace(':id', id);

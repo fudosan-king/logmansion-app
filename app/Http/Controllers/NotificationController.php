@@ -35,10 +35,10 @@ class NotificationController extends Controller
             'noti_date' => 'required|date',
             'noti_status' => 'nullable',
             'noti_url' => 'nullable|url',
-            'url' => '無効な形式です。',
         ], [
             'required' => 'この項目は必須です。',
             'date' => '無効な形式です。',
+            'url' => '無効な形式です。',
         ]);
         $data['noti_status'] = $request->has('noti_status');
         $notification = Notification::create($data);
@@ -60,7 +60,7 @@ class NotificationController extends Controller
             'cat_id' => 'required',
             'noti_title' => 'required',
             'noti_content' => 'nullable',
-            'noti_date' => 'required|date',
+            // 'noti_date' => 'required|date',
             'noti_status' => 'nullable',
             'noti_url' => 'nullable|url',
         ], [
@@ -102,7 +102,7 @@ class NotificationController extends Controller
                     return Carbon::parse($row->updated_at)->format('Y/m/d');
                 })
                 ->addColumn('active', function($row){
-                    return $row->banner_active ? '表示' : '非表示';
+                    return $row->noti_status ? '表示' : '非表示';
                 })
                 ->addColumn('action', function($row){
                     $action = ""; 

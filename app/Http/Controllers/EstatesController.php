@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Estate;
-
+use App\Models\EstateSchedule;
+use Carbon\Carbon;
 class EstatesController extends Controller
 {
     /**
@@ -14,14 +15,12 @@ class EstatesController extends Controller
      */
     public function index()
     {
-        $search = request('search');
-        $per_page = request('per_page');
-        $estates = Estate::orderBy('est_id', 'desc')
-            ->when($search, function ($query, $search) {
-                return $query->where('est_name', 'like', '%' . $search . '%');
-            })
-            ->paginate($per_page?$per_page:config('conts.paging'));
-
+        $estates = Estate::orderBy('est_id', 'desc');
+        $estates = $estates->get()->toArray();
+        foreach ($estates as $key => $estate) {
+            $estates[$key]['schedules'] = $this->getEstateSchedules($estate['est_id'])->original;
+        }
+        // $archive = ;
         return view('estate/index', [
             'estates' => $estates
         ]);
@@ -160,5 +159,18 @@ class EstatesController extends Controller
         $estate = Estate::find($id);
         $estate->delete();
         return redirect()->route('estate.index');
+    }
+    public function getEstateSchedules($est_id)
+    {
+        $estateSchedules = EstateSchedule::where('est_id', $est_id)->get()->toArray();
+        $result = [];
+        foreach ($estateSchedules as $key => $estateSchedule) {
+            if (Carbon::parse($estateSchedule['schedule_date'])->lte(Carbon::now())) {
+                $result['current_schedule'] = $estateSchedule;
+            } else {
+                $result['next_schedule'] = $estateSchedule;
+            }
+        }
+        return response()->json($result);
     }
 }

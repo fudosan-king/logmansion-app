@@ -7,7 +7,7 @@ return [
     "submit" => "保存",
     "edit" => "編集",
     "delete" => "削除",
-    "user" => "削除",
+    "user" => "ユーザー",
     "dashboard" =>"ダッシュボード",
     "estate" =>    "物件",
     "notification" =>       "お知らせ",
