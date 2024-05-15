@@ -87,7 +87,7 @@ class EstatesController extends Controller
         $estate->est_usefulinfo_ward_url = $request->input('selected_ward_url');
         $estate->est_usefulinfo_ward_show = $request->input('showLinkstatus3') === 'on' ? 1 : 0;
         $estate->save();
-        toast('Estate created successfully.','success');
+        toast('物件が登録されました。','success');
         return redirect()->route('estate.index');
     }   
 
@@ -150,8 +150,9 @@ class EstatesController extends Controller
         $estate->est_usefulinfo_ward_url = $request->input('selected_ward_url');
         $estate->est_usefulinfo_ward_show = $request->input('showLinkstatus3') === 'on' ? 1 : 0;
         $estate->save();
-        toast('Estate update successfully.','success');
-        return redirect()->route('estate.edit',['id'=>$id]);
+        toast('物件が編集されました。','success');
+        // return redirect()->route('estate.edit',['id'=>$id]);
+        return redirect()->route('estate.index');
 
     }
 
@@ -175,6 +176,7 @@ class EstatesController extends Controller
             ->get()
             ->toArray();
         $result = [];
+        //Fix: logic error for current schedule
         foreach ($estateSchedules as $estateSchedule) {
             $scheduleDate = Carbon::parse($estateSchedule['schedule_date']);
             if ($scheduleDate->lte(Carbon::now()) && (!isset($result['current_schedule']))) {

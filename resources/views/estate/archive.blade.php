@@ -37,7 +37,7 @@
                             <a href="{{route('estate.index')}}" type="button" class="btn btn-danger y-2">{{ config('estate_labels.back') }}</a>
                             </div>
                         </div>
-                        <table id="archive_data" class="table table-bordered table-striped dataTable dtr-inline">
+                        <table id="tblData" class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                             <tr>
                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.estate_name') }}</th>
@@ -80,7 +80,11 @@
 @section('js')
     <script>
       $(document).ready(function(){
-        $('#archive_data').DataTable();
+        $('#tblData').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json"
+            }
+        });
       })
     </script>
 @stop
