@@ -38,9 +38,8 @@
                                 <label>説明文</label>
                             </div>
                         </div>
-                        <div class="col-sm-1">
-
-                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-1"></div>
                     </div>
                 </div>
                 @foreach($getAllDoc as $doc)
