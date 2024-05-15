@@ -96,10 +96,7 @@
         format: 'YYYY/MM/DD',
         yearRange: "-100:+0",
         disabledDates: false,
-        minDate: moment().startOf('day'),
-    })
-    $("#notidatepicker").on("change.datetimepicker", function (e) {
-        $('#notidatepicker').datetimepicker('minDate', e.date);
+        minDate: 0,
     });
   })
 </script>
