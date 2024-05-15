@@ -35,18 +35,18 @@
                         <div class="w-50">
                         </div>
                         <div>
-                          <a href="{{route('estate.archive_index')}}" type="button" class="btn btn-light y-2">アーカイブ</a>
-                          <a href="{{route('estate.create')}}" class="btn btn-primary mt-2 mb-2 ml-4">物件新規追加</a>
+                          <a href="{{route('estate.archive_index')}}" type="button" class="btn btn-light y-2">{{ config('estate_labels.archive') }}</a>
+                          <a href="{{route('estate.create')}}" class="btn btn-primary mt-2 mb-2 ml-4">{{ config('estate_labels.add_new_estate') }}</a>
                         </div>
                     </div>
                   <table id="tblData" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example2_info">
                     <thead>
                       <tr>
-                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >物件名</th>
-                        <th class="sorting sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="descending">ステータス</th>
-                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >次スケジュール</th>
-                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >クライアント</th>
-                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >アクション</th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.estate_name') }}</th>
+                        <th class="sorting sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="descending">{{ config('estate_labels.status') }}</th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.next_schedule') }}</th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.client') }}</th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.action') }}</th>
                       </tr>
                     </thead>
                     <tbody>
