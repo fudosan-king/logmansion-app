@@ -25,7 +25,7 @@ use Illuminate\Routing\Controller as BaseController;
      *     )
      * )
      *  @OA\Server(
-     *      url="http://localhost/api/",
+     *      url="http://localhost/",
      *      description="Development Environment"
      *  )
      *
