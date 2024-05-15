@@ -66,17 +66,10 @@ class EstatesController extends Controller
      */
     public function store(Request $request)
     {
-        $messages = [
-            // 'est_name.required' => 'The estate name field is required.',
-            // 'est_name.max' => 'The estate name may not be greater than 255 characters.',
-            // 'est_room_no.required' => 'The room number field is required.',
-            'est_name.unique'=>'The estate name must not match',
-            'est_room_no.unique'=>'The room number must not match',
-        ];
         $validatedData = $request->validate([
-            'est_name' => 'required|max:255|unique:estate_data',
-            'est_room_no' => 'required|unique:estate_data'
-        ],$messages);
+            'est_name' => 'required|max:255',
+            'est_room_no' => 'required'
+        ]);
         $estate = new Estate();
         // Step 1
         $estate->est_name = $request->input('est_name');
@@ -132,18 +125,12 @@ class EstatesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $messages = [
-            'est_name.unique'=>'The estate name must not match',
-            'est_room_no.unique'=>'The room number must not match',
-        ];
         $validatedData = $request->validate([
-            'est_name' => 'required|max:255|unique:estate_data,est_name,' . $id . ',est_id',
-            'est_room_no' => 'required|unique:estate_data,est_room_no,' . $id . ',est_id'
-        ], $messages);
-        
+            'est_name' => 'required|max:255|',
+            'est_room_no' => 'required'
+        ]);
         $estate = Estate::find($id);
         if (!$estate) {
-            //handle estate not found
             toast('Data Error','error');
             return redirect()->route('estate.index');
         }
