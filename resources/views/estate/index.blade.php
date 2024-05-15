@@ -1,9 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', '物件一覧')
+@section('title', config('estate_labels.title_estate'))
+
 
 @section('content_header')
-    <h1>物件一覧</h1>
+    <h1>{{ config('estate_labels.title_estate') }}</h1>
 @stop
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
@@ -59,12 +60,11 @@
                               @endif
                             </td>
                             <td>
-                              <!-- 24.4.15 事前審査 -->
                                 @if($estate['schedules'] !== [] && isset($estate['schedules']['next_schedule']))
                                   {{ date('Y-m-d', strtotime($estate['schedules']['next_schedule']['schedule_date'])) }} {{$estate['schedules']['next_schedule']['schedule_name'] ?? ""}}
                                 @endif
                             </td>
-                            <td>山田二郎</td>
+                            <td></td>
                             <td>
                                 <div class="action_bar" style="">
                                   <a href="{{route('estate.edit',['id'=>$estate['est_id']])}}">
@@ -73,7 +73,7 @@
                                   
                                   <a href="{{route('schedule.edit', ['id' => $estate['est_id']])}}"><i class="fas fa-calendar"></i></a>
                                   <a href="{{route('doc.edit', ['id' => $estate['est_id']])}}"><i class="fas fa-file-upload"></i></a>
-                                  <a href="{{route('estate.destroy',$estate['est_id'])}}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this estate?')) { document.getElementById('delete-form-{{$estate['est_id']}}').submit(); }">
+                                  <a href="{{route('estate.destroy',$estate['est_id'])}}" onclick="event.preventDefault(); if(confirm('{{ config('estate_labels.delete_confim') }}')) { document.getElementById('delete-form-{{$estate['est_id']}}').submit(); }">
                                     <form id="delete-form-{{$estate['est_id']}}" action="{{route('estate.destroy',$estate['est_id'])}}" method="POST" style="display: none;">
                                       @csrf
                                       @method('DELETE')

@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'アーカイブ')
+@section('title', config('estate_labels.title_archive'))
 
 @section('content_header')
-    <h1>アーカイブ</h1>
+    <h1>{{ config('estate_labels.title_archive') }}</h1>
 @stop
 @section('css')
     <style>
@@ -49,10 +49,10 @@
                             @foreach($estates as $estate)
                             <tr>
                                 <td class="dtr-control">{{$estate['est_name']}}</td>
-                                <td>山田二郎</td>
+                                <td></td> 
                                 <td>
                                     <div class="action_bar">
-                                    <a href="{{route('estate.destroy',$estate['est_id'])}}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this estate?')) { document.getElementById('delete-form-{{$estate['est_id']}}').submit(); }">
+                                    <a href="{{route('estate.destroy',$estate['est_id'])}}" onclick="event.preventDefault(); if(confirm('{{ config('estate_labels.delete_confim') }}')) { document.getElementById('delete-form-{{$estate['est_id']}}').submit(); }">
                                         <form id="delete-form-{{$estate['est_id']}}" action="{{route('estate.destroy',$estate['est_id'])}}" method="POST" style="display: none;">
                                         @csrf
                                         @method('DELETE')
