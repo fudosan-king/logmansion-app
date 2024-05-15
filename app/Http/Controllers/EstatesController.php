@@ -15,14 +15,35 @@ class EstatesController extends Controller
      */
     public function index()
     {
-        $estates = Estate::orderBy('est_id', 'desc');
-        $estates = $estates->get()->toArray();
-        foreach ($estates as $key => $estate) {
-            $estates[$key]['schedules'] = $this->getEstateSchedules($estate['est_id'])->original;
+        $estates = Estate::orderBy('est_id', 'desc')->get()->toArray();
+        $currentEstates = [];
+        foreach ($estates as $estate) {
+            $schedules = $this->getEstateSchedules($estate['est_id'])->original;
+            if ($schedules !== []) {
+                if (empty($schedules['next_schedule']) && date('Y-m-d', strtotime($schedules['current_schedule']['schedule_date'])) != date('Y-m-d')) {
+                    continue; 
+                }
+            }
+            $estate['schedules'] = $schedules;
+            $currentEstates[] = $estate;
         }
-        // $archive = ;
         return view('estate/index', [
-            'estates' => $estates
+            'estates' => $currentEstates
+        ]);
+    }
+    public function archive_index(){
+        $estates = Estate::orderBy('est_id', 'desc')->get()->toArray();
+        $archive = [];
+        foreach ($estates as $estate) {
+            $schedules = $this->getEstateSchedules($estate['est_id'])->original;
+            if ($schedules !== []) {
+                if (empty($schedules['next_schedule']) && date('Y-m-d', strtotime($schedules['current_schedule']['schedule_date'])) != date('Y-m-d')) {
+                    $archive[] = $estate;
+                }
+            }
+        }
+        return view('estate/archive', [
+            'estates' => $archive
         ]);
     }
 
@@ -162,15 +183,21 @@ class EstatesController extends Controller
     }
     public function getEstateSchedules($est_id)
     {
-        $estateSchedules = EstateSchedule::where('est_id', $est_id)->get()->toArray();
+        $estateSchedules = EstateSchedule::where('est_id', $est_id)
+            ->orderBy('schedule_date') // Order by schedule_date
+            ->get()
+            ->toArray();
         $result = [];
-        foreach ($estateSchedules as $key => $estateSchedule) {
-            if (Carbon::parse($estateSchedule['schedule_date'])->lte(Carbon::now())) {
+        foreach ($estateSchedules as $estateSchedule) {
+            $scheduleDate = Carbon::parse($estateSchedule['schedule_date']);
+            if ($scheduleDate->lte(Carbon::now()) && (!isset($result['current_schedule']))) {
                 $result['current_schedule'] = $estateSchedule;
-            } else {
+            } elseif ($scheduleDate->gt(Carbon::now()) && (!isset($result['next_schedule']))) {
                 $result['next_schedule'] = $estateSchedule;
+                break;
             }
         }
+
         return response()->json($result);
     }
 }

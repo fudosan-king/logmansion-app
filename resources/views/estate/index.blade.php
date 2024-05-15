@@ -35,7 +35,7 @@
                         <div class="w-50">
                         </div>
                         <div>
-                          <button type="button" class="btn btn-light y-2">アーカイブ</button>
+                          <a href="{{route('estate.archive_index')}}" type="button" class="btn btn-light y-2">アーカイブ</a>
                           <a href="{{route('estate.create')}}" class="btn btn-primary mt-2 mb-2 ml-4">物件新規追加</a>
                         </div>
                     </div>
@@ -51,38 +51,38 @@
                     </thead>
                     <tbody>
                       @foreach($estates as $estate)
-                      <tr class="odd">
-                        <td class="dtr-control">{{$estate['est_name']}}</td>
-                        <td class="sorting_1">
-                          @if($estate['schedules'] !== [])
-                            {{$estate['schedules']['current_schedule']['schedule_name']}}
-                          @endif
-                        </td>
-                        <td>
-                          <!-- 24.4.15 事前審査 -->
-                            @if($estate['schedules'] !== [])
-                            {{ date('Y-m-d', strtotime($estate['schedules']['next_schedule']['schedule_date'])) }} {{$estate['schedules']['next_schedule']['schedule_name']}}
-                            @endif
-                        </td>
-                        <td>山田二郎</td>
-                        <td>
-                            <div class="action_bar" style="">
-                              <a href="{{route('estate.edit',['id'=>$estate['est_id']])}}">
-                                <i class="fas fa-hammer"></i>
-                              </a>
-                              
-                              <a href="{{route('schedule.edit', ['id' => $estate['est_id']])}}"><i class="fas fa-calendar"></i></a>
-                              <a href="{{route('doc.edit', ['id' => $estate['est_id']])}}"><i class="fas fa-file-upload"></i></a>
-                              <a href="{{route('estate.destroy',$estate['est_id'])}}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this estate?')) { document.getElementById('delete-form-{{$estate['est_id']}}').submit(); }">
-                                <form id="delete-form-{{$estate['est_id']}}" action="{{route('estate.destroy',$estate['est_id'])}}" method="POST" style="display: none;">
-                                  @csrf
-                                  @method('DELETE')
-                                </form>
-                                <i class="fas fa-trash-alt text-danger"></i>
-                              </a>
-                            </div>
-                        </td>
-                      </tr>
+                          <tr class="odd">
+                            <td class="dtr-control">{{$estate['est_name']}}</td>
+                            <td class="sorting_1">
+                              @if($estate['schedules'] !== [])
+                                {{$estate['schedules']['current_schedule']['schedule_name'] ?? ""}}
+                              @endif
+                            </td>
+                            <td>
+                              <!-- 24.4.15 事前審査 -->
+                                @if($estate['schedules'] !== [] && isset($estate['schedules']['next_schedule']))
+                                  {{ date('Y-m-d', strtotime($estate['schedules']['next_schedule']['schedule_date'])) }} {{$estate['schedules']['next_schedule']['schedule_name'] ?? ""}}
+                                @endif
+                            </td>
+                            <td>山田二郎</td>
+                            <td>
+                                <div class="action_bar" style="">
+                                  <a href="{{route('estate.edit',['id'=>$estate['est_id']])}}">
+                                    <i class="fas fa-hammer"></i>
+                                  </a>
+                                  
+                                  <a href="{{route('schedule.edit', ['id' => $estate['est_id']])}}"><i class="fas fa-calendar"></i></a>
+                                  <a href="{{route('doc.edit', ['id' => $estate['est_id']])}}"><i class="fas fa-file-upload"></i></a>
+                                  <a href="{{route('estate.destroy',$estate['est_id'])}}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this estate?')) { document.getElementById('delete-form-{{$estate['est_id']}}').submit(); }">
+                                    <form id="delete-form-{{$estate['est_id']}}" action="{{route('estate.destroy',$estate['est_id'])}}" method="POST" style="display: none;">
+                                      @csrf
+                                      @method('DELETE')
+                                    </form>
+                                    <i class="fas fa-trash-alt text-danger"></i>
+                                  </a>
+                                </div>
+                            </td>
+                          </tr>
                       @endforeach
                     </tbody>
                   </table>
