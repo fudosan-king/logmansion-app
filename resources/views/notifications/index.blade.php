@@ -14,10 +14,10 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <h5>List</h5>
+                        <h5>{{ __('messages.list') }}</h5>
                     </div>
                     <div class="card-tools">
-                        <a href="{{ route('notification.create') }}" class="btn btn-primary">新規追加</a>
+                        <a href="{{ route('notification.create') }}" class="btn btn-primary">{{ __('messages.create_new') }}</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -26,13 +26,13 @@
                         <table id="tblData" class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>日付</th>
-                                    <th>カテゴリ</th>
-                                    <th>タイトル</th>
-                                    <th>状態</th>
-                                    <th>最終更新日</th>
-                                    <th>アクション</th>
+                                    <th>{{ __('messages.id') }}</th>
+                                    <th>{{ __('messages.date') }}</th>
+                                    <th>{{ __('messages.category') }}</th>
+                                    <th>{{ __('messages.title') }}</th>
+                                    <th>{{ __('messages.status') }}</th>
+                                    <th>{{ __('messages.last_updated') }}</th>
+                                    <th>{{ __('messages.action') }}</th>
                                 </tr>
                             </thead>
                         </table>

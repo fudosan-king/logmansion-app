@@ -3,7 +3,7 @@
 @section('title', __('messages.banner'))
 
 @section('content_header')
-    <h1>バナー編集</h1>
+    <h1>{{__('messages.edit_banner')}}</h1>
 @stop
 
 @section('content')
@@ -14,7 +14,7 @@
                 @method('PUT')
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="banner_title">タイトル</label>
+                        <label for="banner_title">{{ __('messages.title') }}</label>
                         <input type="text" name="banner_title" id="banner_title"
                             class="form-control @error('banner_title') is-invalid @enderror"
                             value="{{ old('banner_title', $banner->banner_title) }}">
@@ -23,7 +23,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="banner_description">説明文</label>
+                        <label for="banner_description">{{ __('messages.description') }}</label>
                         <textarea name="banner_description" id="banner_description"
                             class="form-control @error('banner_description') is-invalid @enderror">{{ old('banner_description', $banner->banner_description) }}</textarea>
                         @error('banner_description')
@@ -31,7 +31,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="banner_image">画像</label>
+                        <label for="banner_image">{{ __('messages.image') }}</label>
                         <span class="red-required">※</span>
                         <div class="input-group">
                             <input type="file" class="custom-file-input @error('banner_image') is-invalid @enderror" name="banner_image" id="banner_image" accept="image/*" onchange="previewImage(this)">
@@ -49,7 +49,7 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="noti_url">URL</label>
+                        <label for="noti_url">{{ __('messages.url') }}</label>
                         <input type="url" name="banner_url" id="banner_url"
                             class="form-control @error('banner_url') is-invalid @enderror"
                             value="{{ old('banner_url', $banner->banner_url) }}" placeholder="{{ asset('/') }}">
@@ -60,7 +60,7 @@
                     <div class="form-group">
                         <input type="checkbox" name="banner_active" id="banner_active" value="1"
                             {{ old('banner_active', $banner->banner_active) ? 'checked' : '' }}>
-                        <label for="banner_active">表示</label>
+                        <label for="banner_active">{{ __('messages.status') }}</label>
                         @error('banner_active')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

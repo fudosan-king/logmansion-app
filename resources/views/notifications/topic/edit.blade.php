@@ -3,7 +3,7 @@
 @section('title', __('messages.category'))
 
 @section('content_header')
-    <h1>カテゴリー編集</h1>
+    <h1>{{__('messages.edit_category')}}</h1>
 @stop
 
 @section('content')
@@ -14,7 +14,7 @@
                 @method('PUT')
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="cat_name">タイトル</label>
+                        <label for="cat_name">{{ __('messages.title') }}</label>
                         <span class="red-required">※</span>
                         <input type="text" name="cat_name" id="cat_name"
                             class="form-control @error('cat_name') is-invalid @enderror"
@@ -23,7 +23,6 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    
                 </div>
             </div>
             <div class="card-footer d-flex justify-content-center">
