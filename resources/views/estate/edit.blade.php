@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Edit Estate')
+@section('title', '物件編集')
 
 @section('content_header')
-    <h1>Edit Estate</h1>
+    <h1>物件編集</h1>
 @stop
 @section('css')
     <meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
@@ -23,7 +23,7 @@
                 </ul>
             </div>
         @endif
-        <form action="{{route('estate.update',['id'=>$estate->est_id])}}" method="POST">
+        <form novalidate action="{{route('estate.update',['id'=>$estate->est_id])}}" method="POST">
             @csrf
             @method('PUT')
             <div class="card" id="step1">
@@ -35,31 +35,28 @@
                         <div class="form-group row">
                             <label for="estateName" class="col-sm-2 col-form-label">物件名 <span class="text-danger">※</span></label>
                             <div class="col-sm-10">
-                                <input required value="{{$estate->est_name}}" type="text" class="form-control" name="est_name" id="estateName" placeholder="物件名" 
-                                oninvalid="this.setCustomValidity('これは必須項目です。')" oninput="this.setCustomValidity('')"/>
+                                <input required value="{{$estate->est_name}}" type="text" class="form-control" name="est_name" id="estateName" placeholder="物件名"  />
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="roomNo" class="col-sm-2 col-form-label">建物名・号室 <span class="text-danger">※</span></label>
                             <div class="col-sm-10">
-                                <input required value="{{$estate->est_room_no}}" type="text" class="form-control" name="est_room_no" id="roomNo" placeholder="建物名・号室" 
-                                oninvalid="this.setCustomValidity('これは必須項目です。')" oninput="this.setCustomValidity('')" />
+                                <input required value="{{$estate->est_room_no}}" type="text" class="form-control" name="est_room_no" id="roomNo" placeholder="建物名・号室"  />
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="address" class="col-sm-2 col-form-label">住所 <span class="text-danger">※</span></label>
-                            <div class="col-sm-10 row">
-                                <input required value="{{$estate->est_zip}}" type="text" class="form-control col-sm-4 m-2" name="zip22" size="7" maxlength="7" 
-                                oninvalid="this.setCustomValidity('これは必須項目です。')" oninput="this.setCustomValidity('')">
-                                <span class="mt-3">郵便番号入力補助</span>
-                                <div class="row container mr-1">
-                                    <div class="form-group col-sm-3">
-                                        <label for="select_prefectures">都道府県</label>
-                                        <input value="{{$estate->est_pref}}" id="select_prefectures" name="pref21" class="form-control d-inline">
+                            <div class="col-sm-10 row pl-1 ml-1">
+                                <input required value="{{$estate->est_zip}}" type="number" class="form-control col-sm-4" name="zip22" size="7" maxlength="7" placeholder="郵便番号入力" />
+                                
+                                <div class="row mr-1 mt-2">
+                                    <div class="form-group col-sm-3 ">
+                                        <label for="select_prefectures">都道府県 <span class="text-danger">※</span></label>
+                                        <input required value="{{$estate->est_pref}}" id="select_prefectures" name="pref21" class="form-control d-inline">
                                     </div>
                                     <div class="form-group col-sm-3">
-                                        <label for="select_city">市・区</label>
-                                        <input value="{{$estate->est_city}}" type="text" id="select_city" name="addr21" class="form-control d-inline">
+                                        <label for="select_city">市・区 <span class="text-danger">※</span></label>
+                                        <input required value="{{$estate->est_city}}" type="text" id="select_city" name="addr21" class="form-control d-inline">
                                     </div>
                                     <div class="form-group col-sm-3">
                                         <label for="select_ward">区町村</label>
@@ -82,8 +79,9 @@
                 <div class="form-horizontal">
                     <div class="card-body d-flex justify-content-center flex-column align-items-center">
                         <div class="" style="width:50%">
-                            <div onclick="getURL()" class="btn btn-info float-right">情報を読み込む</div>
+                            <div onclick="getURL()" class="btn btn-primary float-right">HP情報を読み込む</div>
                         </div>
+                        <div id="fulladdress" class="text-success"></div>
                         <table style="width:50%">
                             <tr>
                                 <th>物件所在地</th>
@@ -143,7 +141,8 @@
                         </div> -->
                     </div>
                     <div class="card-footer d-flex justify-content-center">
-                        <button type="submit" class="btn btn-info" id="finish_step2">保存</button>
+                        <a href="{{route('estate.index')}}" class="btn btn-default mr-2">キャンセル</a>
+                        <button type="submit" class="btn btn-primary" id="finish_step2">保存</button>
                     </div>
                 </form>
             </div>
@@ -158,6 +157,7 @@
 
 @section('js')
     <script>
+        updateFullAddress();
         $('[name="zip22"]').on('keyup', function() {
             $('[name="pref21"]').val('');
             $('[name="addr21"]').val('');
@@ -197,19 +197,33 @@
                     $('#selected_prefectures').val(pref);
                     $('#selected_city').val(city);
                     $('#selected_ward').val(ward);
+                    updateFullAddress();
                     getURL();
                 }
             }, 200);
         });
         $('[name="pref21"]').on('keyup', function() {
             $('#selected_prefectures').val(this.value);
+            updateFullAddress();
         });
         $('[name="addr21"]').on('keyup', function() {
             $('#selected_city').val(this.value);
+            updateFullAddress();
         });
         $('[name="strt21"]').on('keyup', function() {
             $('#selected_ward').val(this.value);
+            updateFullAddress();
         });
+        $('[name="street"]').on('keyup', function() {
+            updateFullAddress();
+        });
+        function updateFullAddress() {
+            let pref = $('#selected_prefectures').val();
+            let city = $('#selected_city').val();
+            let ward = $('#selected_ward').val();
+            let street = $('input[name="street"]').val();
+            $('#fulladdress').text(pref + city + ward + street);
+        }
     </script>
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
@@ -237,69 +251,66 @@
                 console.error(err);
             }
         })();
-        const getURL = ()=>{
-            let pref = $('#selected_prefectures').val();
-            let city = $('#selected_city').val();
-            let ward = $('#selected_ward').val();
-            if (pref !== '') {
-                let urlPref = dataUrlCsv.find((data) => data.name.includes(pref));
-                if (urlPref) {
-                    $('#selected_pref_url').val(urlPref.URL || '');
-                } else {
-                    $('#selected_pref_url').val('');
-                    // $('#error_message').show();
+        const getURL = () => {
+            const pref = $('#selected_prefectures').val();
+            const city = $('#selected_city').val();
+            const ward = $('#selected_ward').val();
+            $('#selected_pref_url').attr('placeholder', '');
+            $('#selected_city_url').attr('placeholder', '');
+            $('#selected_ward_url').attr('placeholder', '');
+
+            const setUrl = (selector, name) => {
+                const urlData = dataUrlCsv.find(data => data.name.includes(name));
+                const url = urlData ? urlData.URL : '';
+                $(selector).val(url);
+                if (url==='') {
+                    $(selector).attr('placeholder', 'リストに存在しない地名です');
                 }
-            }else{
+            };
+            setUrl('#selected_pref_url', pref);
+            setUrl('#selected_city_url', city);
+            setUrl('#selected_ward_url', ward);
+            if (!pref ) {
                 $('#selected_pref_url').val('');
             }
-            if (city !== '') {
-                let urlCity = dataUrlCsv.find((data) => data.name.includes(city));
-                if (urlCity) {
-                    $('#selected_city_url').val(urlCity.URL || '');
-                } else {
-                    $('#selected_city_url').val('');
-                    // $('#error_message').show();
-                }
-            }else{
+            if (!city ) {
                 $('#selected_city_url').val('');
             }
-            if (ward !== '') {
-                let urlWard = dataUrlCsv.find((data) => data.name.includes(ward));
-                if (urlWard) {
-                    $('#selected_ward_url').val(urlWard.URL || '');
-                } else {
-                    $('#selected_ward_url').val('');
-                    // $('#error_message').show();
-                }
-            }else{
+            if (!ward ) {
                 $('#selected_ward_url').val('');
             }
-        }
-        // // handle  for 5 special provine
-        // $('input[name="zip22"]').on('change', function() {
-        //     const zipValue = $(this).val().trim(); 
-        //     const validZipPrefixes = ['220', '210', '228', '330', '260'];
-        //     const zipPrefix = zipValue.substring(0, 3);
-        //     const isMatched = validZipPrefixes.includes(zipPrefix);
-        //     if (isMatched) {
-        //         //Lấy giá trị input có id select_city tách đôi ra
-        //         const selectCityInput = $('#select_city');
-        //         const cityValue = selectCityInput.val();
-        //         const cityLength = cityValue.length;
-        //         if (cityLength % 2 === 0) {
-        //             const firstHalf = cityValue.substring(0, cityLength / 2);
-        //             const secondHalf = cityValue.substring(cityLength / 2);
-        //             // Do something with firstHalf and secondHalf
-        //             console.log(firstHalf,secondHalf)
-        //         }
-        //     } else {
-        //         return;
-        //     }
+        };
+        
 
-        //     alert(message); // Hiển thị thông báo
-        // });
-    
-
+    </script>
+    <script>
+        $('form').on('submit', function(e) {
+            e.preventDefault();
+            $('.invalid-feedback').remove();
+            let isValid = true;
+            $(this).find(':input[required]').each(function() {
+                if (!$(this).val()) {
+                    $(this).addClass('is-invalid');
+                    $(this).after('<div class="d-block invalid-feedback">この項目は必須です。</div>');
+                    isValid = false;
+                }else{
+                    $(this).removeClass('is-invalid');
+                }
+            });
+            if (isValid) {
+                this.submit();
+            }
+        });
+    </script>
+    <script>
+       $('input').on('input', function() {
+            this.value = this.value.replace(/^\s+/, '');
+        });
+        $('input[type="number"]').on('input', function() {
+            if (this.value.length > 7) {
+                this.value = this.value.slice(0, 7);
+            }
+        });
     </script>
     <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 @stop
