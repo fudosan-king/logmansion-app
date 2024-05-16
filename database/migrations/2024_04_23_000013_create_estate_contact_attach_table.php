@@ -15,10 +15,11 @@ class CreateEstateContactAttachTable extends Migration
     {
         Schema::create('estate_contact_attach', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('contact_id')->nullable();
+            $table->unsignedInteger('contact_id');
             $table->string('contact_file')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('contact_id')->references('contact_id')->on('estate_contact');
         });
     }
 

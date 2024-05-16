@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'よくある質問')
+@section('title', __('messages.faq'))
 
 @section('content_header')
-    <h1>FAQ新規追加</h1>
+    <h1>{{__('messages.edit_faq')}}</h1>
 @stop
 
 @section('content')
@@ -14,7 +14,7 @@
                 @method('PUT')
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="faq_title">タイトル</label>
+                        <label for="faq_title">{{ __('messages.title') }}</label>
                         <span class="red-required">※</span>
                         <input type="text" name="faq_title" id="faq_title"
                             class="form-control @error('faq_title') is-invalid @enderror"
@@ -24,7 +24,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="faq_content">内容</label>
+                        <label for="faq_content">{{ __('messages.content') }}</label>
                         <span class="red-required">※</span>
                         <textarea name="faq_content" id="faq_content"
                             class="form-control @error('faq_content') is-invalid @enderror">{{ old('faq_content', $faq->faq_content) }}</textarea>
@@ -35,7 +35,7 @@
                     <div class="form-group">
                         <input type="checkbox" name="faq_active" id="faq_active" value="1"
                             {{ old('faq_active', $faq->faq_active) ? 'checked' : '' }}>
-                        <label for="faq_active">表示</label>
+                        <label for="faq_active">{{ __('messages.status') }}</label>
                         @error('faq_active')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
