@@ -63,6 +63,7 @@ Route::group(['middleware' => ['auth', 'permission']], function(){
         Route::get('/create', [EstatesController::class, 'create'])->name('create');
         Route::post('/store', [EstatesController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [EstatesController::class, 'edit'])->name('edit');
+        Route::get('/view/{id}', [EstatesController::class, 'show'])->name('view');
         Route::put('/update/{id}', [EstatesController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [EstatesController::class, 'destroy'])->name('destroy');
         Route::get('/getEstateSchedules/{id}',[EstatesController::class, 'getEstateSchedules'])->name('getEstateSchedules');

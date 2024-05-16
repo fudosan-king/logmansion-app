@@ -81,10 +81,14 @@
                         <div class="" style="width:50%">
                             <div onclick="getURL()" class="btn btn-primary float-right">HP情報を読み込む</div>
                         </div>
-                        <div id="fulladdress" class="text-success"></div>
+                        <div class=" w-50 d-flex justify-content-between">
+                            <div>物件所在地</div>
+                            <div id="fulladdress" class=""></div>
+                            <div></div>
+                        </div>
                         <table style="width:50%">
                             <tr>
-                                <th>物件所在地</th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -159,13 +163,8 @@
     <script>
         updateFullAddress();
         $('[name="zip22"]').on('keyup', function() {
-            $('[name="pref21"]').val('');
-            $('[name="addr21"]').val('');
-            $('[name="strt21"]').val('');
-            $('[name="street"]').val('');
-            $('#selected_prefectures').val('');
-            $('#selected_city').val('');
-            $('#selected_ward').val('');
+            $('[name="pref21"], [name="addr21"], [name="strt21"], [name="street"]').val('');
+            $('#selected_prefectures, #selected_city, #selected_ward, #selected_pref_url, #selected_city_url, #selected_ward_url').val('');
             AjaxZip3.zip2addr(this,'','pref21','addr21','strt21');
             let checkInterval = setInterval(function() {
                 if ($('[name="pref21"]').val() && $('[name="addr21"]').val()) {
@@ -205,17 +204,21 @@
         $('[name="pref21"]').on('keyup', function() {
             $('#selected_prefectures').val(this.value);
             updateFullAddress();
+            getURL();
         });
         $('[name="addr21"]').on('keyup', function() {
             $('#selected_city').val(this.value);
             updateFullAddress();
+            getURL();
         });
         $('[name="strt21"]').on('keyup', function() {
             $('#selected_ward').val(this.value);
             updateFullAddress();
+            getURL();
         });
         $('[name="street"]').on('keyup', function() {
             updateFullAddress();
+            getURL();
         });
         function updateFullAddress() {
             let pref = $('#selected_prefectures').val();
@@ -307,10 +310,11 @@
             this.value = this.value.replace(/^\s+/, '');
         });
         $('input[type="number"]').on('input', function() {
-            if (this.value.length > 7) {
-                this.value = this.value.slice(0, 7);
-            }
-        });
+          if (this.value.length > 7) {
+             this.value = this.value.slice(0, 7);
+          }
+          this.value = this.value.replace(/[^0-9]/g, '');
+       });
     </script>
     <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 @stop

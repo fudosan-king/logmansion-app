@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Estate;
+use App\Models\EstateDoc;
 use App\Models\EstateSchedule;
 use Carbon\Carbon;
 class EstatesController extends Controller
@@ -97,11 +98,15 @@ class EstatesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($est_id)
     {
-        $estates = Estate::find($id);
+        $estates = Estate::find($est_id);
+        $estate_schedule = EstateSchedule::where('est_id', $est_id)->orderBy('schedule_date','desc')->get();
+        $estate_document = EstateDoc::where('est_id', $est_id)->orderBy('doc_category','asc')->get();
         return view('estate/view', [
-            'estate' =>$estates
+            'estate' =>$estates,
+            'estate_schedule' => $estate_schedule,
+            'estate_document' => $estate_document
         ]);
     }
 
