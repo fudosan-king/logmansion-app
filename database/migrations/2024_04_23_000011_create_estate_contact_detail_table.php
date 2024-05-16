@@ -16,7 +16,9 @@ class CreateEstateContactDetailTable extends Migration
         Schema::create('estate_contact_detail', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('contact_id')->nullable();
-            $table->string('contact_file')->nullable();
+            $table->longText('contact_message')->nullable();
+            $table->integer('client_id')->nullable();
+            $table->integer('user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

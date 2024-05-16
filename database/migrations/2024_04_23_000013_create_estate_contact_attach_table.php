@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEstateContactsTable extends Migration
+class CreateEstateContactAttachTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateEstateContactsTable extends Migration
      */
     public function up()
     {
-        Schema::create('estate_contacts', function (Blueprint $table) {
-            $table->increments('contact_id');
-            $table->integer('client_id')->nullable();
-            $table->string('contact_title')->nullable();
-            $table->longText('contact_description')->nullable();
+        Schema::create('estate_contact_attach', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('contact_id')->nullable();
+            $table->string('contact_file')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +29,6 @@ class CreateEstateContactsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('estate_contacts');
+        Schema::dropIfExists('estate_contact_attach');
     }
 }
