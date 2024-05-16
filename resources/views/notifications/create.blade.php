@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'お知らせ')
+@section('title', __('messages.notifications'))
 
 @section('content_header')
-    <h1>お知らせ新規追加</h1>
+    <h1>{{ __('messages.add_notification') }}</h1>
 @stop
 
 @section('content')
@@ -13,7 +13,7 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="noti_title">タイトル</label>
+                        <label for="noti_title">{{ __('messages.title') }}</label>
                         <span class="red-required">※</span>
                         <input type="text" name="noti_title" id="noti_title" class="form-control @error('noti_title') is-invalid @enderror" value="{{ old('noti_title') }}">
                         @error('noti_title')
@@ -21,7 +21,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="cat_id">カテゴリ</label>
+                        <label for="cat_id">{{ __('messages.category') }}</label>
                         <span class="red-required">※</span>
                         <select name="cat_id" id="cat_id" class="form-control @error('cat_id') is-invalid @enderror">
                             @foreach ($categories as $category)
@@ -33,7 +33,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="noti_content">本文</label>
+                        <label for="noti_content">{{ __('messages.content') }}</label>
                         <textarea name="noti_content" id="noti_content" class="form-control @error('noti_content') is-invalid @enderror">{{ old('noti_content') }}</textarea>
                         @error('noti_content')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -41,13 +41,13 @@
                     </div>
                     <div class="form-check">
                         <input name="noti_status" type="checkbox" class="form-check-input" {{ old('noti_status') == true ? 'checked' : '' }}>
-                        <label>表示</label>
+                        <label>{{ __('messages.status') }}</label>
                         @error('noti_status')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="noti_date">日付</label>
+                        <label for="noti_date">{{ __('messages.date') }}</label>
                         <span class="red-required">※</span>
                         <div class="input-group date" id="notidatepicker" data-target-input="nearest">
                             <input type="text" name="noti_date"  class="form-control datetimepicker-input @error('noti_date') is-invalid @enderror" 
@@ -59,12 +59,9 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-
-                        {{-- <input type="date" name="noti_date" id="noti_date"
-                            class="form-control @error('noti_date') is-invalid @enderror"> --}}
                     </div>
                     <div class="form-group">
-                        <label for="noti_url">URL</label>
+                        <label for="noti_url">{{ __('messages.url') }}</label>
                         <input type="url" name="noti_url" id="noti_url"
                             class="form-control @error('noti_url') is-invalid @enderror" placeholder="{{ asset('/') }}" value="{{ old('noti_url') }}">
                         @error('noti_url')
@@ -97,9 +94,6 @@
         yearRange: "-100:+0",
         disabledDates: false,
         minDate: moment().startOf('day'),
-    })
-    $("#notidatepicker").on("change.datetimepicker", function (e) {
-        $('#notidatepicker').datetimepicker('minDate', e.date);
     });
   })
 </script>
