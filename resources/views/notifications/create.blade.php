@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'お知らせ')
+@section('title', __('messages.notifications'))
 
 @section('content_header')
     <h1>お知らせ新規追加</h1>
@@ -96,7 +96,7 @@
         format: 'YYYY/MM/DD',
         yearRange: "-100:+0",
         disabledDates: false,
-        minDate: 0,
+        minDate: moment().startOf('day'),
     });
   })
 </script>

@@ -64,7 +64,7 @@ class BannerController extends Controller
         $banner->banner_url = $request->input('banner_url');
         $banner->banner_active = $request->input('banner_active', false);
         $banner->save();
-        toast('バナーが登録されました。','success');
+        toast(__('messages.banner').__('messages.created'),'success');
         return redirect()->route('banner.index');
     }
 
@@ -107,7 +107,7 @@ class BannerController extends Controller
         $banner->banner_url = $request->input('banner_url');
         $banner->banner_active = $request->input('banner_active', false);
         $banner->save();
-        toast('バナーが編集されました。','success');
+        toast(__('messages.banner').__('messages.edited'),'success');
         return redirect()->route('banner.index');
     }
 

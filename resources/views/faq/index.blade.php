@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'よくある質問')
+@section('title', __('messages.faq'))
 
 @section('content_header')
-    <h1>よくある質問</h1>
+    <h1>{{__('messages.faq')}}</h1>
 @stop
 
 @section('content')

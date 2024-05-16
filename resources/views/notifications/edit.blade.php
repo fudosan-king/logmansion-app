@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'お知らせ')
+@section('title', __("messages.notifications"))
 
 @section('content_header')
-    <h1>お知らせ編集</h1>
+    <h1>{{__('messages.notifications')}}編集</h1>
 @stop
 
 @section('content')

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'よくある質問')
+@section('title', __('messages.faq'))
 
 @section('content_header')
     <h1>FAQ新規追加</h1>

@@ -32,6 +32,7 @@ class TopicController extends Controller
         ]);
         $notification = NotiCategory::create($data);
         toast('カテゴリーが登録されました。','success');
+        toast(__('messages.category').__('messages.created'),'success');
         return redirect()->route('topic.index');
     }
 
@@ -48,7 +49,7 @@ class TopicController extends Controller
             'cat_name' => 'required',
         ]);
         $category->update($data);
-        toast('カテゴリーが編集されました。','success');
+        toast(__('messages.category').__('messages.edited'),'success');
         return redirect()->route('topic.index');
     }
 

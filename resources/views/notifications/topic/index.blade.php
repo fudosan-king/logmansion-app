@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'カテゴリー')
+@section('title', __('messages.category'))
 
 @section('content_header')
-    <h1>カテゴリー</h1>
+    <h1>{{__('messages.category')}}</h1>
 @stop
 
 @section('content')

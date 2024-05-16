@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'カテゴリ')
+@section('title', __('messages.category'))
 
 @section('content_header')
     <h1>カテゴリー編集</h1>

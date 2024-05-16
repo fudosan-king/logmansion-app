@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'バナー')
+@section('title', __('messages.banner'))
 
 @section('content_header')
-    <h1>バナー</h1>
+    <h1>{{__('messages.banner')}}</h1>
 @stop
 
 @section('content')

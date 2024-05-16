@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'バナー')
+@section('title', __('messages.banner'))
 
 @section('content_header')
     <h1>バナー編集</h1>
