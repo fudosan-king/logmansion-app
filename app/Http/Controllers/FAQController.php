@@ -39,7 +39,7 @@ class FAQController extends Controller
         $faq->faq_content = $request->input('faq_content');
         $faq->faq_active = $request->input('faq_active', false);
         $faq->save();
-        toast('FAQ created successfully.','success');
+        toast('よくある質問が登録されました。','success');
         return redirect()->route('faq.index');
     }
 
@@ -65,7 +65,7 @@ class FAQController extends Controller
         $faq->faq_content = $request->input('faq_content');
         $faq->faq_active = $request->input('faq_active', false);
         $faq->save();
-        toast('FAQ updated successfully.','success');
+        toast('よくある質問が編集されました。','success');
         return redirect()->route('faq.index');
     }
 
