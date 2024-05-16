@@ -15,12 +15,14 @@ class CreateEstateContactDetailTable extends Migration
     {
         Schema::create('estate_contact_detail', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('contact_id')->nullable();
-            $table->longText('contact_message')->nullable();
-            $table->integer('client_id')->nullable();
-            $table->integer('user_id')->nullable();
+            $table->unsignedInteger('contact_id');
+            $table->longText('contact_message');
+            $table->integer('author');
+            $table->integer('author_type')->default('0')->comment("0:client | 1:staff");
+            $table->integer('reponse_type')->default('0')->comment("0:この内容で送信 | 1:登録のみ | 2:電話等で対応");
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('contact_id')->references('contact_id')->on('estate_contact');
         });
     }
 
