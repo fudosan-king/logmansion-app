@@ -59,6 +59,7 @@ Route::group(['middleware' => ['auth', 'permission']], function(){
     
     Route::group(['prefix' => 'estate', 'as' => 'estate.'], function(){
         Route::get('/', [EstatesController::class, 'index'])->name('index');
+        Route::get('/archive', [EstatesController::class, 'archive_index'])->name('archive_index');
         Route::get('/create', [EstatesController::class, 'create'])->name('create');
         Route::post('/store', [EstatesController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [EstatesController::class, 'edit'])->name('edit');

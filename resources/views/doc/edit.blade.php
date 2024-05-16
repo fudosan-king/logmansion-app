@@ -38,9 +38,8 @@
                                 <label>説明文</label>
                             </div>
                         </div>
-                        <div class="col-sm-1">
-
-                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-1"></div>
                     </div>
                 </div>
                 @foreach($getAllDoc as $doc)
@@ -358,15 +357,16 @@
             if (pdfName.text().trim() != '') {
                 if (confirm("ファイルを削除しますか？")) {
                     var docPermanentId = $(this).closest('.doc-row').find('input[name="doc-permanent"]');
+                    var divDownloadPdf = $(this).closest('.doc-row').find('.download-pdf');
                     if (docPermanentId != '') {
-                        deleteDocPermanent(docPermanentId, pdfName);
+                        deleteDocPermanent(docPermanentId, pdfName, divDownloadPdf);
                     }
                 }
             }
         });
 
         //function deleteDocPermanent
-        function deleteDocPermanent(docPermanentId, pdfName) {
+        function deleteDocPermanent(docPermanentId, pdfName, divDownloadPdf) {
             $.ajax({
                 url: "/estate/doc/destroy/" + docPermanentId.val(),
                 type: "DELETE",
@@ -377,6 +377,7 @@
                     if (response == true) {
                         pdfName.text('');
                         docPermanentId.val('');
+                        divDownloadPdf.remove();
                     }
                 },
                 error: function(xhr, status, error) {

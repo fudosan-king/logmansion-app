@@ -15,14 +15,35 @@ class EstatesController extends Controller
      */
     public function index()
     {
-        $estates = Estate::orderBy('est_id', 'desc');
-        $estates = $estates->get()->toArray();
-        foreach ($estates as $key => $estate) {
-            $estates[$key]['schedules'] = $this->getEstateSchedules($estate['est_id'])->original;
+        $estates = Estate::orderBy('est_id', 'desc')->get()->toArray();
+        $currentEstates = [];
+        foreach ($estates as $estate) {
+            $schedules = $this->getEstateSchedules($estate['est_id'])->original;
+            if ($schedules !== []) {
+                if (empty($schedules['next_schedule']) && date('Y-m-d', strtotime($schedules['current_schedule']['schedule_date'])) != date('Y-m-d')) {
+                    continue; 
+                }
+            }
+            $estate['schedules'] = $schedules;
+            $currentEstates[] = $estate;
         }
-        // $archive = ;
         return view('estate/index', [
-            'estates' => $estates
+            'estates' => $currentEstates
+        ]);
+    }
+    public function archive_index(){
+        $estates = Estate::orderBy('est_id', 'desc')->get()->toArray();
+        $archive = [];
+        foreach ($estates as $estate) {
+            $schedules = $this->getEstateSchedules($estate['est_id'])->original;
+            if ($schedules !== []) {
+                if (empty($schedules['next_schedule']) && date('Y-m-d', strtotime($schedules['current_schedule']['schedule_date'])) != date('Y-m-d')) {
+                    $archive[] = $estate;
+                }
+            }
+        }
+        return view('estate/archive', [
+            'estates' => $archive
         ]);
     }
 
@@ -45,17 +66,10 @@ class EstatesController extends Controller
      */
     public function store(Request $request)
     {
-        $messages = [
-            // 'est_name.required' => 'The estate name field is required.',
-            // 'est_name.max' => 'The estate name may not be greater than 255 characters.',
-            // 'est_room_no.required' => 'The room number field is required.',
-            'est_name.unique'=>'The estate name must not match',
-            'est_room_no.unique'=>'The room number must not match',
-        ];
         $validatedData = $request->validate([
-            'est_name' => 'required|max:255|unique:estate_data',
-            'est_room_no' => 'required|unique:estate_data'
-        ],$messages);
+            'est_name' => 'required|max:255',
+            'est_room_no' => 'required'
+        ]);
         $estate = new Estate();
         // Step 1
         $estate->est_name = $request->input('est_name');
@@ -73,7 +87,7 @@ class EstatesController extends Controller
         $estate->est_usefulinfo_ward_url = $request->input('selected_ward_url');
         $estate->est_usefulinfo_ward_show = $request->input('showLinkstatus3') === 'on' ? 1 : 0;
         $estate->save();
-        toast('Estate created successfully.','success');
+        toast(config('estate_labels.toast_create'),'success');
         return redirect()->route('estate.index');
     }   
 
@@ -85,7 +99,10 @@ class EstatesController extends Controller
      */
     public function show($id)
     {
-        
+        $estates = Estate::find($id);
+        return view('estate/view', [
+            'estate' =>$estates
+        ]);
     }
 
     /**
@@ -111,18 +128,12 @@ class EstatesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $messages = [
-            'est_name.unique'=>'The estate name must not match',
-            'est_room_no.unique'=>'The room number must not match',
-        ];
         $validatedData = $request->validate([
-            'est_name' => 'required|max:255|unique:estate_data,est_name,' . $id . ',est_id',
-            'est_room_no' => 'required|unique:estate_data,est_room_no,' . $id . ',est_id'
-        ], $messages);
-        
+            'est_name' => 'required|max:255|',
+            'est_room_no' => 'required'
+        ]);
         $estate = Estate::find($id);
         if (!$estate) {
-            //handle estate not found
             toast('Data Error','error');
             return redirect()->route('estate.index');
         }
@@ -142,8 +153,9 @@ class EstatesController extends Controller
         $estate->est_usefulinfo_ward_url = $request->input('selected_ward_url');
         $estate->est_usefulinfo_ward_show = $request->input('showLinkstatus3') === 'on' ? 1 : 0;
         $estate->save();
-        toast('Estate update successfully.','success');
-        return redirect()->route('estate.edit',['id'=>$id]);
+        toast(config('estate_labels.toast_update'),'success');
+        // return redirect()->route('estate.edit',['id'=>$id]);
+        return redirect()->route('estate.index');
 
     }
 
@@ -162,13 +174,26 @@ class EstatesController extends Controller
     }
     public function getEstateSchedules($est_id)
     {
-        $estateSchedules = EstateSchedule::where('est_id', $est_id)->get()->toArray();
+        $estateSchedules = EstateSchedule::where('est_id', $est_id)
+            ->orderBy('schedule_date','desc') // Order by schedule_date
+            ->get()
+            ->toArray();
         $result = [];
-        foreach ($estateSchedules as $key => $estateSchedule) {
-            if (Carbon::parse($estateSchedule['schedule_date'])->lte(Carbon::now())) {
+        foreach ($estateSchedules as $estateSchedule) {
+            $scheduleDate = Carbon::parse($estateSchedule['schedule_date']);
+            if ($scheduleDate->lte(Carbon::now())) {
                 $result['current_schedule'] = $estateSchedule;
-            } else {
+                break;
+            }
+        }
+        usort($estateSchedules, function($a, $b) {
+            return strtotime($a['schedule_date']) - strtotime($b['schedule_date']);
+        });
+        foreach ($estateSchedules as $estateSchedule) {
+            $scheduleDate = Carbon::parse($estateSchedule['schedule_date']);
+            if ($scheduleDate->gt(Carbon::now())) {
                 $result['next_schedule'] = $estateSchedule;
+                break;
             }
         }
         return response()->json($result);
