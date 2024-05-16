@@ -87,7 +87,7 @@ class EstatesController extends Controller
         $estate->est_usefulinfo_ward_url = $request->input('selected_ward_url');
         $estate->est_usefulinfo_ward_show = $request->input('showLinkstatus3') === 'on' ? 1 : 0;
         $estate->save();
-        toast('物件が登録されました。','success');
+        toast(config('estate_labels.toast_create'),'success');
         return redirect()->route('estate.index');
     }   
 
@@ -99,7 +99,10 @@ class EstatesController extends Controller
      */
     public function show($id)
     {
-        
+        $estates = Estate::find($id);
+        return view('estate/view', [
+            'estate' =>$estates
+        ]);
     }
 
     /**
@@ -150,7 +153,7 @@ class EstatesController extends Controller
         $estate->est_usefulinfo_ward_url = $request->input('selected_ward_url');
         $estate->est_usefulinfo_ward_show = $request->input('showLinkstatus3') === 'on' ? 1 : 0;
         $estate->save();
-        toast('物件が編集されました。','success');
+        toast(config('estate_labels.toast_update'),'success');
         // return redirect()->route('estate.edit',['id'=>$id]);
         return redirect()->route('estate.index');
 
