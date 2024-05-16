@@ -37,7 +37,7 @@
                             <a href="{{route('estate.index')}}" type="button" class="btn btn-danger y-2">{{ config('estate_labels.back') }}</a>
                             </div>
                         </div>
-                        <table id="archive_data" class="table table-bordered table-striped dataTable dtr-inline">
+                        <table id="tblData" class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                             <tr>
                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.estate_name') }}</th>
@@ -80,7 +80,26 @@
 @section('js')
     <script>
       $(document).ready(function(){
-        $('#archive_data').DataTable();
+        $('#tblData').DataTable({
+            "language": {
+                "sProcessing": "処理中...",
+                "sLengthMenu": "_MENU_ 件表示",
+                "sZeroRecords": "データはありません。",
+                "sInfo": " _TOTAL_ 件中 _START_ から _END_ まで表示",
+                "sInfoEmpty": " 0 件中 0 から 0 まで表示",
+                "sInfoFiltered": "（全 _MAX_ 件より抽出）",
+                "sInfoPostFix": "",
+                "sSearch": "検索:",
+                "sUrl": "",
+                "oPaginate": {
+                    "sFirst": "先頭",
+                    "sPrevious": "前",
+                    "sNext": "次",
+                    "sLast": "最終"
+                }
+            },
+            "order": []
+        });
       })
     </script>
 @stop
