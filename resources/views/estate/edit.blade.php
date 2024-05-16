@@ -79,7 +79,7 @@
                 <div class="form-horizontal">
                     <div class="card-body d-flex justify-content-center flex-column align-items-center">
                         <div class="" style="width:50%">
-                            <div onclick="getURL()" class="btn btn-primary float-right">情報を読み込む</div>
+                            <div onclick="getURL()" class="btn btn-primary float-right">HP情報を読み込む</div>
                         </div>
                         <div id="fulladdress" class="text-success"></div>
                         <table style="width:50%">

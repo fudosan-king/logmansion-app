@@ -172,21 +172,27 @@ class EstatesController extends Controller
     public function getEstateSchedules($est_id)
     {
         $estateSchedules = EstateSchedule::where('est_id', $est_id)
-            ->orderBy('schedule_date') // Order by schedule_date
+            ->orderBy('schedule_date','desc') // Order by schedule_date
             ->get()
             ->toArray();
         $result = [];
-        //Fix: logic error for current schedule
         foreach ($estateSchedules as $estateSchedule) {
             $scheduleDate = Carbon::parse($estateSchedule['schedule_date']);
-            if ($scheduleDate->lte(Carbon::now()) && (!isset($result['current_schedule']))) {
+            if ($scheduleDate->lte(Carbon::now())) {
                 $result['current_schedule'] = $estateSchedule;
-            } elseif ($scheduleDate->gt(Carbon::now()) && (!isset($result['next_schedule']))) {
+                break;
+            }
+        }
+        usort($estateSchedules, function($a, $b) {
+            return strtotime($a['schedule_date']) - strtotime($b['schedule_date']);
+        });
+        foreach ($estateSchedules as $estateSchedule) {
+            $scheduleDate = Carbon::parse($estateSchedule['schedule_date']);
+            if ($scheduleDate->gt(Carbon::now())) {
                 $result['next_schedule'] = $estateSchedule;
                 break;
             }
         }
-
         return response()->json($result);
     }
 }

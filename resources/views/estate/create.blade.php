@@ -47,7 +47,7 @@
                         <div class="form-group row">
                             <label for="address" class="col-sm-2 col-form-label">住所 <span class="text-danger">※</span></label>
                             <div class="col-sm-10 row pl-1 ml-1">
-                                <input required type="text" value="{{old('zip22')}}" class="form-control col-sm-4" name="zip22" size="7" maxlength="7" placeholder="郵便番号入力">
+                                <input required type="number" value="{{old('zip22')}}" class="form-control col-sm-4" name="zip22" size="7" maxlength="7" placeholder="郵便番号入力">
                                 <div class="row mt-2">
                                     <div class="form-group col-sm-3">
                                         <label for="select_prefectures">都道府県 <span class="text-danger">※</span></label>
@@ -78,7 +78,7 @@
                 <div class="form-horizontal">
                     <div class="card-body d-flex justify-content-center flex-column align-items-center">
                         <div class="" style="width:50%">
-                            <div onclick="getURL()" class="btn btn-primary float-right">情報を読み込む</div>
+                            <div onclick="getURL()" class="btn btn-primary float-right">HP情報を読み込む</div>
                         </div>
                         <div id="fulladdress" class="text-success"></div>
                         <table style="width:50%">
@@ -133,7 +133,7 @@
                     </div>
                     <div class="card-footer d-flex justify-content-center">
                         <a href="{{route('estate.index')}}" class="btn btn-default mr-2">キャンセル</a>
-                        <button type="submit" class="btn btn-primary" id="finish_step2">物件新規追加</button>
+                        <button type="submit" class="btn btn-primary" id="finish_step2">保存</button>
                     </div>
                 </form>
             </div>

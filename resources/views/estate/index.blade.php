@@ -67,12 +67,16 @@
                             <td></td>
                             <td>
                                 <div class="action_bar" style="">
-                                  <a href="#">
+                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add Client">
                                     <i class="fas fa-hammer"></i>
+                                    </a>
+                                  <a href="{{route('schedule.edit', ['id' => $estate['est_id']])}}" data-toggle="tooltip" data-placement="top" title="Add Calendar">
+                                    <i class="fas fa-calendar"></i>
                                   </a>
-                                  <a href="{{route('schedule.edit', ['id' => $estate['est_id']])}}"><i class="fas fa-calendar"></i></a>
-                                  <a href="{{route('doc.edit', ['id' => $estate['est_id']])}}"><i class="fas fa-file-upload"></i></a>
-                                  <a href="{{route('estate.destroy',$estate['est_id'])}}" onclick="event.preventDefault(); if(confirm('{{ config('estate_labels.delete_confim') }}')) { document.getElementById('delete-form-{{$estate['est_id']}}').submit(); }">
+                                  <a href="{{route('doc.edit', ['id' => $estate['est_id']])}}" data-toggle="tooltip" data-placement="top" title="Add Files">
+                                    <i class="fas fa-file-upload"></i>
+                                  </a>
+                                  <a href="{{route('estate.destroy',$estate['est_id'])}}" onclick="event.preventDefault(); if(confirm('{{ config('estate_labels.delete_confim') }}')) { document.getElementById('delete-form-{{$estate['est_id']}}').submit(); }" data-toggle="tooltip" data-placement="top" title="Delete Estate">
                                     <form id="delete-form-{{$estate['est_id']}}" action="{{route('estate.destroy',$estate['est_id'])}}" method="POST" style="display: none;">
                                       @csrf
                                       @method('DELETE')
@@ -100,11 +104,12 @@
 @section('js')
     <script>
       $(document).ready(function(){
-        $('#tblData').DataTable({
-          "columnDefs": [
-            { "searchable": false, "targets": [1, 2, 4] }
-          ]
-        });
+      $('#tblData').DataTable({
+        "columnDefs": [
+        { "searchable": false, "targets": [1, 2, 4] }
+        ],
+        "order": []
+      });
       })
     </script>
 @stop
