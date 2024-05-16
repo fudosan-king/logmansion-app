@@ -12,5 +12,7 @@ return [
     'client' => 'クライアント',
     'action' => 'アクション',
     'back'=> '戻る',
-    'delete_confim'=>'を削除しますか？'
+    'delete_confim'=>'を削除しますか？',
+    'toast_create' => '物件が作成されました。',
+    'toast_update' => '物件が編集されました。',
 ];

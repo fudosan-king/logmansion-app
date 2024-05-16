@@ -87,7 +87,7 @@ class EstatesController extends Controller
         $estate->est_usefulinfo_ward_url = $request->input('selected_ward_url');
         $estate->est_usefulinfo_ward_show = $request->input('showLinkstatus3') === 'on' ? 1 : 0;
         $estate->save();
-        toast('Estate created successfully.','success');
+        toast(config('estate_labels.toast_create'),'success');
         return redirect()->route('estate.index');
     }   
 
@@ -99,7 +99,10 @@ class EstatesController extends Controller
      */
     public function show($id)
     {
-        
+        $estates = Estate::find($id);
+        return view('estate/view', [
+            'estate' =>$estates
+        ]);
     }
 
     /**
@@ -150,8 +153,9 @@ class EstatesController extends Controller
         $estate->est_usefulinfo_ward_url = $request->input('selected_ward_url');
         $estate->est_usefulinfo_ward_show = $request->input('showLinkstatus3') === 'on' ? 1 : 0;
         $estate->save();
-        toast('Estate update successfully.','success');
-        return redirect()->route('estate.edit',['id'=>$id]);
+        toast(config('estate_labels.toast_update'),'success');
+        // return redirect()->route('estate.edit',['id'=>$id]);
+        return redirect()->route('estate.index');
 
     }
 
@@ -171,20 +175,27 @@ class EstatesController extends Controller
     public function getEstateSchedules($est_id)
     {
         $estateSchedules = EstateSchedule::where('est_id', $est_id)
-            ->orderBy('schedule_date') // Order by schedule_date
+            ->orderBy('schedule_date','desc') // Order by schedule_date
             ->get()
             ->toArray();
         $result = [];
         foreach ($estateSchedules as $estateSchedule) {
             $scheduleDate = Carbon::parse($estateSchedule['schedule_date']);
-            if ($scheduleDate->lte(Carbon::now()) && (!isset($result['current_schedule']))) {
+            if ($scheduleDate->lte(Carbon::now())) {
                 $result['current_schedule'] = $estateSchedule;
-            } elseif ($scheduleDate->gt(Carbon::now()) && (!isset($result['next_schedule']))) {
+                break;
+            }
+        }
+        usort($estateSchedules, function($a, $b) {
+            return strtotime($a['schedule_date']) - strtotime($b['schedule_date']);
+        });
+        foreach ($estateSchedules as $estateSchedule) {
+            $scheduleDate = Carbon::parse($estateSchedule['schedule_date']);
+            if ($scheduleDate->gt(Carbon::now())) {
                 $result['next_schedule'] = $estateSchedule;
                 break;
             }
         }
-
         return response()->json($result);
     }
 }

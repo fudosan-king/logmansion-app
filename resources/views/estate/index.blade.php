@@ -53,7 +53,7 @@
                     <tbody>
                       @foreach($estates as $estate)
                           <tr class="odd">
-                            <td class="dtr-control">{{$estate['est_name']}}</td>
+                            <td class="dtr-control"><a href="{{route('estate.edit',['id'=>$estate['est_id']])}}">{{$estate['est_name']}}</a></td>
                             <td class="sorting_1">
                               @if($estate['schedules'] !== [])
                                 {{$estate['schedules']['current_schedule']['schedule_name'] ?? ""}}
@@ -67,13 +67,16 @@
                             <td></td>
                             <td>
                                 <div class="action_bar" style="">
-                                  <a href="{{route('estate.edit',['id'=>$estate['est_id']])}}">
+                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add Client">
                                     <i class="fas fa-hammer"></i>
+                                    </a>
+                                  <a href="{{route('schedule.edit', ['id' => $estate['est_id']])}}" data-toggle="tooltip" data-placement="top" title="Add Calendar">
+                                    <i class="fas fa-calendar"></i>
                                   </a>
-                                  
-                                  <a href="{{route('schedule.edit', ['id' => $estate['est_id']])}}"><i class="fas fa-calendar"></i></a>
-                                  <a href="{{route('doc.edit', ['id' => $estate['est_id']])}}"><i class="fas fa-file-upload"></i></a>
-                                  <a href="{{route('estate.destroy',$estate['est_id'])}}" onclick="event.preventDefault(); if(confirm('{{ config('estate_labels.delete_confim') }}')) { document.getElementById('delete-form-{{$estate['est_id']}}').submit(); }">
+                                  <a href="{{route('doc.edit', ['id' => $estate['est_id']])}}" data-toggle="tooltip" data-placement="top" title="Add Files">
+                                    <i class="fas fa-file-upload"></i>
+                                  </a>
+                                  <a href="{{route('estate.destroy',$estate['est_id'])}}" onclick="event.preventDefault(); if(confirm('{{ config('estate_labels.delete_confim') }}')) { document.getElementById('delete-form-{{$estate['est_id']}}').submit(); }" data-toggle="tooltip" data-placement="top" title="Delete Estate">
                                     <form id="delete-form-{{$estate['est_id']}}" action="{{route('estate.destroy',$estate['est_id'])}}" method="POST" style="display: none;">
                                       @csrf
                                       @method('DELETE')
@@ -101,11 +104,12 @@
 @section('js')
     <script>
       $(document).ready(function(){
-        $('#tblData').DataTable({
-          "columnDefs": [
-            { "searchable": false, "targets": [1, 2, 4] }
-          ]
-        });
+      $('#tblData').DataTable({
+        "columnDefs": [
+        { "searchable": false, "targets": [1, 2, 4] }
+        ],
+        "order": []
+      });
       })
     </script>
 @stop
