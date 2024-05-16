@@ -42,7 +42,7 @@ class NotificationController extends Controller
         ]);
         $data['noti_status'] = $request->has('noti_status');
         $notification = Notification::create($data);
-        toast('Notification created successfully.','success');
+        toast('お知らせが登録されました。','success');
         return redirect()->route('notification.index');
     }
 
@@ -71,7 +71,7 @@ class NotificationController extends Controller
         $data['noti_status'] = $request->has('noti_status');
         $notification->update($data);
 
-        toast('Notification updated successfully.','success');
+        toast('お知らせが編集されました。','success');
         return redirect()->route('notification.index');
     }
 
