@@ -29,4 +29,6 @@ return [
     'date' => '日付',
     'password' => 'パスワード',
     'save' => '保存',
+    'user_create' => 'ユーザーが作成されました。',
+    'user_update' => 'ユーザーが編集されました。',
 ];

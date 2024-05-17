@@ -48,13 +48,13 @@
                                 <span class="text-danger">{{$errors->first('email')}}</span>
                             @endif
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="password" class="form-label">{{__('messages.password')}}</label>
                             <input type="password" class="form-control" name="password" placeholder="Enter Users Password" value="{{old('password')}}">
                             @if($errors->has('password'))
                                 <span class="text-danger">{{$errors->first('password')}}</span>
                             @endif
-                        </div>
+                        </div> --}}
                         <div class="form-group">
                             <label for="roles" class="form-label">{{__('messages.role')}}</label>
                             <select class="form-control select2"

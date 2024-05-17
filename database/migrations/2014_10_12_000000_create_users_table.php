@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('department')->default('0')->comment("0:LS LogSuite | 1:LA LogArchitects");
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->default(Hash::make('admin2024'));
             $table->rememberToken();
             $table->timestamps();
         });
