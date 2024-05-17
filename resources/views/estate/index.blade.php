@@ -43,10 +43,10 @@
                   <table id="tblData" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example2_info">
                     <thead>
                       <tr>
-                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.estate_name') }}</th>
-                        <th class="sorting sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="descending">{{ config('estate_labels.status') }}</th>
-                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.next_schedule') }}</th>
-                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.client') }}</th>
+                        <th class="sorting w-50" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.estate_name') }}</th>
+                        <th class="sorting text-nowrap sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="descending">{{ config('estate_labels.status') }}</th>
+                        <th class="sorting text-nowrap" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.next_schedule') }}</th>
+                        <th class="sorting text-nowrap" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.client') }}</th>
                         <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.action') }}</th>
                       </tr>
                     </thead>
