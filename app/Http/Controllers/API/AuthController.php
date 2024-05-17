@@ -73,10 +73,10 @@ class AuthController extends Controller
                 'client_email' => $credentials['client_email'], 
                 'password' => $credentials['client_password']
             ]);
-            $token = auth('clients')->login(Client::where('client_email', $credentials['client_email'])->first());
             if (!$token) {
                 return response()->json(['error' => 'invalid_credentials'], 401);
             }
+            $token = auth('clients')->login(Client::where('client_email', $credentials['client_email'])->first());
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
