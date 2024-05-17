@@ -18,15 +18,15 @@ class EstatesController extends Controller
     {
         $estates = Estate::orderBy('est_id', 'desc')->get()->toArray();
         $currentEstates = [];
+        // $schedules = [];
         foreach ($estates as $estate) {
             $schedules = $this->getEstateSchedules($estate['est_id'])->original;
-            if ($schedules !== []) {
-                if (empty($schedules['next_schedule']) && date('Y-m-d', strtotime($schedules['current_schedule']['schedule_date'])) != date('Y-m-d')) {
-                    continue; 
-                }
-            }
             $estate['schedules'] = $schedules;
-            $currentEstates[] = $estate;
+            if ($this->isArchive($estate['est_id'])) {
+                continue;
+            }else{
+                $currentEstates[] = $estate;
+            }
         }
         return view('estate/index', [
             'estates' => $currentEstates
@@ -36,11 +36,8 @@ class EstatesController extends Controller
         $estates = Estate::orderBy('est_id', 'desc')->get()->toArray();
         $archive = [];
         foreach ($estates as $estate) {
-            $schedules = $this->getEstateSchedules($estate['est_id'])->original;
-            if ($schedules !== []) {
-                if (empty($schedules['next_schedule']) && date('Y-m-d', strtotime($schedules['current_schedule']['schedule_date'])) != date('Y-m-d')) {
-                    $archive[] = $estate;
-                }
+            if ($this->isArchive($estate['est_id'])) {
+                $archive[] = $estate;
             }
         }
         return view('estate/archive', [
@@ -202,5 +199,18 @@ class EstatesController extends Controller
             }
         }
         return response()->json($result);
+    }
+    public function isArchive($est_id){
+        $late_schedule = EstateSchedule::where('est_id', $est_id)
+            ->orderBy('schedule_date', 'desc')
+            ->first();
+        if ($late_schedule) {
+            $scheduleDate = strtotime($late_schedule['schedule_date']);
+            $oneYearAgo = strtotime('-1 year -1 day');
+            if ($scheduleDate <= $oneYearAgo) {
+                return true;
+            }
+        }
+        return false;
     }
 }

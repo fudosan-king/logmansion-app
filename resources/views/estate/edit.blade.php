@@ -35,7 +35,7 @@
                         <div class="form-group row">
                             <label for="estateName" class="col-sm-2 col-form-label">物件名 <span class="text-danger">※</span></label>
                             <div class="col-sm-10">
-                                <input required value="{{$estate->est_name}}" type="text" class="form-control" name="est_name" id="estateName" placeholder="物件名"  />
+                                <input required value="{{$estate->est_name}}" type="text" class="form-control" name="est_name" id="estateName" placeholder="物件名"  maxlength="255"/>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -297,6 +297,26 @@
                     $(this).after('<div class="d-block invalid-feedback">この項目は必須です。</div>');
                     isValid = false;
                 }else{
+                    $(this).removeClass('is-invalid');
+                }
+            });
+            $('input[type="url"]').each(function() {
+                let url = $(this).val();
+                if (url.trim() === '') {
+                    return;
+                }
+                let urlPattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+                    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name and extension
+                    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+                    '(\\:\\d+)?'+ // port
+                    '(\\/[-a-z\\d%_.~+]*)*'+ // path
+                    '(\\?[;&amp;a-z\\d%_.~+=-]*)?'+ // query string
+                    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+                if (!urlPattern.test(url)) {
+                    $(this).addClass('is-invalid');
+                    $(this).after('<div style="margin:-10px" class="d-block invalid-feedback ml-2">無効な形式です</div>');
+                    isValid = false;
+                } else {
                     $(this).removeClass('is-invalid');
                 }
             });
