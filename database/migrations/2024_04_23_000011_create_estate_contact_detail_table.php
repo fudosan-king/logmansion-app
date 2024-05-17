@@ -19,7 +19,7 @@ class CreateEstateContactDetailTable extends Migration
             $table->longText('contact_message');
             $table->integer('author');
             $table->integer('author_type')->default('0')->comment("0:client | 1:staff");
-            $table->integer('reponse_type')->default('0')->comment("0:この内容で送信 | 1:登録のみ | 2:電話等で対応");
+            $table->integer('response_type')->default('0')->comment("0:この内容で送信 | 1:登録のみ | 2:電話等で対応");
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('contact_id')->references('contact_id')->on('estate_contact');
