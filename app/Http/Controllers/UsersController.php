@@ -10,9 +10,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Laravel\Ui\Presets\React;
 use Spatie\Permission\Models\Role;
-
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AdminResetNotification;
+use Illuminate\Auth\Passwords\PasswordBroker;
 class UsersController extends Controller
 {
+
+    use SendsPasswordResetEmails;
+   
     /**
      * Display a listing of the resource.
      *
@@ -50,6 +59,7 @@ class UsersController extends Controller
             'department' => 'required', 
             'email' => 'required|email:rfc,dns|unique:users,email'
         ]);
+
         if($request->has('roles'))
         {
             $user->create($request->all())->roles()->sync($request->roles);
@@ -58,12 +68,26 @@ class UsersController extends Controller
         }
         if($user)
         {
-            toast('New User Created Successfully.','success');
+            $response = $this->broker()->sendResetLink(
+                $request->only('email')
+            );
+         
+            // Mail::to($request->email)->send(new AdminResetNotification($request, 'asaaaaa'));
+            toast(__('messages.user_create'),'success');
             return Redirect::to('users');
+
         }
         toast('Error Creating New User','error');
         return back()->withInput();
     }
+
+    // public function sendResetLinkEmail(Request $request)
+    // {
+    //     $this->validateEmail($request);
+    //     $response = $this->broker()->sendResetLink(
+    //         $this->credentials($request)
+    //     );
+    // }
 
     /**
      * Display the specified resource.
@@ -110,7 +134,7 @@ class UsersController extends Controller
 
         if($user)
         {
-            toast('User Updated Successfully.','success');
+            toast(__('messages.user_update'),'success');
             return Redirect::to('users');
         }
         toast('Error in User Update','error');
