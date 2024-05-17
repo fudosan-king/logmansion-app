@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Estate;
+use App\Models\EstateDoc;
 use App\Models\EstateSchedule;
 use Carbon\Carbon;
 class EstatesController extends Controller
@@ -17,15 +18,15 @@ class EstatesController extends Controller
     {
         $estates = Estate::orderBy('est_id', 'desc')->get()->toArray();
         $currentEstates = [];
+        // $schedules = [];
         foreach ($estates as $estate) {
             $schedules = $this->getEstateSchedules($estate['est_id'])->original;
-            if ($schedules !== []) {
-                if (empty($schedules['next_schedule']) && date('Y-m-d', strtotime($schedules['current_schedule']['schedule_date'])) != date('Y-m-d')) {
-                    continue; 
-                }
-            }
             $estate['schedules'] = $schedules;
-            $currentEstates[] = $estate;
+            if ($this->isArchive($estate['est_id'])) {
+                continue;
+            }else{
+                $currentEstates[] = $estate;
+            }
         }
         return view('estate/index', [
             'estates' => $currentEstates
@@ -35,11 +36,8 @@ class EstatesController extends Controller
         $estates = Estate::orderBy('est_id', 'desc')->get()->toArray();
         $archive = [];
         foreach ($estates as $estate) {
-            $schedules = $this->getEstateSchedules($estate['est_id'])->original;
-            if ($schedules !== []) {
-                if (empty($schedules['next_schedule']) && date('Y-m-d', strtotime($schedules['current_schedule']['schedule_date'])) != date('Y-m-d')) {
-                    $archive[] = $estate;
-                }
+            if ($this->isArchive($estate['est_id'])) {
+                $archive[] = $estate;
             }
         }
         return view('estate/archive', [
@@ -97,11 +95,15 @@ class EstatesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($est_id)
     {
-        $estates = Estate::find($id);
+        $estates = Estate::find($est_id);
+        $estate_schedule = EstateSchedule::where('est_id', $est_id)->orderBy('schedule_date','desc')->get();
+        $estate_document = EstateDoc::where('est_id', $est_id)->orderBy('doc_category','asc')->get();
         return view('estate/view', [
-            'estate' =>$estates
+            'estate' =>$estates,
+            'estate_schedule' => $estate_schedule,
+            'estate_document' => $estate_document
         ]);
     }
 
@@ -197,5 +199,18 @@ class EstatesController extends Controller
             }
         }
         return response()->json($result);
+    }
+    public function isArchive($est_id){
+        $late_schedule = EstateSchedule::where('est_id', $est_id)
+            ->orderBy('schedule_date', 'desc')
+            ->first();
+        if ($late_schedule) {
+            $scheduleDate = strtotime($late_schedule['schedule_date']);
+            $oneYearAgo = strtotime('-1 year -1 day');
+            if ($scheduleDate <= $oneYearAgo) {
+                return true;
+            }
+        }
+        return false;
     }
 }

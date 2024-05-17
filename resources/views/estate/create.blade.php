@@ -35,7 +35,7 @@
                         <div class="form-group row">
                             <label for="estateName" class="col-sm-2 col-form-label">物件名 <span class="text-danger">※</span></label>
                             <div class="col-sm-10">
-                                <input required maxlength="255" type="text" value="{{old('est_name')}}" class="form-control" name="est_name" id="estateName" placeholder="物件名" />
+                                <input required type="text" value="{{old('est_name')}}" class="form-control" name="est_name" id="estateName" placeholder="物件名" maxlength=255/>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -80,10 +80,14 @@
                         <div class="" style="width:50%">
                             <div onclick="getURL()" class="btn btn-primary float-right">HP情報を読み込む</div>
                         </div>
-                        <div id="fulladdress" class="text-success"></div>
+                        <div class=" w-50 d-flex justify-content-between">
+                            <div>物件所在地</div>
+                            <div id="fulladdress" class=""></div>
+                            <div></div>
+                        </div>
                         <table style="width:50%">
                             <tr>
-                                <th>物件所在地</th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -92,7 +96,7 @@
                                     <input id="selected_prefectures" readonly placeholder="都道府県" class="form-control">
                                 </td>
                                 <td>                                
-                                    <input type="text" value="{{old('selected_pref_url')}}" class="form-control m-2" id="selected_pref_url" name="selected_pref_url">
+                                    <input type="url" value="{{old('selected_pref_url')}}" class="form-control m-2" id="selected_pref_url" name="selected_pref_url">
                                 </td>
                                 <td>
                                     <div class="custom-control custom-switch ml-4">
@@ -106,7 +110,7 @@
                                     <input id="selected_city" readonly placeholder="市・区 " class="form-control">
                                 </td>
                                 <td>                                
-                                    <input type="text" value="{{old('selected_city_url')}}" class="form-control m-2" id="selected_city_url" name="selected_city_url">
+                                    <input type="url" value="{{old('selected_city_url')}}" class="form-control m-2" id="selected_city_url" name="selected_city_url">
                                 </td>
                                 <td>
                                     <div class="custom-control custom-switch ml-4">
@@ -120,7 +124,7 @@
                                     <input id="selected_ward" readonly placeholder="区町村" class="form-control">
                                 </td>
                                 <td>                                
-                                    <input  type="text" value="{{old('selected_ward_url')}}" class="form-control m-2" id="selected_ward_url" name="selected_ward_url">
+                                    <input  type="url" value="{{old('selected_ward_url')}}" class="form-control m-2" id="selected_ward_url" name="selected_ward_url">
                                 </td>
                                 <td>
                                     <div class="custom-control custom-switch ml-4">
@@ -150,13 +154,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
          $('[name="zip22"]').on('keyup', function() {
-            $('[name="pref21"]').val('');
-            $('[name="addr21"]').val('');
-            $('[name="strt21"]').val('');
-            $('[name="street"]').val('');
-            $('#selected_prefectures').val('');
-            $('#selected_city').val('');
-            $('#selected_ward').val('');
+            $('[name="pref21"], [name="addr21"], [name="strt21"], [name="street"]').val('');
+            $('#selected_prefectures, #selected_city, #selected_ward, #selected_pref_url, #selected_city_url, #selected_ward_url').val('');
             AjaxZip3.zip2addr(this,'','pref21','addr21','strt21');
             let checkInterval = setInterval(function() {
                 if ($('[name="pref21"]').val() && $('[name="addr21"]').val()) {
@@ -214,6 +213,7 @@
             let ward = $('#selected_ward').val();
             let street = $('input[name="street"]').val();
             $('#fulladdress').text(pref + city + ward + street);
+            getURL();
         }
         @if ($errors->any())
             $(document).ready(function() {
@@ -292,20 +292,41 @@
                     $(this).removeClass('is-invalid');
                 }
             });
+            $('input[type="url"]').each(function() {
+                let url = $(this).val();
+                if (url.trim() === '') {
+                    return;
+                }
+                let urlPattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+                    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name and extension
+                    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+                    '(\\:\\d+)?'+ // port
+                    '(\\/[-a-z\\d%_.~+]*)*'+ // path
+                    '(\\?[;&amp;a-z\\d%_.~+=-]*)?'+ // query string
+                    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+                if (!urlPattern.test(url)) {
+                    $(this).addClass('is-invalid');
+                    $(this).after('<div style="margin:-10px" class="d-block invalid-feedback ml-2">無効な形式です</div>');
+                    isValid = false;
+                } else {
+                    $(this).removeClass('is-invalid');
+                }
+            });
             if (isValid) {
                 this.submit();
             }
         });
     </script>
-     <script>
-        $('input').on('input', function() {
-            this.value = this.value.replace(/^\s+/, '');
-        });
-        $('input[type="number"]').on('input', function() {
-            if (this.value.length > 7) {
-                this.value = this.value.slice(0, 7);
-            }
-        });
+    <script>
+       $('input').on('input', function() {
+          this.value = this.value.replace(/^\s+/, '');
+       });
+       $('input[type="number"]').on('input', function() {
+          if (this.value.length > 7) {
+             this.value = this.value.slice(0, 7);
+          }
+          this.value = this.value.replace(/[^0-9]/g, '');
+       });
     </script>
     <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 @stop

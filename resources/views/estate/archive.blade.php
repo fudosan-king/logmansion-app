@@ -40,7 +40,8 @@
                         <table id="tblData" class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                             <tr>
-                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.estate_name') }}</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >
+                                    {{ config('estate_labels.estate_name') }}</th>
                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.client') }}</th>
                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.action') }}</th>
                             </tr>
@@ -48,7 +49,9 @@
                             <tbody>
                             @foreach($estates as $estate)
                             <tr>
-                                <td class="dtr-control">{{$estate['est_name']}}</td>
+                                <td class="dtr-control">
+                                    <a href="{{route('estate.view',$estate['est_id'])}}">{{$estate['est_name']}}</a>
+                                </td>
                                 <td></td> 
                                 <td>
                                     <div class="action_bar">
