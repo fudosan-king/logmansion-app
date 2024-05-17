@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'カテゴリー')
+@section('title', __('messages.category'))
 
 @section('content_header')
-    <h1>カテゴリー新規追加</h1>
+    <h1>{{__('messages.new_category')}}</h1>
 @stop
 
 @section('content')
@@ -13,7 +13,7 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="cat_name">タイトル</label>
+                        <label for="cat_name">{{ __('messages.title') }}</label>
                         <span class="red-required">※</span>
                         <input type="text" name="cat_name" id="cat_name"
                             class="form-control @error('cat_name') is-invalid @enderror"
