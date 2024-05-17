@@ -30,6 +30,10 @@ return [
     'password' => 'パスワード',
     'save' => '保存',
 
+    'user_create' => 'ユーザーが作成されました。',
+    'user_update' => 'ユーザーが編集されました。',
+
+
     'created' => 'が登録されました。',
     'edited' => 'が編集されました。',
     'created' => 'が登録されました。',
@@ -66,5 +70,5 @@ return [
     'edit_faq' => 'FAQ編集',
     'new_category' => 'カテゴリー新規追加',
     'edit_category' => 'カテゴリー編集',
-    
+
 ];
