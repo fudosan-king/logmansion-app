@@ -56,7 +56,7 @@
                             @endif
                         </div> --}}
                         <div class="form-group">
-                            <label for="roles" class="form-label">{{__('messages.role')}}</label>
+                            <label for="roles" class="form-label">{{__('messages.role')}} <span class="text-danger">*</span></label>
                             <select class="form-control select2"
                             {{-- multiple="multiple"  --}}
                             id="select2" data-placeholder="Select Roles" name="roles[]">
@@ -140,14 +140,14 @@
                 {data:'roles', name:'roles'},
                 {data:'action', name:'action', bSortable:false, className:"text-center"},
             ], 
-
+            // ({{__('messages.confirm_delete')}}
             // data: dataSet,
             order:[[0, "desc"]]
         });
         $('body').on('click', '#btnDel', function(){
             //confirmation
             var id = $(this).data('id');
-            if(confirm('Delete Data '+id+'?')==true)
+            if(confirm('{{__("messages.confirm_delete")}}')==true)
             {
                 var route = "{{route('users.destroy', ':id')}}"; 
                 route = route.replace(':id', id);
