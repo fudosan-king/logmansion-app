@@ -88,11 +88,12 @@ Route::group(['middleware' => ['auth', 'permission']], function(){
     Route::put('/catalogue/update/{id}', [CatalogueController::class, 'update'])->name('catalogue.update');
     Route::delete('/catalogue/destroy/{id}', [CatalogueController::class, 'destroy'])->name('catalogue.destroy'); 
     
+    // Route::get('/estcontact/create', [EstContactController::class, 'create'])->name('estcontact.create'); 
+    // Route::post('/estcontact/store', [EstContactController::class, 'store'])->name('estcontact.store');
+    // Route::delete('/estcontact/destroy/{id}', [EstContactController::class, 'destroy'])->name('estcontact.destroy'); 
+    Route::get('/getDocSearch', [EstContactController::class, 'getDocSearch'])->name('estcontact.getDocSearch');
     Route::get('/estcontact', [EstContactController::class, 'index'])->name('estcontact'); 
-    Route::get('/estcontact/create', [EstContactController::class, 'create'])->name('estcontact.create'); 
-    Route::post('/estcontact/store', [EstContactController::class, 'store'])->name('estcontact.store');
     Route::get('/estcontact/edit/{id}', [EstContactController::class, 'edit'])->name('estcontact.edit');
     Route::put('/estcontact/update/{id}', [EstContactController::class, 'update'])->name('estcontact.update');
-    Route::delete('/estcontact/destroy/{id}', [EstContactController::class, 'destroy'])->name('estcontact.destroy'); 
 });
 
