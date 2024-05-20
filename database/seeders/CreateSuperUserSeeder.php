@@ -8,7 +8,9 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-
+use Illuminate\Support\Facades\Hash;
+use Faker\Factory;
+use Illuminate\Support\Arr;
 class CreateSuperUserSeeder extends Seeder
 {
     /**
@@ -90,14 +92,73 @@ class CreateSuperUserSeeder extends Seeder
         $permission = Permission::create(['name' => 'estcontact.update','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'estcontact.destroy','guard_name' => 'web']);
         
-        
-
+    
         for($i=1; $i <= $permission->id; $i++) {
             \DB::table('role_has_permissions')->insert([
                 'permission_id' =>  $i,
                 'role_id' => $role->id
              ]);
         }
-        // $role->syncPermissions($permission->id);
+    
+        $locales = ['en_GB', 'vn_VN'];
+        $faker = Factory::create(Arr::random($locales));
+        
+        for($i=1; $i <= 10; $i++) {
+            \DB::table('estate_banners')->insert([
+                'banner_title' => rand(1,10),
+                'banner_description' => $faker->paragraphs(2,true),
+                'banner_image' => '/banner/'.rand(1,5).'.jpg',
+                'banner_url' => rand(1,10),
+                'banner_active' => rand(0,1),
+            ]);
+        }
+
+        for($i=1; $i <= 50; $i++) {
+            \DB::table('estate_clients')->insert([
+                'client_id' => 'Est'. sprintf("%06d", $i),
+                'est_id' =>   $i,
+                'client_name' => $faker->name,
+                'client_f_name' => $faker->firstName,
+                'client_l_name' => $faker->lastName,
+                'client_furigana' => 'abc',
+                'client_email' => $faker->email,
+                'client_password' => Hash::make('super1234'),
+                'client_tel' => $faker->phoneNumber,
+         ]);
+        }
+      
+
+        for($i=1; $i <= 10; $i++) {
+            $contact_type = rand(0,2);
+            \DB::table('estate_contact')->insert([
+                'client_id' => 'Est'. sprintf("%06d", $i),
+                'contact_type' =>   $contact_type,
+                'contact_spot' =>  ($contact_type == 2 ? $contact_type = rand(0,8): null),
+                'contact_status' =>  rand(0,3),
+                'contact_title' => $faker->sentence,
+                'contact_comment' => $faker->paragraphs(2,true),
+                'updated_at' => now(),
+                'created_at' => now(),
+                'user_id' => rand(1,10),
+            ]);
+        }
+
+        for($i=1; $i <= 100; $i++) {
+            \DB::table('estate_contact_detail')->insert([
+                'contact_id' => rand(1,10),
+                'contact_message' =>  $faker->sentence,
+                'author' =>   rand(1,10),
+                'author_type' =>  rand(0,1),
+                'response_type' => rand(0,2),
+            ]);
+        }
+
+        for($i=1; $i <= 10; $i++) {
+            \DB::table('estate_contact_attach')->insert([
+                'contact_id' => rand(1,10),
+                'contact_file' => '/test/'.rand(1,5).'.jpg' ,
+            ]);
+        }
+
     }
 }
