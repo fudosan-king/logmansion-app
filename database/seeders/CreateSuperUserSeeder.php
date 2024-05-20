@@ -43,7 +43,15 @@ class CreateSuperUserSeeder extends Seeder
         $permission = Permission::create(['name' => 'estate.edit','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'estate.update','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'estate.destroy','guard_name' => 'web']); 
-
+        $permission = Permission::create(['name' => 'estate.archive_index','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'estate.getEstateSchedules','guard_name' => 'web']); 
+    
+        $permission = Permission::create(['name' => 'client.index','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'client.create','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'client.store','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'client.edit','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'client.update','guard_name' => 'web']); 
+ 
         $permission = Permission::create(['name' => 'notification.index','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'notification.create','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'notification.store','guard_name' => 'web']); 
@@ -85,13 +93,19 @@ class CreateSuperUserSeeder extends Seeder
         $permission = Permission::create(['name' => 'catalogue.update','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'catalogue.destroy','guard_name' => 'web']);
 
-        $permission = Permission::create(['name' => 'estcontact.index','guard_name' => 'web']);
+        $permission = Permission::create(['name' => 'estcontact','guard_name' => 'web']);
         $permission = Permission::create(['name' => 'estcontact.create','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'estcontact.store','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'estcontact.edit','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'estcontact.update','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'estcontact.destroy','guard_name' => 'web']);
         
+        $permission = Permission::create(['name' => 'doc.edit','guard_name' => 'web']);
+        $permission = Permission::create(['name' => 'doc.store','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'doc.permanent','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'doc.update','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'doc.destroy','guard_name' => 'web']); 
+
     
         for($i=1; $i <= $permission->id; $i++) {
             \DB::table('role_has_permissions')->insert([

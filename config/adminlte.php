@@ -357,12 +357,12 @@ return [
         ],
         [
             'text' => 'おすすめオーダー家具',
-            'route' => 'catalogue',
+            'route' => 'catalogue.index',
             'icon' => 'fas fa-fw  fa-regular fa-book',
         ],
         [
             'text' => 'お問い合わせ',
-            'route' => 'estcontact',
+            'url' => 'estcontact',
             'icon' => 'fas fa-fw  fa-address-book',
         ],
         // ['header' => 'account_settings'],

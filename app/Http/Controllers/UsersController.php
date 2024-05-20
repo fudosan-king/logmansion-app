@@ -28,7 +28,7 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {        
+    {       
         if($request->ajax())
         {
             return $this->getUsers();
@@ -58,7 +58,11 @@ class UsersController extends Controller
             'name' => 'required', 
             'department' => 'required', 
             'email' => 'required|email:rfc,dns|unique:users,email'
+        ],
+        [
+            'email.unique' => __('messages.email.unique'),
         ]);
+
 
         if($request->has('roles'))
         {
@@ -108,6 +112,9 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
+        if (empty($user) || Auth::id() ==  $user->id) {
+            abort(403);
+        }
         return view('users.edit', [
             "user" => $user, 
             "userRole" => $user->roles->pluck('name')->toArray(), 
@@ -159,7 +166,8 @@ class UsersController extends Controller
 
     private function getUsers()
     {
-        $data = User::with('roles')->get();
+       
+        $data = User::with('roles')->where('id', '<>',Auth::user()->id)->get();
         return DataTables::of($data)
                 ->addColumn('name', function($row){
                     return ucfirst($row->name);

@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth', 'permission']], function(){
       
     Route::resource('faq', FAQController::class);
     
+    Route::resource('catalogue', CatalogueController::class);
 
     Route::group(['prefix'=> 'users', 'as' => 'users.'], function(){
         Route::resource('permissions', PermissionsController::class);
@@ -81,12 +82,7 @@ Route::group(['middleware' => ['auth', 'permission']], function(){
     Route::post('/estate/doc/update', [DocumentController::class, 'update'])->name('doc.update');
     Route::delete('/estate/doc/destroy/{id}', [DocumentController::class, 'destroy'])->name('doc.destroy');
 
-    Route::get('/catalogue', [CatalogueController::class, 'index'])->name('catalogue'); 
-    Route::get('/catalogue/create', [CatalogueController::class, 'create'])->name('catalogue.create'); 
-    Route::post('/catalogue/store', [CatalogueController::class, 'store'])->name('catalogue.store');
-    Route::get('/catalogue/edit/{id}', [CatalogueController::class, 'edit'])->name('catalogue.edit');
-    Route::put('/catalogue/update/{id}', [CatalogueController::class, 'update'])->name('catalogue.update');
-    Route::delete('/catalogue/destroy/{id}', [CatalogueController::class, 'destroy'])->name('catalogue.destroy'); 
+   
     
     // Route::get('/estcontact/create', [EstContactController::class, 'create'])->name('estcontact.create'); 
     // Route::post('/estcontact/store', [EstContactController::class, 'store'])->name('estcontact.store');
@@ -95,5 +91,6 @@ Route::group(['middleware' => ['auth', 'permission']], function(){
     Route::get('/estcontact', [EstContactController::class, 'index'])->name('estcontact'); 
     Route::get('/estcontact/edit/{id}', [EstContactController::class, 'edit'])->name('estcontact.edit');
     Route::put('/estcontact/update/{id}', [EstContactController::class, 'update'])->name('estcontact.update');
+    
 });
 

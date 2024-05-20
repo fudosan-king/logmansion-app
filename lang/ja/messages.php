@@ -21,11 +21,11 @@ return [
     "archive" => "アーカイブ",
     'user-list' => 'ユーザ一覧',
     'name' => 'お名前',
-    'mail' => 'メール',
+    'mail' => 'メールアドレス',
     'tel' => 'お電話番号',
     'action' => 'アクション',
-    'department' => '部門',
-    'role' => '役割',
+    'department' => '所属',
+    'role' => '権限',
     'date' => '日付',
     'password' => 'パスワード',
     'save' => '保存',
@@ -70,5 +70,6 @@ return [
     'edit_faq' => 'FAQ編集',
     'new_category' => 'カテゴリー新規追加',
     'edit_category' => 'カテゴリー編集',
-
+    'email' => ['unique' => 'メールアドレスはすでに使用されています。'],      
+    'confirm_delete' =>  'ユーザーを削除しますか？',
 ];
