@@ -139,7 +139,7 @@ class CreateSuperUserSeeder extends Seeder
                 'contact_comment' => $faker->paragraphs(2,true),
                 'updated_at' => now(),
                 'created_at' => now(),
-                'user_id' => rand(1,10),
+                'user_id' => rand(1,2),
             ]);
         }
 
@@ -147,7 +147,7 @@ class CreateSuperUserSeeder extends Seeder
             \DB::table('estate_contact_detail')->insert([
                 'contact_id' => rand(1,10),
                 'contact_message' =>  $faker->sentence,
-                'author' =>   rand(1,10),
+                'author' =>   rand(1,2),
                 'author_type' =>  rand(0,1),
                 'response_type' => rand(0,2),
             ]);
@@ -156,7 +156,7 @@ class CreateSuperUserSeeder extends Seeder
         for($i=1; $i <= 10; $i++) {
             \DB::table('estate_contact_attach')->insert([
                 'contact_id' => rand(1,10),
-                'contact_file' => '/test/'.rand(1,5).'.jpg' ,
+                'contact_file' => 'test/'.rand(1,5).'.jpg' ,
             ]);
         }
 
