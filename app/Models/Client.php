@@ -53,4 +53,9 @@ class Client extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class, 'client_id', 'client_id');
+    }
 }
