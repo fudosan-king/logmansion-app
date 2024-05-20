@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'お問い合わせ')
+@section('title', config('estate_labels.contact'))
 
 
 @section('content_header')
-<h1>お問い合わせ</h1>
+<h1> {{config('estate_labels.contact')}} </h1>
 @stop
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
@@ -30,12 +30,9 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="row search-contact">
-                                        <!-- <div class="col-sm-1">
-                                            <label for="">type search</label>
-                                        </div> -->
                                         <div class="col-sm-2">
                                             <select class="form-control contact-type-search">
-                                                <option value="empty">All</option>
+                                                <option value="empty">{{ config('estate_labels.all') }}</option>
                                                 @foreach(Config::get('const.text_search') as $key => $value)
                                                 <option value="{{ $key }}">
                                                     {{ $value }}
@@ -43,29 +40,22 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <!-- <div class="col-sm-1">
-                                            <label for="">data search</label>
-                                        </div> -->
                                         <div class="col-sm-2">
                                             <select class="form-control contact-value-search" name="">
                                             </select>
-
                                         </div>
-                                        <!-- <div class="col-sm-1">
-                                            <a href="" type="button" class="btn btn-primary y-2">Search</a>
-                                        </div> -->
                                     </div>
                                     <table id="tblData" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example2_info">
                                         <thead>
                                             <tr>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Client</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Contact Type</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Spot</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Contact Title</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Status</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Last Updated</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Staff</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Date</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">{{ config('estate_labels.client') }}</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">{{ config('estate_labels.contact_type') }}</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">{{ config('estate_labels.spot') }}</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">{{ config('estate_labels.contact_title') }}</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">{{ config('estate_labels.status') }}</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">{{ config('estate_labels.last_update') }}</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">{{ config('estate_labels.staff') }}</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">{{ config('estate_labels.date') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
