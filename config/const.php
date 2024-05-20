@@ -18,4 +18,43 @@ return [
     'doc_categories' => [0, 1, 2],
     'doc_payment_category' => 3,
     'warranty_period_category' => 4,
+    'contact_type' => [
+        '0' => 'その他',
+        '1' => 'お問い合わせ',
+        '2' => 'アフターサービスのご相談'
+    ],
+    'contact_status' => [
+        '0' => '相談受付',
+        '1' => '回答待ち',
+        '2' => '応答済',
+        '3' => '対応終了',
+    ],
+    'contact_spot' => [
+        '0' => 'その他',
+        '1' => 'キッチン',
+        '2' => '浴室',
+        '3' => '洗面',
+        '4' => '給排水',
+        '5' => 'その他水回り',
+        '6' => '壁・クロス',
+        '7' => '床',
+        '8' => '建具',
+    ],
+    'reponse_type' => [
+        '0' => 'この内容で送信',
+        '1' => '登録のみ',
+        '2' => '電話等で対応'
+    ],
+    'text_search' => [
+        '0' => 'client',
+        '1' => 'staff',
+        '2' => 'type',
+    ],
+    'field_search_contact' => [
+        '0' => 'client_id',
+        '1' => 'user_id',
+        '2' => 'contact_type',
+    ],
+    'author_type_staff'  => 1,
+    'author_type_client'  => 0,
 ];
