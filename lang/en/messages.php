@@ -64,4 +64,6 @@ return [
     'edit_faq' => 'Edit FAQ',
     'new_category' => 'Add New Category',
     'edit_category' => 'Edit Category',
+    'new_catalogue' => 'Add New Catalogue',
+    'edit_catalogue' => 'Edit Catalogue',
 ];

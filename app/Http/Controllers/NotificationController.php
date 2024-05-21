@@ -32,7 +32,7 @@ class NotificationController extends Controller
             'cat_id' => 'required',
             'noti_title' => 'required',
             'noti_content' => 'nullable',
-            'noti_date' => 'required|date',
+            'noti_date' => 'required|date|after:yesterday',
             'noti_status' => 'nullable',
             'noti_url' => 'nullable|url',
         ], [
@@ -61,7 +61,7 @@ class NotificationController extends Controller
             'cat_id' => 'required',
             'noti_title' => 'required',
             'noti_content' => 'nullable',
-            // 'noti_date' => 'required|date',
+            'noti_date' => 'required|date|after:yesterday',
             'noti_status' => 'nullable',
             'noti_url' => 'nullable|url',
         ], [
