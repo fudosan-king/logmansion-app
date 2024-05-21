@@ -57,15 +57,15 @@
                         <label for="noti_date">{{ __('messages.date') }}</label>
                         <span class="red-required">※</span>
                         <?php $dateValue = date('Y-m-d', strtotime($notification->noti_date)); ?>
-                        <input type="date" class="form-control datepicker @error('noti_date') is-invalid @enderror" value="{{$dateValue}}" disabled>
-                        {{-- <div class="input-group date" id="notidatepicker" data-target-input="nearest">
+                        {{-- <input type="date" class="form-control datepicker @error('noti_date') is-invalid @enderror" value="{{$dateValue}}" > --}}
+                        <div class="input-group date" id="notidatepicker" data-target-input="nearest">
                             <input type="text" name="noti_date"  class="form-control datetimepicker-input @error('noti_date') is-invalid @enderror" 
-                            value="{{ $notification->noti_date ? substr($notification->noti_date, 0, 10) : '' }}"
+                            value="{{ \Carbon\Carbon::createFromFormat('Y-m-d', $notification->noti_date)->format('Y/m/d') }}"
                             data-target="#notidatepicker" />
                             <div class="input-group-append" data-target="#notidatepicker" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
-                        </div> --}}
+                        </div>
                         @error('noti_date')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -93,22 +93,33 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
 @stop
 
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> --}}
 <script>
-    $(document).ready(function() {
-        function formatDate() {
-            flatpickr('.datepicker', {
-                dateFormat: 'Y/m/d',
-                allowInput: true
-            });
-        }
+    // $(document).ready(function() {
+    //     function formatDate() {
+    //         flatpickr('.datepicker', {
+    //             dateFormat: 'Y/m/d',
+    //             allowInput: true
+    //         });
+    //     }
 
-        formatDate();
+    //     formatDate();
 
+    // })
+    $(function () {
+        $('#notidatepicker').datetimepicker({
+            changeMonth: true,
+            changeYear: true,
+            // defaultDate: {{ \Carbon\Carbon::createFromFormat('Y-m-d', $notification->noti_date)->format('Y/m/d') }},
+            format: 'YYYY/MM/DD',
+            yearRange: "-100:+0",
+            disabledDates: false,
+            minDate: moment().startOf('day'),
+        });
     })
 </script>
 @stop
