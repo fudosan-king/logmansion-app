@@ -87,7 +87,7 @@
                                                     姓
                                                 </div>
                                                 <div class="col-md-6">
-                                                    {{$client->client_f_name ?? ""}}
+                                                    {{$client->client_f_name ?? }}
                                                 </div> 
                                             </div>
                                             <div class="row mb-2">
@@ -95,7 +95,7 @@
                                                     名
                                                 </div>
                                                 <div class="col-md-6">
-                                                    {{$client->client_l_name ?? ""}}
+                                                    {{$client->client_l_name ?? }}
                                                 </div> 
                                             </div>
                                             <div class="row mb-2">
@@ -103,7 +103,7 @@
                                                     姓よみ
                                                 </div>
                                                 <div class="col-md-6">
-                                                    {{$client->	client_furigana_firstname ?? ""}}
+                                                    {{$client->	client_furigana_firstname ?? }}
                                                 </div> 
                                             </div>
                                             <div class="row mb-2">
@@ -111,7 +111,7 @@
                                                     名よみ
                                                 </div>
                                                 <div class="col-md-6">
-                                                    {{$client->	client_furigana_lastname ?? ""}}
+                                                    {{$client->	client_furigana_lastname ?? }}
                                                 </div> 
                                             </div>
                                             <div class="row mb-2">
@@ -119,7 +119,7 @@
                                                     電話番号
                                                 </div>
                                                 <div class="col-md-6">
-                                                    {{$client->client_tel ?? ""}}
+                                                    {{$client->client_tel ?? }}
                                                 </div> 
                                             </div>
                                             <div class="row mb-2">
@@ -127,7 +127,7 @@
                                                     Mail
                                                 </div>
                                                 <div class="col-md-6">
-                                                    {{$client->client_email ?? ""}}
+                                                    {{$client->client_email ?? }}
                                                 </div> 
                                             </div>
                                         </div>

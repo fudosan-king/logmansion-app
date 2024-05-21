@@ -39,22 +39,22 @@
                                     <label class="col-sm-3 col-form-label">氏名 <span class="text-danger">※</span></label>
                                     <div class="col-sm-4">
                                         <label for="">姓 <span class="text-danger">※</span></label>
-                                        <input value="{{ old('first_name') }}" required maxlength="255" name="first_name" type="text" class="form-control">
+                                        <input value="{{ old('first_name') }}" required maxlength="500" name="first_name" type="text" class="form-control">
                                     </div>
                                     <div class="col-sm-4">
                                         <label for="">名 <span class="text-danger">※</span></label>
-                                        <input value="{{ old('last_name') }}" required name="last_name" maxlength="255" type="text" class="form-control">
+                                        <input value="{{ old('last_name') }}" required name="last_name" maxlength="500" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-3">氏名（フリガナ）<span class="text-danger">※</span></label>
                                     <div class="col-sm-4">
                                         <label for="">セイ <span class="text-danger">※</span></label>
-                                        <input value="{{ old('first_name_furi') }}" required name="first_name_furi" maxlength="255" type="text" class="form-control">
+                                        <input value="{{ old('first_name_furi') }}" required name="first_name_furi" maxlength="500" type="text" class="form-control">
                                     </div>
                                     <div class="col-sm-4">
                                         <label class="" for="">メイ <span class="text-danger">※</span></label>
-                                        <input value="{{ old('last_name_furi') }}" required name="last_name_furi" maxlength="255" type="text" class="form-control">
+                                        <input value="{{ old('last_name_furi') }}" required name="last_name_furi" maxlength="500" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
