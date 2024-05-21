@@ -64,26 +64,39 @@ class EstContactController extends Controller
 
     public function update($id, Request $request)
     {
-        $status = $request->input('options-status');
-        $responseType = $request->input('options-response');
+        $newStatus = $request->input('status');
         $contactMessage = $request->input('contact-message');
+        $contactNote = $request->input('contact-note');
+        $oldContact = Contact::findOrFail($id);
+        $oldStatus = $oldContact->contact_status;
+        $textConfig = config('const.contact_status');
+        $messageChangeStatus = Auth::user()->name . ' が ' . $textConfig[$oldStatus] . ' から ' . $textConfig[$newStatus] . 'に変更しました。';
 
-        $contactDetail = new ContactDetail();
-        $contactDetail->contact_id = $id;
-        $contactDetail->contact_message = $contactMessage;
-        $contactDetail->author = Auth::user()->id;
-        $contactDetail->author_type = config('const.author_type_staff');
-        $contactDetail->response_type = $responseType;
-        if ($contactDetail->save()) {
-            $contact = Contact::findOrFail($id);
-            $contact->update([
-                'contact_status' => $status,
-                'user_id' => Auth::user()->id
-            ]);
-
-            return redirect()->route('estcontact.edit', ['id' => $id]);
-        } else {
-            return redirect()->back()->withErrors(['msg' => 'Failed to save contact detail.']);
+        if ($oldStatus != $newStatus) {
+            $contactDetail = new ContactDetail();
+            $contactDetail->contact_id = $id;
+            $contactDetail->contact_message = $messageChangeStatus;
+            $contactDetail->author = Auth::user()->id;
+            $contactDetail->author_type = config('const.author_type_staff');
+            $contactDetail->save();
         }
+
+        if ($contactMessage != null || $contactNote != null) {
+            $contactDetail = new ContactDetail();
+            $contactDetail->contact_id = $id;
+            $contactDetail->contact_message = $contactMessage;
+            $contactDetail->author = Auth::user()->id;
+            $contactDetail->author_type = config('const.author_type_staff');
+            $contactDetail->contact_note = $contactNote;
+            $contactDetail->save();
+        }
+
+        $contact = Contact::findOrFail($id);
+        $contact->update([
+            'contact_status' => $newStatus,
+            'user_id' => Auth::user()->id
+        ]);
+
+        return redirect()->route('estcontact.edit', ['id' => $id]);
     }
 }

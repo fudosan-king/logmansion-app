@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', config('estate_labels.title_estate'))
+@section('title', config('estate_labels.contact_detail'))
 
 
 @section('content_header')
-<h1>{{ config('estate_labels.title_estate') }}</h1>
+<h1>{{ config('estate_labels.contact_detail') }}</h1>
 @stop
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
@@ -48,6 +48,12 @@
         border-color: #ddd;
         color: #444;
     }
+
+    .message-time {
+        font-style: italic;
+        font-size: 14px;
+    }
+
 </style>
 @stop
 
@@ -71,12 +77,12 @@
                 <div class="chat-container">
                     <div class="row mb-3">
                         <div class="col">
-                            <label for="optionsRow1">{{$contact->client->client_name}}</label>
+                            <label for="optionsRow1">{{$contact->client->client_name}}様</label>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col">
-                            <label for="optionsRow1">場所：{{ Config::get('const.contact_spot.'.$contact->contact_spot) }}</label>
+                            <label for="optionsRow1"> {{ $contact->contact_title }} : </label>
                         </div>
                     </div>
                     <div class="message-container">
@@ -85,14 +91,29 @@
                         @foreach($contactMessages as $message)
                         @if($message->author_type == 0)
                         <div class="message">
+                            <span class="message-time">{{$message->created_at}}</span>
                             <div class="alert alert-primary" role="alert">
+                                <i class="fas fa-comment"></i>
                                 {{$message->contact_message}}
                             </div>
                         </div>
-                        @else
+                        @elseif($message->contact_message != null)
                         <div class="message">
+                            <span class="message-time">{{$message->created_at}}</span><br>
+                            <span>{{$message->user->name}}</span>
                             <div class="alert alert-secondary" role="alert">
+                                <i class="fas fa-comment"></i>
                                 {{$message->contact_message}}
+                            </div>
+                        </div>
+                        @endif
+
+                        @if($message->contact_note != null)
+                        <div class="message">
+                            <span class="message-time">{{$message->created_at}}</span>
+                            <div class="alert alert-secondary" role="alert">
+                                <i class="fas fa-sticky-note"></i>
+                                {{$message->contact_note}}
                             </div>
                         </div>
                         @endif
@@ -106,45 +127,38 @@
                         @method('PUT')
                         <div class="row mb-3">
                             <div class="col">
-                                <label for="optionsRow1">Choose an option:</label>
+                                <label for="optionsRow1">返信：</label>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <input type="radio" id="option1" name="options-status" value="1" checked>
-                                <label for="option1">回答待ち</label>
-                            </div>
-                            <div class="col">
-                                <input type="radio" id="option2" name="options-status" value="2">
-                                <label for="option2">応答済</label>
-                            </div>
-                            <div class="col">
-                                <input type="radio" id="option3" name="options-status" value="3">
-                                <label for="option3">対応終了</label>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label for="optionsRow1">Choose an option:</label>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <input type="radio" id="option4" name="options-response" value="0" checked>
-                                <label for="option4">この内容で送信</label>
-                            </div>
-                            <div class="col">
-                                <input type="radio" id="option5" name="options-response" value="1">
-                                <label for="option5">登録のみ</label>
-                            </div>
-                            <div class="col">
-                                <input type="radio" id="option6" name="options-response" value="2">
-                                <label for="option6">電話等で対応</label>
-                            </div>
-                        </div>
-
                         <div class="input-group mb-3">
-                            <textarea type="text" name="contact-message" class="form-control" placeholder="Type your message..." aria-label="Type your message..." aria-describedby=""></textarea>
+                            <textarea type="text" name="contact-message" class="form-control" aria-describedby=""></textarea>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="optionsRow1">メモ&nbsp;&nbsp;&nbsp;お客様には送信されません</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <textarea type="text" name="contact-note" class="form-control" aria-describedby=""></textarea>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="optionsRow1">{{ config('estate_labels.status') }}</label>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            @foreach(array_slice(config('const.contact_status'), 1, null, true) as $key => $value)
+                            <div class="col">
+                                <input id="option_{{$key}}" type="radio" name="status" value="{{ $key }}"
+                                @if ($key == $contact->contact_status)
+                                    checked
+                                @elseif ($key == 1)
+                                    checked
+                                @endif
+                                >
+                                <label for="option_{{$key}}">{{ $value }}</label>
+                            </div>
+                            @endforeach
                         </div>
                         <div class="input-group-append float-right">
                             <button class="btn btn-primary" type="submit" id="">{{ __('messages.save') }}</button>
