@@ -18,7 +18,7 @@ class ContactDetail extends Model
     'contact_message',
     'author',
     'author_type',
-    'reponse_type'
+    'contact_note',
   ];
 
   protected $dates = ['created_at', 'updated_at', 'deleted_at'];
@@ -26,5 +26,10 @@ class ContactDetail extends Model
   public function contact()
   {
     return $this->belongsTo(Contact::class, 'contact_id', 'contact_id');
+  }
+
+  public function user()
+  {
+    return $this->belongsTo(User::class, 'author', 'id');
   }
 }
