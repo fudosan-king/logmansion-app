@@ -94,7 +94,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input value="{{$estate->est_pref}}" id="selected_prefectures" readonly class="form-control">
+                                    <input placeholder="都道府県" value="{{$estate->est_pref}}" id="selected_prefectures" readonly class="form-control">
                                 </td>
                                 <td>                                
                                     <input value="{{$estate->est_usefulinfo_pref_url}}" type="url" class="form-control m-2" id="selected_pref_url" name="selected_pref_url">
@@ -108,7 +108,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input value="{{$estate->est_city}}" id="selected_city" readonly class="form-control">
+                                    <input placeholder="市・区 " value="{{$estate->est_city}}" id="selected_city" readonly class="form-control">
                                 </td>
                                 <td>                                
                                     <input value="{{$estate->est_usefulinfo_city_url}}" type="url" class="form-control m-2" id="selected_city_url" name="selected_city_url">
@@ -122,7 +122,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input value="{{$estate->est_ward}}" id="selected_ward" readonly class="form-control">
+                                    <input placeholder="区町村" value="{{$estate->est_ward}}" id="selected_ward" readonly class="form-control">
                                 </td>
                                 <td>                                
                                     <input value="{{$estate->est_usefulinfo_ward_url}}" type="url" class="form-control m-2" id="selected_ward_url" name="selected_ward_url">
@@ -165,6 +165,7 @@
         $('[name="zip22"]').on('keyup', function() {
             $('[name="pref21"], [name="addr21"], [name="strt21"], [name="street"]').val('');
             $('#selected_prefectures, #selected_city, #selected_ward, #selected_pref_url, #selected_city_url, #selected_ward_url').val('');
+            $('#selected_pref_url, #selected_city_url, #selected_ward_url').attr('placeholder', '');
             AjaxZip3.zip2addr(this,'','pref21','addr21','strt21');
             let checkInterval = setInterval(function() {
                 if ($('[name="pref21"]').val() && $('[name="addr21"]').val()) {

@@ -68,6 +68,76 @@
                             </div>
                             <div class="col-sm-12">
                                 <div class="card">
+                                <div class="card-header">
+                                        <h3 class="card-title"><strong>クライアント情報</strong></h3>
+                                    </div>
+                                    <div class="form-horizontal">
+                                        <div class="card-body">
+                                        <div class="w-100">
+                                            <div class="row mb-2">
+                                                <div class="col-md-3 font-weight-bold">
+                                                    お客様番号
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{$client->client_id ?? ""}}
+                                                </div> 
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-md-3 font-weight-bold">
+                                                    姓
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{$client->client_f_name ?? ""}}
+                                                </div> 
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-md-3 font-weight-bold">
+                                                    名
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{$client->client_l_name ?? ""}}
+                                                </div> 
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-md-3 font-weight-bold">
+                                                    姓よみ
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{$client->	client_furigana_firstname ?? ""}}
+                                                </div> 
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-md-3 font-weight-bold">
+                                                    名よみ
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{$client->	client_furigana_lastname ?? ""}}
+                                                </div> 
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-md-3 font-weight-bold">
+                                                    電話番号
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{$client->client_tel ?? ""}}
+                                                </div> 
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-md-3 font-weight-bold">
+                                                    Mail
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{$client->client_email ?? ""}}
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="card">
                                     <div class="card-header">
                                         <h3 class="card-title"><strong>お役立ち情報 </strong></h3>
                                     </div>
