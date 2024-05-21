@@ -163,7 +163,9 @@ class CreateSuperUserSeeder extends Seeder
                 'contact_message' =>  $faker->sentence,
                 'author' =>   rand(1,2),
                 'author_type' =>  rand(0,1),
-                'response_type' => rand(0,2),
+                'contact_note' =>  $faker->sentence,
+                'updated_at' => now(),
+                'created_at' => now(),
             ]);
         }
 
