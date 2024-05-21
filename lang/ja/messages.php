@@ -72,4 +72,6 @@ return [
     'edit_category' => 'カテゴリー編集',
     'email' => ['unique' => 'メールアドレスはすでに使用されています。'],      
     'confirm_delete' =>  'ユーザーを削除しますか？',
+    'new_catalogue' => 'おすすめオーダー家具新規追加',
+    'edit_catalogue' => 'おすすめオーダー家具編集',
 ];
