@@ -42,7 +42,8 @@ class CreateSuperUserSeeder extends Seeder
         $permission = Permission::create(['name' => 'estate.store','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'estate.edit','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'estate.update','guard_name' => 'web']); 
-        $permission = Permission::create(['name' => 'estate.destroy','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'estate.destroy','guard_name' => 'web']);
+        $permission = Permission::create(['name' => 'estate.view','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'estate.archive_index','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'estate.getEstateSchedules','guard_name' => 'web']); 
     
@@ -51,6 +52,7 @@ class CreateSuperUserSeeder extends Seeder
         $permission = Permission::create(['name' => 'client.store','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'client.edit','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'client.update','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'client.view','guard_name' => 'web']); 
  
         $permission = Permission::create(['name' => 'notification.index','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'notification.create','guard_name' => 'web']); 
