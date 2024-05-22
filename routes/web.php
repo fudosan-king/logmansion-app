@@ -52,6 +52,8 @@ Route::group(['middleware' => ['auth', 'permission']], function(){
     Route::resource('faq', FAQController::class);
     
     Route::resource('catalogue', CatalogueController::class);
+    Route::post('catalogue/up/{id}', [CatalogueController::class, 'swapIndexUp'])->name('catalog.index.up');
+    Route::post('catalogue/down/{id}', [CatalogueController::class, 'swapIndexDown'])->name('catalog.index.down');
 
     Route::group(['prefix'=> 'users', 'as' => 'users.'], function(){
         Route::resource('permissions', PermissionsController::class);
