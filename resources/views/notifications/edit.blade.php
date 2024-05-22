@@ -65,10 +65,10 @@
                             <div class="input-group-append" data-target="#notidatepicker" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
+                            @error('noti_date')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
-                        @error('noti_date')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="noti_url">{{ __('messages.url') }}</label>
