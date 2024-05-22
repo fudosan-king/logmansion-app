@@ -37,3 +37,4 @@ public/storage*
 docker/*
 docker-compose.yml*
 l5-swagger.php*
+composer.lock
