@@ -78,7 +78,7 @@ class ClientController extends Controller
             'client_tel'=>$request->input('telephone')
         ];
         $estate = Client::create($data);
-        toast('が登録されました。','success');
+        toast(config('client_labels.toast_create'),'success');
         
         // Mail::to($data['client_email'])->send(new SendPasswordEmail($password));
         // toast('Add client success!','success');
@@ -135,7 +135,7 @@ class ClientController extends Controller
             'client_tel'=>$request->input('telephone')
         ];
         $client->update($data);
-        toast('が編集されました。','success');
+        toast(config('client_labels.toast_update'),'success');
         return redirect()->route('estate.index');
     }
 
@@ -147,9 +147,7 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        // return response()->json(['message' => $id]);
         $client = Client::find($id);
         $client->delete();
-        // return response()->json(['message' => 'Client deleted successfully'], 200);
     }
 }

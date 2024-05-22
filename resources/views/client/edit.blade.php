@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'クライアント情報')
+@section('title', config('client_labels.client_info'))
 
 @section('content_header')
-    <h1>クライアント情報</h1>
+    <h1>{{config('client_labels.client_info')}}</h1>
 @stop
 @section('css')
     <meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
@@ -17,7 +17,7 @@
             @csrf
             <div class="card" id="step2">
                 <div class="card-header">
-                    <h3 class="card-title"><strong>クライアント情報</strong></h3>
+                    <h3 class="card-title"><strong>{{config('client_labels.client_info')}}</strong></h3>
                 </div>
                 <div class="form-horizontal">
                     <form method="POST" action="{{route('client.update',['id'=>$client->id])}}">
@@ -26,7 +26,7 @@
                         <div class="card-body d-flex justify-content-center flex-column align-items-center">
                             <h3 class="">{{$client->estateName}}</h3>
                             <div class="w-75 mt-4">
-                                <h4 class="mb-2">クライアント情報</h4>
+                                <h4 class="mb-2">{{config('client_labels.client_info')}}</h4>
                                 <input type="hidden" value="{{$client->est_id}}" name="est_id">
                                 <div class="form-group row">
                                     <label for="" class="col-sm-3 col-form-label">クライアントID <span class="text-danger">※</span></label>
@@ -147,14 +147,17 @@
 <script>
     $('#delete_client').on('click', function(e) {
         e.preventDefault();
-        $.ajax({
-            url: "{{ route('client.destroy', ['id' => $client->id]) }}",
-            type: "DELETE",
-            success: function(response) {
+        if (confirm('クライアントを削除しますか？')) {
+            $.ajax({
+                url: "{{ route('client.destroy', ['id' => $client->id]) }}",
+                type: "DELETE",
+                success: function(response) {
                     window.location.href = "{{ route('estate.index') }}";
-            }
-        });
+                }
+            });
+        }
     });
+</script>
 </script>
 </script>
 @stop

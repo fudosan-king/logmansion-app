@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'クライアント登録')
+@section('title', config('client_labels.client_info'))
 
 @section('content_header')
-    <h1>クライアント登録</h1>
+    <h1>{{config('client_labels.client_info')}}</h1>
 @stop
 @section('css')
     <meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
@@ -19,7 +19,7 @@
             @csrf
             <div class="card" id="step2">
                 <div class="card-header">
-                    <h3 class="card-title"><strong>クライアント登録</strong></h3>
+                    <h3 class="card-title"><strong>{{config('client_labels.client_info')}}</strong></h3>
                 </div>
                 <div class="form-horizontal">
                     <form method="POST" action="{{route('client.store')}}">
@@ -27,7 +27,7 @@
                         <div class="card-body d-flex justify-content-center flex-column align-items-center">
                             <h3 class="">{{$estateName}}</h3>
                             <div class="w-75 mt-4">
-                                <h4 class="mb-2">クライアント登録</h4>
+                                <h4 class="mb-2">{{config('client_labels.client_info')}}</h4>
                                 <input type="hidden" value="{{$est_id}}" name="est_id">
                                 <div class="form-group row">
                                     <label for="" class="col-sm-3 col-form-label">クライアントID <span class="text-danger">※</span></label>
