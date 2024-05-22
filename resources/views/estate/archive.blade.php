@@ -52,7 +52,11 @@
                                 <td class="dtr-control">
                                     <a href="{{route('estate.view',$estate['est_id'])}}">{{$estate['est_name']}}</a>
                                 </td>
-                                <td></td> 
+                                <td>
+                                    @if(isset($estate['client']))
+                                        {{$estate['client']['client_f_name']}}{{$estate['client']['client_l_name']}}
+                                    @endif
+                                </td> 
                                 <td>
                                     <div class="action_bar">
                                     <a href="{{route('estate.destroy',$estate['est_id'])}}" onclick="event.preventDefault(); if(confirm('{{ config('estate_labels.delete_confim') }}')) { document.getElementById('delete-form-{{$estate['est_id']}}').submit(); }">

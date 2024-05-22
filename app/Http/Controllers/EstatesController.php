@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Estate;
 use App\Models\EstateDoc;
 use App\Models\EstateSchedule;
+use App\Models\Client;
 use Carbon\Carbon;
 class EstatesController extends Controller
 {
@@ -16,9 +17,13 @@ class EstatesController extends Controller
      */
     public function index()
     {
-        $estates = Estate::orderBy('est_id', 'desc')->get()->toArray();
+        // $estates = Estate::orderBy('est_id', 'desc')->get()->toArray();
+        $estates = Estate::orderBy('est_id', 'desc')->get()->map(function ($estate) {
+            $estateArray = $estate->toArray();
+            $estateArray['client'] = $estate->client;
+            return $estateArray;
+        })->toArray();
         $currentEstates = [];
-        // $schedules = [];
         foreach ($estates as $estate) {
             $schedules = $this->getEstateSchedules($estate['est_id'])->original;
             $estate['schedules'] = $schedules;
@@ -33,7 +38,11 @@ class EstatesController extends Controller
         ]);
     }
     public function archive_index(){
-        $estates = Estate::orderBy('est_id', 'desc')->get()->toArray();
+        $estates = Estate::orderBy('est_id', 'desc')->get()->map(function ($estate) {
+            $estateArray = $estate->toArray();
+            $estateArray['client'] = $estate->client;
+            return $estateArray;
+        })->toArray();
         $archive = [];
         foreach ($estates as $estate) {
             if ($this->isArchive($estate['est_id'])) {
@@ -100,8 +109,10 @@ class EstatesController extends Controller
         $estates = Estate::find($est_id);
         $estate_schedule = EstateSchedule::where('est_id', $est_id)->orderBy('schedule_date','desc')->get();
         $estate_document = EstateDoc::where('est_id', $est_id)->orderBy('doc_category','asc')->get();
+        $client = Client::where('est_id', $est_id)->first();
         return view('estate/view', [
             'estate' =>$estates,
+            'client'=>$client,
             'estate_schedule' => $estate_schedule,
             'estate_document' => $estate_document
         ]);
