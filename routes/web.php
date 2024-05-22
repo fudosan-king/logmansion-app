@@ -14,6 +14,7 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\CatalogueController;
 use App\Http\Controllers\EstContactController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\ClientController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,7 +72,15 @@ Route::group(['middleware' => ['auth', 'permission']], function(){
         Route::delete('/destroy/{id}', [EstatesController::class, 'destroy'])->name('destroy');
         Route::get('/getEstateSchedules/{id}',[EstatesController::class, 'getEstateSchedules'])->name('getEstateSchedules');
     })->name('estate');
-       
+
+    Route::group(['prefix' => 'client', 'as' => 'client.'], function(){
+        Route::get('/create/{estate_id}', [ClientController::class, 'create'])->name('create');
+        Route::post('/store', [ClientController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [ClientController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [ClientController::class, 'update'])->name('update');
+        Route::get('/view/{id}', [ClientController::class, 'show'])->name('view');
+        Route::delete('/destroy/{id}', [ClientController::class, 'destroy'])->name('destroy');
+    });
 
     Route::get('/estate/schedule/{id}', [ScheduleController::class, 'edit'])->name('schedule.edit');
     Route::post('/estate/schedule/store', [ScheduleController::class, 'store'])->name('schedule.store');

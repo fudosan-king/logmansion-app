@@ -24,9 +24,8 @@ class EstContactController extends Controller
     public function edit($id)
     {
         $contact = Contact::findOrFail($id);
-        $contactFiles = ContactFile::where('contact_id', $id)->get();
         $contactMessages = ContactDetail::where('contact_id', $id)->orderBy('created_at', 'asc')->get();
-        return view('contact.edit', compact('contactFiles', 'contactMessages', 'contact'));
+        return view('contact.edit', compact('contactMessages', 'contact'));
     }
 
     public function getDocSearch(Request $request)
@@ -69,16 +68,18 @@ class EstContactController extends Controller
         $contactNote = $request->input('contact-note');
         $oldContact = Contact::findOrFail($id);
         $oldStatus = $oldContact->contact_status;
-        $textConfig = config('const.contact_status');
-        $messageChangeStatus = Auth::user()->name . ' が ' . $textConfig[$oldStatus] . ' から ' . $textConfig[$newStatus] . 'に変更しました。';
+        $checkUpdate = false;
 
         if ($oldStatus != $newStatus) {
             $contactDetail = new ContactDetail();
+            $textConfig = config('const.contact_status');
+            $messageChangeStatus = Auth::user()->name . ' が ' . $textConfig[$oldStatus] . ' から ' . $textConfig[$newStatus] . 'に変更しました。';
             $contactDetail->contact_id = $id;
             $contactDetail->contact_message = $messageChangeStatus;
             $contactDetail->author = Auth::user()->id;
             $contactDetail->author_type = config('const.author_type_staff');
             $contactDetail->save();
+            $checkUpdate = true;
         }
 
         if ($contactMessage != null || $contactNote != null) {
@@ -89,13 +90,16 @@ class EstContactController extends Controller
             $contactDetail->author_type = config('const.author_type_staff');
             $contactDetail->contact_note = $contactNote;
             $contactDetail->save();
+            $checkUpdate = true;
         }
 
-        $contact = Contact::findOrFail($id);
-        $contact->update([
-            'contact_status' => $newStatus,
-            'user_id' => Auth::user()->id
-        ]);
+        if ($checkUpdate) {
+            $contact = Contact::findOrFail($id);
+            $contact->update([
+                'contact_status' => $newStatus,
+                'user_id' => Auth::user()->id
+            ]);
+        }
 
         return redirect()->route('estcontact.edit', ['id' => $id]);
     }

@@ -39,31 +39,96 @@
                                                 <div class="col-sm-10 row pl-1 ml-1">
                                                     <div class="row mr-1 mt-2 w-75">
                                                         <div class="col-sm-2">
-                                                            <!-- <label for="select_prefectures">郵便番号入力 </label> -->
-                                                            <div></div>
                                                             {{$estate->est_zip ?? ""}}
                                                         </div>
                                                         <div class="col-sm-2">
                                                             <!-- <label for="select_prefectures">都道府県 </label> -->
-                                                            <div>{{$estate->est_pref ?? ""}}</div>
-                                                        </div>
-                                                        <div class="col-sm-2">
+                                                            {{$estate->est_pref ?? ""}}
+                                                        
                                                             <!-- <label for="select_city">市・区 </label> -->
-                                                            <div>{{$estate->est_city ?? ""}}</div>
-                                                        </div>
-                                                        <div class="col-sm-2">
+                                                            {{$estate->est_city ?? ""}}
+                                                        
                                                             <!-- <label for="select_ward">区町村</label> -->
-                                                            <div>{{$estate->est_ward ?? ""}}</div>
-                                                        </div>
-                                                        <div class="col-sm-2">
+                                                            {{$estate->est_ward ?? ""}}
+                                                        
                                                             <!-- <label for="select_street">丁目・番地</label> -->
-                                                            <div>{{$estate->est_address ?? ""}}</div>
+                                                            {{$estate->est_address ?? ""}}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="card">
+                                <div class="card-header">
+                                        <h3 class="card-title"><strong>クライアント情報</strong></h3>
+                                    </div>
+                                    <div class="form-horizontal">
+                                        <div class="card-body">
+                                        <div class="w-100">
+                                            <div class="row mb-2">
+                                                <div class="col-md-3 font-weight-bold">
+                                                    お客様番号
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{$client->client_id ?? ""}}
+                                                </div> 
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-md-3 font-weight-bold">
+                                                    姓
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{$client->client_f_name ?? ""}}
+                                                </div> 
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-md-3 font-weight-bold">
+                                                    名
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{$client->client_l_name ?? ""}}
+                                                </div> 
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-md-3 font-weight-bold">
+                                                    姓よみ
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{$client->	client_furigana_firstname ?? ""}}
+                                                </div> 
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-md-3 font-weight-bold">
+                                                    名よみ
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{$client->	client_furigana_lastname ?? ""}}
+                                                </div> 
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-md-3 font-weight-bold">
+                                                    電話番号
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{$client->client_tel ?? ""}}
+                                                </div> 
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-md-3 font-weight-bold">
+                                                    Mail
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{$client->client_email ?? ""}}
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                             </div>
                             <div class="col-sm-12">
@@ -159,7 +224,8 @@
                                                             </div>
                                                             <div class="col">
                                                                 <div class="">
-                                                                    {{$doc['doc_name'] ?? ""}}
+                                                                    {{ basename($doc['doc_file']) ?? "" }}
+                                                                </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col">

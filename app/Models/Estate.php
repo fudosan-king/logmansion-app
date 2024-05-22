@@ -29,5 +29,7 @@ class Estate extends Model
         'est_usefulinfo_ward_url',
         'est_usefulinfo_ward_show'
     ];
-
+    public function client(){
+        return $this->hasOne(Client::class, 'est_id');
+    }
 }
