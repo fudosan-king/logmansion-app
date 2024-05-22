@@ -15,14 +15,14 @@ class ContactFile extends Model
   protected $primaryKey = 'id';
 
   protected $fillable = [
-    'contact_id',
-    'contact_file',
+    'contact_detail_id',
+    'path_file',
   ];
 
   protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
-  public function contact()
+  public function contactDetail()
   {
-    return $this->belongsTo(Contact::class, 'contact_id', 'contact_id');
+    return $this->belongsTo(Contact::class, 'contact_detail_id', 'id');
   }
 }

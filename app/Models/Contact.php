@@ -32,11 +32,6 @@ class Contact extends Model
     return $this->belongsTo(Client::class, 'client_id', 'client_id');
   }
 
-  public function contactFiles()
-  {
-    return $this->hasMany(ContactFile::class, 'contact_id', 'contact_id');
-  }
-
   public function contactDetails()
   {
     return $this->hasMany(ContactDetail::class, 'contact_id', 'contact_id');

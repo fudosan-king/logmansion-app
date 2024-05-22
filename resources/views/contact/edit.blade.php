@@ -54,21 +54,20 @@
         font-size: 14px;
     }
 
+    .alert.alert-primary {
+        position: relative;
+    }
+
+    .fas.fa-images.float-right.cursor-pointer {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
 </style>
 @stop
 
 @section('content')
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            @foreach($contactFiles as $file)
-            <div class="card mr-4 cursor-pointer">
-                <img src="{{ Storage::url($file->contact_file) }}" alt="Hình ảnh" class="img-fluid img-thumbnail thumbnail-image" data-toggle="modal" data-target="#imageModal">
-            </div>
-            @endforeach
-        </div>
-    </div>
-</section>
 
 <section class="content">
     <div class="container-fluid">
@@ -89,15 +88,23 @@
                         @if($contactMessages)
 
                         @foreach($contactMessages as $message)
+
                         @if($message->author_type == 0)
+
                         <div class="message">
                             <span class="message-time">{{$message->created_at}}</span>
                             <div class="alert alert-primary" role="alert">
                                 <i class="fas fa-comment"></i>
                                 {{$message->contact_message}}
+                                <?php $files = App\Models\ContactFile::where('contact_detail_id', $message->id)->get(); ?>
+                                @if(count($files) > 0)
+                                <i class="fas fa-images float-right cursor-pointer" data-toggle="modal" data-target="#listimageModal{{$message->id}}"></i>
+                                @endif
                             </div>
                         </div>
+
                         @elseif($message->contact_message != null)
+
                         <div class="message">
                             <span class="message-time">{{$message->created_at}}</span><br>
                             <span>{{$message->user->name}}</span>
@@ -106,9 +113,11 @@
                                 {{$message->contact_message}}
                             </div>
                         </div>
+
                         @endif
 
                         @if($message->contact_note != null)
+
                         <div class="message">
                             <span class="message-time">{{$message->created_at}}</span>
                             <div class="alert alert-secondary" role="alert">
@@ -116,7 +125,38 @@
                                 {{$message->contact_note}}
                             </div>
                         </div>
+
                         @endif
+
+                        <!-- modal show list image -->
+                        <div class="modal fade" id="listimageModal{{$message->id}}" tabindex="-1" role="dialog" aria-labelledby="listimageModalLabel{{$message->id}}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="listimageModalLabel{{$message->id}}">List Image</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="container-fluid">
+                                            <div class="row">
+
+                                                @foreach($files as $file)
+
+                                                <div class="card mr-4">
+                                                    <img src="{{ Storage::url($file->path_file) }}" alt="Image" class="img-fluid img-thumbnail thumbnail-image cursor-pointer" data-toggle="modal" data-target="#imageModal{{$file->id}}">
+                                                </div>
+
+                                                @endforeach
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         @endforeach
 
                         @endif
@@ -149,11 +189,10 @@
                         <div class="row mb-3">
                             @foreach(array_slice(config('const.contact_status'), 1, null, true) as $key => $value)
                             <div class="col">
-                                <input id="option_{{$key}}" type="radio" name="status" value="{{ $key }}"
-                                @if ($key == $contact->contact_status)
-                                    checked
+                                <input id="option_{{$key}}" type="radio" name="status" value="{{ $key }}" @if ($key==$contact->contact_status)
+                                checked
                                 @elseif ($key == 1)
-                                    checked
+                                checked
                                 @endif
                                 >
                                 <label for="option_{{$key}}">{{ $value }}</label>
@@ -164,7 +203,7 @@
                             <button class="btn btn-primary" type="submit" id="">{{ __('messages.save') }}</button>
                         </div>
                         <div class="float-left">
-                            <a href="{{ URL::previous() }}" class="btn btn-default go-back" id="">{{ __('messages.cancel') }}</a>
+                            <a href="{{ route('estcontact') }}" class="btn btn-default go-back" id="">{{ __('messages.cancel') }}</a>
                         </div>
                     </form>
                 </div>
@@ -173,21 +212,15 @@
     </div>
 </section>
 
-<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+<!-- modal show large image -->
+<div class="modal fade" id="largeImageModal" tabindex="-1" role="dialog" aria-labelledby="largeImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="imageModalLabel">Thumbnail</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <img src="" alt="Thumbnail" class="img-fluid" id="thumbnailPreview" style="width: 100%;">
-            </div>
         </div>
     </div>
 </div>
+
+
 @stop
 
 
@@ -195,11 +228,28 @@
 <script>
     $(document).ready(function() {
         $('.thumbnail-image').click(function() {
-            var src = $(this).attr('src');
-            $('#thumbnailPreview').attr('src', src);
+            var imagePath = $(this).attr('src');
+
+            var modalContent = '<div class="modal-dialog modal-dialog-centered modal-xl" role="document">';
+            modalContent += '<div class="modal-content">';
+            modalContent += '<div class="modal-header">';
+            modalContent += '<h5 class="modal-title">Large Image</h5>';
+            modalContent += '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+            modalContent += '<span aria-hidden="true">&times;</span>';
+            modalContent += '</button>';
+            modalContent += '</div>';
+            modalContent += '<div class="modal-body">';
+            modalContent += '<img src="' + imagePath + '" class="img-fluid" alt="Large Image">';
+            modalContent += '</div>';
+            modalContent += '</div>';
+            modalContent += '</div>';
+
+            $('#largeImageModal').html(modalContent);
+            $('#largeImageModal').modal('show');
         });
     });
 </script>
 @stop
 
 @section('plugins.Datatables', true)
+@section('plugins.Select2', true)
