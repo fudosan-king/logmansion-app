@@ -58,7 +58,7 @@
                         <span class="red-required">※</span>
                         <?php $dateValue = date('Y-m-d', strtotime($notification->noti_date)); ?>
                         {{-- <input type="date" class="form-control datepicker @error('noti_date') is-invalid @enderror" value="{{$dateValue}}" > --}}
-                        <div class="input-group date" id="notidatepicker" data-target-input="nearest">
+                        {{-- <div class="input-group date" id="notidatepicker" data-target-input="nearest">
                             <input type="text" name="noti_date"  class="form-control datetimepicker-input @error('noti_date') is-invalid @enderror" 
                             value="{{ \Carbon\Carbon::createFromFormat('Y-m-d', $notification->noti_date)->format('Y/m/d') }}"
                             data-target="#notidatepicker" />
@@ -68,7 +68,12 @@
                             @error('noti_date')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-                        </div>
+                        </div> --}}
+                        <input type="text" name="noti_date"  class="form-control datepicker_start_date @error('noti_date') is-invalid @enderror" 
+                            value="{{ \Carbon\Carbon::createFromFormat('Y-m-d', $notification->noti_date)->format('Y/m/d') }}"/>
+                        @error('noti_date')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="noti_url">{{ __('messages.url') }}</label>
@@ -92,11 +97,13 @@
 @stop
 
 @section('css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="/css/admin_custom.css">
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
 @stop
 
 @section('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 {{-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> --}}
 <script>
     // $(document).ready(function() {
@@ -110,16 +117,25 @@
     //     formatDate();
 
     // })
-    $(function () {
-        $('#notidatepicker').datetimepicker({
-            changeMonth: true,
-            changeYear: true,
-            // defaultDate: {{ \Carbon\Carbon::createFromFormat('Y-m-d', $notification->noti_date)->format('Y/m/d') }},
-            format: 'YYYY/MM/DD',
-            yearRange: "-100:+0",
-            disabledDates: false,
-            minDate: moment().startOf('day'),
+
+    // $(function () {
+    //     $('#notidatepicker').datetimepicker({
+    //         changeMonth: true,
+    //         changeYear: true,
+    //         format: 'YYYY/MM/DD',
+    //         yearRange: "-100:+0",
+    //         disabledDates: false,
+    //         minDate: moment().startOf('day'),
+    //     });
+    // })
+    $('.datepicker_start_date').datepicker({
+            format: 'yyyy/mm/dd',
+            language: 'ja',
+            startDate: new Date,
+            // endDate: new Date
         });
-    })
 </script>
 @stop
+
+@section('plugins.Datatables', true)
+@section('plugins.Select2', true)
