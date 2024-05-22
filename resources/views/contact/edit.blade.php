@@ -64,6 +64,12 @@
         top: 50%;
         transform: translateY(-50%);
     }
+
+    .large-image {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
 </style>
 @stop
 
@@ -133,7 +139,17 @@
                         </div>
 
                         @elseif($message->contact_message != null)
+                        
+                        @if (preg_match('/に変更しました。/', $message->contact_message))
+                        <div class="message">
+                            <span class="message-time">{{$message->created_at}}</span><br>
+                            <span>{{$message->user->name}}</span>
+                            <div class="alert alert-secondary" role="alert">
+                                {{$message->contact_message}}
+                            </div>
+                        </div>
 
+                        @else
                         <div class="message">
                             <span class="message-time">{{$message->created_at}}</span><br>
                             <span>{{$message->user->name}}</span>
@@ -142,6 +158,8 @@
                                 {{$message->contact_message}}
                             </div>
                         </div>
+
+                        @endif
 
                         @endif
 
@@ -241,7 +259,7 @@
             modalContent += '</button>';
             modalContent += '</div>';
             modalContent += '<div class="modal-body">';
-            modalContent += '<img src="' + imagePath + '" class="img-fluid" alt="Large Image">';
+            modalContent += '<img src="' + imagePath + '" class="large-image" alt="Large Image">';
             modalContent += '</div>';
             modalContent += '</div>';
             modalContent += '</div>';
