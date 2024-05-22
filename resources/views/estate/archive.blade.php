@@ -40,10 +40,10 @@
                         <table id="tblData" class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                             <tr>
-                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >
+                                <th class="text-nowrap w-50" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >
                                     {{ config('estate_labels.estate_name') }}</th>
-                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.client') }}</th>
-                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.action') }}</th>
+                                <th class="text-nowrap w-50" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.client') }}</th>
+                                <th class="text-nowrap" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ config('estate_labels.action') }}</th>
                             </tr>
                             </thead>
                             <tbody>
