@@ -156,6 +156,8 @@
          $('[name="zip22"]').on('keyup', function() {
             $('[name="pref21"], [name="addr21"], [name="strt21"], [name="street"]').val('');
             $('#selected_prefectures, #selected_city, #selected_ward, #selected_pref_url, #selected_city_url, #selected_ward_url').val('');
+            $('#selected_pref_url, #selected_city_url, #selected_ward_url').attr('placeholder', '');
+
             AjaxZip3.zip2addr(this,'','pref21','addr21','strt21');
             let checkInterval = setInterval(function() {
                 if ($('[name="pref21"]').val() && $('[name="addr21"]').val()) {

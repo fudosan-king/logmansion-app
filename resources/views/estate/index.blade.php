@@ -64,19 +64,23 @@
                                   {{ date('Y-m-d', strtotime($estate['schedules']['next_schedule']['schedule_date'])) }} {{$estate['schedules']['next_schedule']['schedule_name'] ?? ""}}
                                 @endif
                             </td>
-                            <td></td>
+                            <td class="text-center">
+                              @if(isset($estate['client']))
+                                <a href="{{route('client.view',['id'=>$estate['client']['id']])}}" data-toggle="tooltip" data-placement="top" title="QR 表示">{{$estate['client']['client_f_name']}}{{$estate['client']['client_l_name']}}</a>
+                              @endif
+                            </td>
                             <td>
                                 <div class="action_bar" style="">
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add Client">
+                                    <a href="{{$estate['client'] ? route('client.edit',['id'=>$estate['client']['id']]):route('client.create',['estate_id' => $estate['est_id']])}}" data-toggle="tooltip" data-placement="top" title="クライアント">
                                     <i class="fas fa-hammer"></i>
                                     </a>
-                                  <a href="{{route('schedule.edit', ['id' => $estate['est_id']])}}" data-toggle="tooltip" data-placement="top" title="Add Calendar">
+                                  <a href="{{route('schedule.edit', ['id' => $estate['est_id']])}}" data-toggle="tooltip" data-placement="top" title="スケジュール">
                                     <i class="fas fa-calendar"></i>
                                   </a>
-                                  <a href="{{route('doc.edit', ['id' => $estate['est_id']])}}" data-toggle="tooltip" data-placement="top" title="Add Files">
+                                  <a href="{{route('doc.edit', ['id' => $estate['est_id']])}}" data-toggle="tooltip" data-placement="top" title="資料">
                                     <i class="fas fa-file-upload"></i>
                                   </a>
-                                  <a href="{{route('estate.destroy',$estate['est_id'])}}" onclick="event.preventDefault(); if(confirm('{{ config('estate_labels.delete_confim') }}')) { document.getElementById('delete-form-{{$estate['est_id']}}').submit(); }" data-toggle="tooltip" data-placement="top" title="Delete Estate">
+                                  <a href="{{route('estate.destroy',$estate['est_id'])}}" onclick="event.preventDefault(); if(confirm('{{ config('estate_labels.delete_confim') }}')) { document.getElementById('delete-form-{{$estate['est_id']}}').submit(); }" data-toggle="tooltip" data-placement="top" title="削除">
                                     <form id="delete-form-{{$estate['est_id']}}" action="{{route('estate.destroy',$estate['est_id'])}}" method="POST" style="display: none;">
                                       @csrf
                                       @method('DELETE')
