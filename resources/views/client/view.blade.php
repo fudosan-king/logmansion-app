@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', config('estate_labels.title_estate'))
+@section('title', config('client_labels.client_info'))
 
 
 @section('content_header')
-    <h1>{{ config('estate_labels.title_estate') }}</h1>
+    <h1>{{ config('client_labels.client_info') }}</h1>
 @stop
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
@@ -32,74 +32,66 @@
     <div class="row">
       <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                <h1 class="card-title"><strong>クライアント情報</strong></h1>
-            </div>
           <div class="card-body d-flex justify-content-center flex-column align-items-center">
-            <div class="w-75">
+            <div class="w-75 d-flex flex-column align-items-center">
                 <div>
                     <h2 class="text-center">{{$client->estateName}}</h2>
+                    <h3 class="text-center">{{config('client_labels.client_view_infomation')}}</h3>
+
                 </div>
-                <h3>お申し込み者様情報</h3>
-                <div class="w-100">
-                    <div class="row mb-2">
-                        <div class="col-md-3 font-weight-bold">
+                <div class="w-50">
+                    <div class="row mb-2 d-flex justify-content-center">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-4 font-weight-bold">
                             お客様番号
                         </div>
                         <div class="col-md-6">
                             {{$client->client_id}}
                         </div> 
                     </div>
-                    <div class="row mb-2">
-                        <div class="col-md-3 font-weight-bold">
-                            姓
+                    <div class="row mb-2 d-flex justify-content-center">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-4 font-weight-bold">
+                            お名前
                         </div>
                         <div class="col-md-6">
-                            {{$client->client_f_name}}
+                            {{$client->client_f_name}} {{$client->client_l_name}}
                         </div> 
                     </div>
-                    <div class="row mb-2">
-                        <div class="col-md-3 font-weight-bold">
-                            名
+                    <div class="row mb-2 d-flex justify-content-center">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-4 font-weight-bold">
+                            お名前（フリガナ）
                         </div>
                         <div class="col-md-6">
-                            {{$client->client_l_name}}
+                            {{$client->	client_furigana_firstname}} {{$client->	client_furigana_lastname}}
                         </div> 
                     </div>
-                    <div class="row mb-2">
-                        <div class="col-md-3 font-weight-bold">
-                            姓よみ
+                    <div class="row mb-2 d-flex justify-content-center">
+                        <div class="col-md-2">
                         </div>
-                        <div class="col-md-6">
-                            {{$client->	client_furigana_firstname}}
-                        </div> 
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-md-3 font-weight-bold">
-                            名よみ
-                        </div>
-                        <div class="col-md-6">
-                            {{$client->	client_furigana_lastname}}
-                        </div> 
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-md-3 font-weight-bold">
+                        <div class="col-md-4 font-weight-bold">
                             電話番号
                         </div>
                         <div class="col-md-6">
                             {{$client->client_tel}}
                         </div> 
                     </div>
-                    <div class="row mb-2">
-                        <div class="col-md-3 font-weight-bold">
-                            Mail
+                    <div class="row mb-2 d-flex justify-content-center">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-4 font-weight-bold">
+                            メールアドレス
                         </div>
                         <div class="col-md-6">
                             {{$client->client_email}}
                         </div> 
                     </div>
                 </div>
-                <div class="w-100 text-center">
+                <div class="w-100 text-center mt-4">
                     <a href="{{route('estate.index')}}" class="btn btn-default mr-2">キャンセル</a>
                     <button class="btn btn-primary printf" onclick="printDiv()">印刷</button>
                 </div>
