@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-center">
-                            <!-- <a href="{{route('estate.index')}}" class="btn btn-default mr-2">キャンセル</a> -->
+                            <a href="{{route('estate.index')}}" class="btn btn-default mr-2">キャンセル</a>
                             <div id="delete_client" class="btn btn-danger mr-2 delete-button">削除</div>
                             <button type="submit" class="btn btn-primary" id="finish_step2">保存</button>
                         </div>

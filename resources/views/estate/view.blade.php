@@ -224,7 +224,8 @@
                                                             </div>
                                                             <div class="col">
                                                                 <div class="">
-                                                                    {{$doc['doc_name'] ?? ""}}
+                                                                    {{ basename($doc['doc_file']) ?? "" }}
+                                                                </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col">

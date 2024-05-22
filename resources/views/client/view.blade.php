@@ -100,6 +100,7 @@
                     </div>
                 </div>
                 <div class="w-100 text-center">
+                    <a href="{{route('estate.index')}}" class="btn btn-default mr-2">キャンセル</a>
                     <button class="btn btn-primary printf" onclick="printDiv()">印刷</button>
                 </div>
             </div>
