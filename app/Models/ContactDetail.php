@@ -32,4 +32,9 @@ class ContactDetail extends Model
   {
     return $this->belongsTo(User::class, 'author', 'id');
   }
+
+  public function contactFiles()
+  {
+    return $this->hasMany(ContactFile::class, 'id', 'contact_detail_id');
+  }
 }
