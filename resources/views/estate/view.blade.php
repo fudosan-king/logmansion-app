@@ -24,13 +24,13 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <label for="estateName" class="col-sm-2 col-form-label">物件名 </label>
-                                                <div class="col-sm-10">
+                                                <div class="col-sm-10 p-2">
                                                     <div>{{$estate->est_name ?? ""}}</div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <label for="roomNo" class="col-sm-2 col-form-label">建物名・号室 </label>
-                                                <div class="col-sm-10">
+                                                <div class="col-sm-10 p-2">
                                                     <div>{{$estate->est_room_no ?? ""}}</div>
                                                 </div>
                                             </div>
@@ -41,18 +41,8 @@
                                                         <div class="col-sm-2">
                                                             {{$estate->est_zip ?? ""}}
                                                         </div>
-                                                        <div class="col-sm-2">
-                                                            <!-- <label for="select_prefectures">都道府県 </label> -->
-                                                            {{$estate->est_pref ?? ""}}
-                                                        
-                                                            <!-- <label for="select_city">市・区 </label> -->
-                                                            {{$estate->est_city ?? ""}}
-                                                        
-                                                            <!-- <label for="select_ward">区町村</label> -->
-                                                            {{$estate->est_ward ?? ""}}
-                                                        
-                                                            <!-- <label for="select_street">丁目・番地</label> -->
-                                                            {{$estate->est_address ?? ""}}
+                                                        <div class="col-sm-10">
+                                                            {{$estate->est_pref}}{{$estate->est_city}}{{$estate->est_ward}}{{$estate->est_address}}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -79,34 +69,18 @@
                                             </div>
                                             <div class="row mb-2">
                                                 <div class="col-md-3 font-weight-bold">
-                                                    姓
+                                                    お名前
                                                 </div>
                                                 <div class="col-md-6">
-                                                    {{$client->client_f_name ?? ""}}
+                                                    {{$client->client_f_name ?? ""}}{{$client->client_l_name ?? ""}}
                                                 </div> 
                                             </div>
                                             <div class="row mb-2">
                                                 <div class="col-md-3 font-weight-bold">
-                                                    名
+                                                    お名前（フリガナ
                                                 </div>
                                                 <div class="col-md-6">
-                                                    {{$client->client_l_name ?? ""}}
-                                                </div> 
-                                            </div>
-                                            <div class="row mb-2">
-                                                <div class="col-md-3 font-weight-bold">
-                                                    姓よみ
-                                                </div>
-                                                <div class="col-md-6">
-                                                    {{$client->	client_furigana_firstname ?? ""}}
-                                                </div> 
-                                            </div>
-                                            <div class="row mb-2">
-                                                <div class="col-md-3 font-weight-bold">
-                                                    名よみ
-                                                </div>
-                                                <div class="col-md-6">
-                                                    {{$client->	client_furigana_lastname ?? ""}}
+                                                    {{$client->	client_furigana_firstname ?? ""}}{{$client->	client_furigana_lastname ?? ""}}
                                                 </div> 
                                             </div>
                                             <div class="row mb-2">
@@ -119,7 +93,7 @@
                                             </div>
                                             <div class="row mb-2">
                                                 <div class="col-md-3 font-weight-bold">
-                                                    Mail
+                                                    メールアドレス
                                                 </div>
                                                 <div class="col-md-6">
                                                     {{$client->client_email ?? ""}}
@@ -175,25 +149,29 @@
                                     </div>
                                     <div class="form-horizontal">
                                         <div class="card-body">
-                                            <table style="width:50%">
-                                                <tr class="mt-2">
-                                                    <th>スケジュール名</th>
-                                                    <th>日付</th>
-                                                    <th>説明文</th>
-                                                </tr>
-                                                @foreach($estate_schedule as $schedule)
-                                                <tr class="mt-2">
-                                                    <td>                     
-                                                        <p>{{$schedule->schedule_name ?? ""}}</p>
-                                                    </td>
-                                                    <td>                     
-                                                        <p>{{ $schedule->schedule_date ? \Carbon\Carbon::parse($schedule->schedule_date)->format('Y-m-d') : "" }}</p>
-                                                    </td>
-                                                    <td>                     
-                                                        <p>{{$schedule->schedule_description ?? ""}}</p>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
+                                            <table style="width:75%">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-nowrap p-2">スケジュール名</th>
+                                                        <th class="text-nowrap p-2">日付</th>
+                                                        <th class="text-nowrap p-2">説明文</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($estate_schedule as $schedule)
+                                                    <tr class="mt-2">
+                                                        <td class="p-2">                     
+                                                            <p>{{$schedule->schedule_name ?? ""}}</p>
+                                                        </td>
+                                                        <td class="text-nowrap p-2">                     
+                                                            <p>{{ $schedule->schedule_date ? \Carbon\Carbon::parse($schedule->schedule_date)->format('Y-m-d') : "" }}</p>
+                                                        </td>
+                                                        <td class="p-2">                     
+                                                            <p>{{$schedule->schedule_description ?? ""}}</p>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -207,10 +185,11 @@
                                     <div class="form-horizontal">
                                         <div class="card-body">
                                             @foreach($estate_document as $doc)
-                                                    <div class="col doc-section w-50">
+                                                    <div class="col doc-section w-75">
                                                         <div class="row doc-row">
                                                             <div class="col">
-                                                                <p class="font-weight-bold">
+                                                                <div class="font-weight-bold">カテゴリー</div>
+                                                                <p class="">
                                                                     @php
                                                                         if($doc['doc_category']===3 || $doc['doc_category']===4){
                                                                             $label = $doc['doc_category']===3 ? '決済までの流れ' : '保証期間';
@@ -223,23 +202,29 @@
                                                                 </p>
                                                             </div>
                                                             <div class="col">
+                                                                <div class="font-weight-bold">
+                                                                    ファイル名
+                                                                </div>
                                                                 <div class="">
                                                                     {{ basename($doc['doc_file']) ?? "" }}
                                                                 </div>
-                                                                </div>
                                                             </div>
                                                             <div class="col">
+                                                                <div class="font-weight-bold">
+                                                                    説明文
+                                                                </div>
                                                                 <div class="">
                                                                     {{$doc['doc_description'] ?? ""}}
                                                                 </div>
                                                             </div>
-                                                            <div class="col-sm-1 download-pdf">
-                                                                <span class="icon">
+                                                            <div class="col download-pdf">
+                                                                <div>&nbsp;</div>
+                                                                <div>
                                                                     @php $file_name = basename($doc['doc_file']); $cleaned_file_name = preg_replace('/^\d{14}_/', '', $file_name); @endphp
                                                                     <a href="{{ Storage::url($doc['doc_file']) }}" download="{{ $cleaned_file_name }}">
                                                                         <i class="fas fa-download"></i>
                                                                     </a>
-                                                                </span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -247,6 +232,10 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-sm-12 text-center">
+                                <a href="{{route('estate.index')}}" class="btn btn-default mr-2">キャンセル</a>
+
                             </div>
                         </div>
                     </div>

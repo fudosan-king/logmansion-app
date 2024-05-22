@@ -103,31 +103,6 @@
                             </div>
                         </div>
 
-                        @elseif($message->contact_message != null)
-
-                        <div class="message">
-                            <span class="message-time">{{$message->created_at}}</span><br>
-                            <span>{{$message->user->name}}</span>
-                            <div class="alert alert-secondary" role="alert">
-                                <i class="fas fa-comment"></i>
-                                {{$message->contact_message}}
-                            </div>
-                        </div>
-
-                        @endif
-
-                        @if($message->contact_note != null)
-
-                        <div class="message">
-                            <span class="message-time">{{$message->created_at}}</span>
-                            <div class="alert alert-secondary" role="alert">
-                                <i class="fas fa-sticky-note"></i>
-                                {{$message->contact_note}}
-                            </div>
-                        </div>
-
-                        @endif
-
                         <!-- modal show list image -->
                         <div class="modal fade" id="listimageModal{{$message->id}}" tabindex="-1" role="dialog" aria-labelledby="listimageModalLabel{{$message->id}}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -156,6 +131,33 @@
                                 </div>
                             </div>
                         </div>
+
+                        @elseif($message->contact_message != null)
+
+                        <div class="message">
+                            <span class="message-time">{{$message->created_at}}</span><br>
+                            <span>{{$message->user->name}}</span>
+                            <div class="alert alert-secondary" role="alert">
+                                <i class="fas fa-comment"></i>
+                                {{$message->contact_message}}
+                            </div>
+                        </div>
+
+                        @endif
+
+                        @if($message->contact_note != null)
+
+                        <div class="message">
+                            <span class="message-time">{{$message->created_at}}</span>
+                            <div class="alert alert-secondary" role="alert">
+                                <i class="fas fa-sticky-note"></i>
+                                {{$message->contact_note}}
+                            </div>
+                        </div>
+
+                        @endif
+
+                 
 
                         @endforeach
 

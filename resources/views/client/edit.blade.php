@@ -16,17 +16,13 @@
       <div class="col-12" >
             @csrf
             <div class="card" id="step2">
-                <div class="card-header">
-                    <h3 class="card-title"><strong>{{config('client_labels.client_info')}}</strong></h3>
-                </div>
                 <div class="form-horizontal">
-                    <form method="POST" action="{{route('client.update',['id'=>$client->id])}}">
+                    <form method="POST" action="{{route('client.update',['id'=>$client->id])}}" novalidate>
                         @csrf
                         @method('PUT')
                         <div class="card-body d-flex justify-content-center flex-column align-items-center">
                             <h3 class="">{{$client->estateName}}</h3>
                             <div class="w-75 mt-4">
-                                <h4 class="mb-2">{{config('client_labels.client_info')}}</h4>
                                 <input type="hidden" value="{{$client->est_id}}" name="est_id">
                                 <div class="form-group row">
                                     <label for="" class="col-sm-3 col-form-label">クライアントID <span class="text-danger">※</span></label>
@@ -47,14 +43,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3">氏名（フリガナ）<span class="text-danger">※</span></label>
+                                    <label class="col-sm-3">氏名（フリガナ</label>
                                     <div class="col-sm-4">
-                                        <label for="">セイ <span class="text-danger">※</span></label>
-                                        <input value="{{ old('client_furigana_firstname') ?? $client->client_furigana_firstname }}" required name="first_name_furi" maxlength="500" type="text" class="form-control">
+                                        <label for="">セイ</label>
+                                        <input value="{{ old('client_furigana_firstname') ?? $client->client_furigana_firstname }}"  name="first_name_furi" maxlength="500" type="text" class="form-control">
                                     </div>
                                     <div class="col-sm-4">
-                                        <label class="" for="">メイ <span class="text-danger">※</span></label>
-                                        <input value="{{ old('last_name_furi') ??  $client->client_furigana_lastname}}" required name="last_name_furi" maxlength="500" type="text" class="form-control">
+                                        <label class="" for="">メイ</label>
+                                        <input value="{{ old('last_name_furi') ??  $client->client_furigana_lastname}}"  name="last_name_furi" maxlength="500" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
