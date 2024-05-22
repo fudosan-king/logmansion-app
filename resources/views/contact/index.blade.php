@@ -184,3 +184,4 @@
 @stop
 
 @section('plugins.Datatables', true)
+@section('plugins.Select2', true)
