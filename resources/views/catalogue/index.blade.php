@@ -31,6 +31,7 @@
                                     <th>{{ __('messages.title') }}</th>
                                     <th>{{ __('messages.status') }}</th>
                                     <th>{{ __('messages.action') }}</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                         </table>
@@ -44,6 +45,8 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 @stop
 
 @section('js')
@@ -58,9 +61,39 @@
                 {data:'cata_title', name:'cata_title'},
                 {data:'active', name:'cata_active'},
                 {data:'action', name:'action', bSortable:true, className:"text-center"},
+                {
+                    name: 'position',
+                    data: null,
+                    searchable: false,
+                    sortable: false,
+                    render: function (data, type, full, meta) {
+                        if (type === 'display') {
+                            var $span = $('<span></span>');
+
+                            if (meta.row > 0) {
+                                $('<a class="dtMoveUp" data-id="' + full.cate_index + '"><i class="fas fa-arrow-up"></i></a>').css('margin-right', '10px').appendTo($span);
+                            }
+
+                            $('<a class="dtMoveDown" data-id="' + full.cate_index + '"><i class="fas fa-arrow-down"></i></a>').appendTo($span);
+
+                            return $span.html();
+                        }
+                        return data;
+                    }
+                }
             ], 
-            order:[[0, "desc"]]
+            'drawCallback': function (settings) {
+                $('#ArgumentsTable tr:last .dtMoveDown').remove();
+
+                $('.dtMoveUp').unbind('click');
+                $('.dtMoveDown').unbind('click');
+
+                $('.dtMoveUp').click(moveUp);
+                $('.dtMoveDown').click(moveDown);
+            },
+            order: [],
         });
+
         $('body').on('click', '#btnDel', function(){
             //confirmation
             var id = $(this).data('id');
@@ -85,6 +118,60 @@
                 //do nothing
             }
         });
+        function moveUp() {
+            // var tr = $(this).parents('tr');
+            // moveRow(tr, 'up');
+
+            var id = $(this).data('id');
+            var route = "{{route('catalog.index.up', ':id')}}"; 
+            route = route.replace(':id', id);
+            changeIndex(route);
+        }
+
+        function moveDown() {
+            // var tr = $(this).parents('tr');
+            // moveRow(tr, 'down');
+
+            var id = $(this).data('id');
+            var route = "{{route('catalog.index.down', ':id')}}"; 
+            route = route.replace(':id', id);
+            changeIndex(route);
+        }
+
+        function changeIndex(route){
+            $.ajax({
+                url:route, 
+                type:"post", 
+                success:function(res){
+                    console.log(res);
+                    $("#tblData").DataTable().ajax.reload();
+                },
+                error:function(res){
+                    var errorMessage = res.responseJSON.message;
+                    alert(errorMessage);
+                }
+            });
+        }
+
+        function moveRow(row, direction) {
+            // var index = table.row(row).index();
+
+            // var order = -1;
+            // if (direction === 'down') {
+            //     order = 1;
+            // }
+
+            // var data1 = table.row(index).data();
+            // data1.order += order;
+
+            // var data2 = table.row(index + order).data();
+            // data2.order += -order;
+
+            // table.row(index).data(data2);
+            // table.row(index + order).data(data1);
+
+            table.page(0).draw(false);
+        }
     });
     
    
