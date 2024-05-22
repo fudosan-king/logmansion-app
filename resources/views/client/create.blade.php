@@ -18,16 +18,12 @@
         <form novalidate action="{{route('client.store')}}" method="post">
             @csrf
             <div class="card" id="step2">
-                <div class="card-header">
-                    <h3 class="card-title"><strong>{{config('client_labels.client_info')}}</strong></h3>
-                </div>
                 <div class="form-horizontal">
-                    <form method="POST" action="{{route('client.store')}}">
+                   
                         @csrf
                         <div class="card-body d-flex justify-content-center flex-column align-items-center">
                             <h3 class="">{{$estateName}}</h3>
                             <div class="w-75 mt-4">
-                                <h4 class="mb-2">{{config('client_labels.client_info')}}</h4>
                                 <input type="hidden" value="{{$est_id}}" name="est_id">
                                 <div class="form-group row">
                                     <label for="" class="col-sm-3 col-form-label">クライアントID <span class="text-danger">※</span></label>
@@ -47,14 +43,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3">氏名（フリガナ）<span class="text-danger">※</span></label>
+                                    <label class="col-sm-3">氏名（フリガナ）</label>
                                     <div class="col-sm-4">
-                                        <label for="">セイ <span class="text-danger">※</span></label>
-                                        <input value="{{ old('first_name_furi') }}" required name="first_name_furi" maxlength="500" type="text" class="form-control">
+                                        <label for="">セイ </label>
+                                        <input value="{{ old('first_name_furi') }}" name="first_name_furi" maxlength="500" type="text" class="form-control">
                                     </div>
                                     <div class="col-sm-4">
-                                        <label class="" for="">メイ <span class="text-danger">※</span></label>
-                                        <input value="{{ old('last_name_furi') }}" required name="last_name_furi" maxlength="500" type="text" class="form-control">
+                                        <label class="" for="">メイ </label>
+                                        <input value="{{ old('last_name_furi') }}" name="last_name_furi" maxlength="500" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -78,7 +74,6 @@
                             <a href="{{route('estate.index')}}" class="btn btn-default mr-2">キャンセル</a>
                             <button type="submit" class="btn btn-primary" id="finish_step2">保存</button>
                         </div>
-                    </form>
                 </div>
             </div>
         </form>

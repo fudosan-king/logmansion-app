@@ -107,7 +107,7 @@ class EstatesController extends Controller
     public function show($est_id)
     {
         $estates = Estate::find($est_id);
-        $estate_schedule = EstateSchedule::where('est_id', $est_id)->orderBy('schedule_date','desc')->get();
+        $estate_schedule = EstateSchedule::where('est_id', $est_id)->get();
         $estate_document = EstateDoc::where('est_id', $est_id)->orderBy('doc_category','asc')->get();
         $client = Client::where('est_id', $est_id)->first();
         return view('estate/view', [
