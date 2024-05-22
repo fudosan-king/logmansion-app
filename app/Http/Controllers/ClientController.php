@@ -48,10 +48,6 @@ class ClientController extends Controller
         $message = [
             'client_id.required' => 'The client id field is required.',
             'client_id.unique' => 'The client id has already been taken.',
-            'first_name.required' => 'The first name field is required.',
-            'last_name.required' => 'The last name field is required.',
-            'first_name_furi.required' => 'The first name furi field is required.',
-            'last_name_furi.required' => 'The last name furi field is required.',
             'telephone.required' => 'The telephone field is required.',
             'email.required' => 'The email field is required.',
             'email.email' => 'The email must be a valid email address.',
@@ -60,8 +56,6 @@ class ClientController extends Controller
             'client_id' => 'required|unique:estate_clients',
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
-            'first_name_furi' => 'required|max:255',
-            'last_name_furi' => 'required|max:255',
             'telephone' => 'required',
             'email' => 'required|email|max:255|unique:estate_clients,client_email',
         ], $message);
