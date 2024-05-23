@@ -60,6 +60,7 @@ Route::group(['middleware' => ['auth', 'permission']], function(){
         Route::resource('roles', RolesController::class);
     });    
     Route::resource('users', UsersController::class);
+    Route::get('profile', [UsersController::class, 'profile'])->name('profile');
     
     Route::group(['prefix' => 'estate', 'as' => 'estate.'], function(){
         Route::get('/', [EstatesController::class, 'index'])->name('index');
@@ -92,8 +93,6 @@ Route::group(['middleware' => ['auth', 'permission']], function(){
     Route::post('/estate/doc/permanent', [DocumentController::class, 'docPermanent'])->name('doc.permanent');
     Route::post('/estate/doc/update', [DocumentController::class, 'update'])->name('doc.update');
     Route::delete('/estate/doc/destroy/{id}', [DocumentController::class, 'destroy'])->name('doc.destroy');
-
-   
     
     // Route::get('/estcontact/create', [EstContactController::class, 'create'])->name('estcontact.create'); 
     // Route::post('/estcontact/store', [EstContactController::class, 'store'])->name('estcontact.store');

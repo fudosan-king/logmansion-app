@@ -365,17 +365,17 @@ return [
             'url' => 'estcontact',
             'icon' => 'fas fa-fw  fa-address-book',
         ],
-        // ['header' => 'account_settings'],
-        // [
-        //     'text' => 'profile',
-        //     'url'  => 'profile',
-        //     'icon' => 'fas fa-fw fa-user',
-        // ],
+        ['header' => 'account_settings'],
         [
-            'text' => 'Settings',
-            // 'url'  => 'settings',
-            'icon' => 'fas fa-fw fa-cogs',
+            'text' => 'profile',
+            'url'  => 'profile',
+            'icon' => 'fas fa-fw fa-user',
         ],
+        // [
+        //     'text' => 'Settings',
+        //     // 'url'  => 'settings',
+        //     'icon' => 'fas fa-fw fa-cogs',
+        // ],
         [
             'text' => 'ユーザー',
             'icon' => 'fas fa-fw fa-users',
