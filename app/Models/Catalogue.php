@@ -19,6 +19,6 @@ class Catalogue extends Model
         'cata_image',
         'cata_url',
         'cata_active',
-        'cate_index',
+        'cata_index',
     ];
 }

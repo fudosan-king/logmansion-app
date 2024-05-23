@@ -65,8 +65,8 @@ class CatalogueController extends Controller
         // $catalogue->cata_url = $request->input('cata_url');
         $catalogue->cata_active = $request->input('cata_active', false);
 
-        $catalogMaxIndex = Catalogue::orderBy('cate_index', 'desc')->first();
-        $catalogue->cate_index = ($catalogMaxIndex->cate_index ?? 0) + 1;
+        $catalogMaxIndex = Catalogue::orderBy('cata_index', 'desc')->first();
+        $catalogue->cata_index = ($catalogMaxIndex->cata_index ?? 0) + 1;
         $catalogue->save();
         toast(__('messages.catalogue').__('messages.created'),'success');
         return redirect()->route('catalogue.index');
@@ -129,9 +129,9 @@ class CatalogueController extends Controller
 
     private function getCatalogues()
     {
-        $data = Catalogue::orderBy('cate_index', 'asc')->get();
-        $maxIndex = $data->max('cate_index');
-        $minIndex = $data->min('cate_index');
+        $data = Catalogue::orderBy('cata_index', 'asc')->get();
+        $maxIndex = $data->max('cata_index');
+        $minIndex = $data->min('cata_index');
         return DataTables::of($data)
                 ->addColumn('image', function($row){
                     $imageUrl = asset("storage/$row->cata_image");
@@ -157,11 +157,11 @@ class CatalogueController extends Controller
                 })
                 ->addColumn('position', function($row) use ($maxIndex, $minIndex) {
                     $action = "";
-                    if($row->cate_index != $minIndex){
-                        $action .= '<a class="dtMoveUp" data-index="' . $row->cate_index . '" style="margin-right: 10px;"><i class="fas fa-arrow-up"></i></a>';
+                    if($row->cata_index != $minIndex){
+                        $action .= '<a class="dtMoveUp" data-index="' . $row->cata_index . '" style="margin-right: 10px;"><i class="fas fa-arrow-up"></i></a>';
                     }
-                    if($row->cate_index < $maxIndex){
-                        $action .= '<a class="dtMoveDown" data-index="' . $row->cate_index . '"><i class="fas fa-arrow-down"></i></a>';
+                    if($row->cata_index < $maxIndex){
+                        $action .= '<a class="dtMoveDown" data-index="' . $row->cata_index . '"><i class="fas fa-arrow-down"></i></a>';
                     }
                     return $action;
                 })
@@ -192,12 +192,12 @@ class CatalogueController extends Controller
 
     function swapIndexUp($index)
     {
-        $item1 = Catalogue::where("cate_index", $index)->first();
-        $item2 = Catalogue::where('cate_index', '<', $index)->orderBy('cate_index', 'desc')->first();
+        $item1 = Catalogue::where("cata_index", $index)->first();
+        $item2 = Catalogue::where('cata_index', '<', $index)->orderBy('cata_index', 'desc')->first();
         if ($item2)
         {
-            $item1->cate_index = $item2->cate_index;
-            $item2->cate_index = $index;
+            $item1->cata_index = $item2->cata_index;
+            $item2->cata_index = $index;
             $item1->save();  
             $item2->save();
         }
@@ -206,12 +206,12 @@ class CatalogueController extends Controller
 
     function swapIndexDown($index)
     {
-        $item1 = Catalogue::where("cate_index", $index)->first();
-        $item2 = Catalogue::where('cate_index', '>', $index)->orderBy('cate_index', 'asc')->first();
+        $item1 = Catalogue::where("cata_index", $index)->first();
+        $item2 = Catalogue::where('cata_index', '>', $index)->orderBy('cata_index', 'asc')->first();
         if ($item2)
         {
-            $item1->cate_index = $item2->cate_index;
-            $item2->cate_index = $index;
+            $item1->cata_index = $item2->cata_index;
+            $item2->cata_index = $index;
             $item1->save();
             $item2->save();
         }
