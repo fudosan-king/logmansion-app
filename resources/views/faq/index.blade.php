@@ -3,7 +3,7 @@
 @section('title', __('messages.faq'))
 
 @section('content_header')
-    <h1>{{__('messages.faq')}}</h1>
+    <h1>{{__('messages.faq')}}{{ __('messages.list') }}</h1>
 @stop
 
 @section('content')
@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <h5>{{ __('messages.list') }}</h5>
+                        <h5></h5>
                     </div>
                     <div class="card-tools">
                         <a href="{{ route('faq.create') }}" class="btn btn-primary">{{ __('messages.create_new') }}</a>
