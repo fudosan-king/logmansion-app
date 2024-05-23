@@ -127,7 +127,7 @@ class ClientController extends Controller
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
             'telephone' => 'required',
-            'email' => 'required|email|max:255|unique:estate_clients,client_email',
+            'email' => 'required|email|max:255|unique:estate_clients,client_email,'.$id,
         ], $message);
         $data = [
             'est_id'=>$request->input('est_id'),
