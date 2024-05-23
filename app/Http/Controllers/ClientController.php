@@ -118,8 +118,18 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
         $client = Client::find($id);
+        $message = [
+            'telephone.required' => 'The telephone field is required.',
+            'email.required' => 'The email field is required.',
+            'email.email' => 'The email must be a valid email address.',
+        ];
+        $validatedData = $request->validate([
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'telephone' => 'required',
+            'email' => 'required|email|max:255|unique:estate_clients,client_email',
+        ], $message);
         $data = [
-            'client_id'=>$request->input('client_id'),
             'est_id'=>$request->input('est_id'),
             'client_f_name'=>$request->input('first_name'),
             'client_l_name'=>$request->input('last_name'),
@@ -142,6 +152,15 @@ class ClientController extends Controller
     public function destroy($id)
     {
         $client = Client::find($id);
-        $client->delete();
+        // $client->delete();
+
+        $client->update([
+            'client_f_name' => null,
+            'client_l_name' => null,
+            'client_furigana_firstname' => null,
+            'client_furigana_lastname' => null,
+            'client_email' => null,
+            'client_tel' => null
+        ]);
     }
 }
