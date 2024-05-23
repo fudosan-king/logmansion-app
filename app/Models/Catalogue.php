@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Catalogue extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $table = 'catalogue';
 
@@ -20,6 +19,6 @@ class Catalogue extends Model
         'cata_image',
         'cata_url',
         'cata_active',
-        'cate_index',
+        'cata_index',
     ];
 }

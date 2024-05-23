@@ -143,7 +143,7 @@ class CreateSuperUserSeeder extends Seeder
                 'cata_image' => '/banner/'.rand(1,5).'.jpg',
                 'cata_url' => $faker->url(),
                 'cata_active' => rand(0,1),
-                'cate_index' => rand(0,10),
+                'cata_index' => rand(0,10),
                 'updated_at' => now(),
                 'created_at' => now(),
             ]);

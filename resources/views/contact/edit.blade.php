@@ -114,7 +114,7 @@
                             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="listimageModalLabel{{$message->id}}">List Image</h5>
+                                        <h5 class="modal-title" id="listimageModalLabel{{$message->id}}">画像一覧</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -166,7 +166,8 @@
                         @if($message->contact_note != null)
 
                         <div class="message">
-                            <span class="message-time">{{$message->created_at}}</span>
+                            <span class="message-time">{{$message->created_at}}</span><br>
+                            <span>{{$message->user->name}}</span>
                             <div class="alert alert-secondary" role="alert">
                                 <i class="fas fa-sticky-note"></i>
                                 {{$message->contact_note}}
@@ -253,7 +254,7 @@
             var modalContent = '<div class="modal-dialog modal-dialog-centered modal-xl" role="document">';
             modalContent += '<div class="modal-content">';
             modalContent += '<div class="modal-header">';
-            modalContent += '<h5 class="modal-title">Large Image</h5>';
+            modalContent += '<h5 class="modal-title"></h5>';
             modalContent += '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
             modalContent += '<span aria-hidden="true">&times;</span>';
             modalContent += '</button>';

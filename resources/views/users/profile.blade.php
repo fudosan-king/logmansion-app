@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', '{{__("messages.profile")}} | Dashboard')
+@section('title', __("messages.profile").' | Dashboard')
 
 @section('content_header')
     <h1>{{__('messages.profile')}}</h1>
@@ -29,18 +29,18 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label for="department" class="form-label">{{__('messages.department')}}</label>
-                            <span style="padding-left:100px">{{ config('const.department')[$user->department] }}</span> 
+                            <label for="department" class="form-label" style="width:200px" >{{__('messages.department')}}</label>
+                            <span>{{ config('const.department')[$user->department] }}</span> 
                         </div>
                         <div class="form-group">
-                            <label for="email" class="form-label">{{__('messages.mail')}} </label>
-                                <span style="padding-left:20px">{{$user->email}}</span>
+                            <label for="email" class="form-label" style="width:200px">{{__('messages.mail')}} </label>
+                            <span>{{$user->email}}</span>
                         </div>
                      
                         <div class="form-group">
-                            <label for="roles" class="form-label">{{__('messages.role')}}</label>
+                            <label for="roles" class="form-label" style="width:200px">{{__('messages.role')}}</label>
                             @foreach ($roles as $role)
-                                <span style="padding-left:100px">{{$user->id ? (in_array($role->name, $userRole)? ucfirst($role->name): ''):''}}</span>
+                                <span>{{$user->id ? (in_array($role->name, $userRole)? ucfirst($role->name): ''):''}}</span>
                             @endforeach
                         </div>
                         {{-- <div class="form-group">

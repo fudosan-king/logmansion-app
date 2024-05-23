@@ -33,20 +33,25 @@ class EstContactController extends Controller
         $valueType = $request->input('value_type');
         $fieldSearchContact = config('const.field_search_contact');
         $fieldSearchValue = $fieldSearchContact[$valueType];
-        $dataSearch = Contact::select($fieldSearchValue)->distinct()->get();
-
         $results = [];
 
         switch ($valueType) {
             case 0:
+                $dataSearch = Contact::select($fieldSearchValue)->distinct()->get();
                 $dataPluck = $dataSearch->pluck('client_id');
                 $results = Client::whereIn('client_id', $dataPluck)->get('client_name');
                 break;
             case 1:
+                $dataSearch = Contact::select($fieldSearchValue)->distinct()->get();
                 $dataPluck = $dataSearch->pluck('user_id');
                 $results = User::whereIn('id', $dataPluck)->get('name');
                 break;
             case 2:
+                $dataSearch = ContactDetail::select($fieldSearchValue)->where('author_type', 1)->distinct()->get();
+                $dataPluck = $dataSearch->pluck('author');
+                $results = User::whereIn('id', $dataPluck)->get('name');
+                break;
+            case 3:
                 $results = config('const.contact_type');
                 break;
             default:
