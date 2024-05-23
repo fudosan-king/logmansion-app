@@ -56,6 +56,7 @@
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">{{ config('estate_labels.last_update') }}</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">{{ config('estate_labels.staff') }}</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">{{ config('estate_labels.date') }}</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -72,6 +73,21 @@
                                                 <td>{{ $contact->updated_at->format('Y-m-d') ?? "" }}</td>
                                                 <td>{{ $contact->user->name ?? "" }}</td>
                                                 <td>{{ $contact->created_at->format('Y-m-d') ?? "" }}</td>
+                                                <?php $listStaff = App\Models\ContactDetail::where('author_type', 1)
+                                                    ->where('contact_id', $contact->contact_id)
+                                                    ->distinct()
+                                                    ->orderByDesc('contact_id')
+                                                    ->get();
+                                                    $dataPluck = $listStaff->pluck('author');
+                                                    $result = [];
+                                                    $results = App\Models\User::whereIn('id', $dataPluck)->orderByDesc('id')->get('name');
+
+                                                ?>
+                                                <td>
+                                                    @foreach($results as $value)
+                                                       {{$value->name}}
+                                                    @endforeach
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -104,7 +120,36 @@
                     "type": "numeric-comma",
                     "targets": "_all"
                 }]
-            }]
+            }],
+            "columns": [{
+                    "data": "column1"
+                },
+                {
+                    "data": "column2"
+                },
+                {
+                    "data": "column3"
+                },
+                {
+                    "data": "column4"
+                },
+                {
+                    "data": "column5"
+                },
+                {
+                    "data": "column6"
+                },
+                {
+                    "data": "column7"
+                },
+                {
+                    "data": "column8"
+                },
+                {
+                    "data": "column9",
+                    "visible": false
+                },
+            ]
         });
 
 
@@ -153,6 +198,14 @@
 
                             case '2':
                                 docNameSelect.append($('<option>', {
+                                    value: item.name,
+                                    text: item.name,
+                                }));
+                                index = 8;
+                                break;
+
+                            case '3':
+                                docNameSelect.append($('<option>', {
                                     value: item,
                                     text: item,
                                 }));
@@ -173,9 +226,14 @@
         $('.contact-value-search').change(function() {
             var searchValue = $(this).val().trim();
             var dataTable = $('#tblData').DataTable();
-            var regexPattern = '^' + $.fn.dataTable.util.escapeRegex(searchValue) + '$';
 
-            dataTable.column(index).search(regexPattern, true, false).draw();
+            if (index == 8) {
+                dataTable.column(index).search(searchValue, true, false).draw();
+            } else {
+                var regexPattern = '^' + $.fn.dataTable.util.escapeRegex(searchValue) + '$';
+                dataTable.column(index).search(regexPattern, true, false).draw();
+            }
+            
         });
 
 
