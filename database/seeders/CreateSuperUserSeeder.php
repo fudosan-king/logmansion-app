@@ -35,6 +35,8 @@ class CreateSuperUserSeeder extends Seeder
         ]);
         $role = Role::create(['name' => 'ユーザー']); 
         $user->assignRole([$role->id]);
+        $permission = Permission::create(['name' => 'users.edit','guard_name' => 'web']); 
+        $permission = Permission::create(['name' => 'users.update','guard_name' => 'web']); 
 
         $permission = Permission::create(['name' => 'dashboard','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'estate.index','guard_name' => 'web']); 
@@ -88,6 +90,8 @@ class CreateSuperUserSeeder extends Seeder
         $permission = Permission::create(['name' => 'schedule.update','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'schedule.destroy','guard_name' => 'web']); 
 
+        $permission = Permission::create(['name' => 'catalogue.index.up','guard_name' => 'web']);
+        $permission = Permission::create(['name' => 'catalogue.index.down','guard_name' => 'web']);
         $permission = Permission::create(['name' => 'catalogue.index','guard_name' => 'web']);
         $permission = Permission::create(['name' => 'catalogue.create','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'catalogue.store','guard_name' => 'web']); 
@@ -101,6 +105,7 @@ class CreateSuperUserSeeder extends Seeder
         $permission = Permission::create(['name' => 'estcontact.edit','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'estcontact.update','guard_name' => 'web']); 
         $permission = Permission::create(['name' => 'estcontact.destroy','guard_name' => 'web']);
+        $permission = Permission::create(['name' => 'estcontact.getDocSearch','guard_name' => 'web']);
         
         $permission = Permission::create(['name' => 'doc.edit','guard_name' => 'web']);
         $permission = Permission::create(['name' => 'doc.store','guard_name' => 'web']); 
@@ -131,6 +136,19 @@ class CreateSuperUserSeeder extends Seeder
             ]);
         }
 
+        for($i=1; $i <= 10; $i++) {
+            \DB::table('catalogue')->insert([
+                'cata_title' => rand(1,10),
+                'cata_description' => $faker->paragraphs(2,true),
+                'cata_image' => '/banner/'.rand(1,5).'.jpg',
+                'cata_url' => $faker->url(),
+                'cata_active' => rand(0,1),
+                'cate_index' => rand(0,10),
+                'updated_at' => now(),
+                'created_at' => now(),
+            ]);
+        }
+
         for($i=1; $i <= 50; $i++) {
             \DB::table('estate_clients')->insert([
                 'client_id' => 'Est'. sprintf("%06d", $i),
@@ -145,7 +163,6 @@ class CreateSuperUserSeeder extends Seeder
          ]);
         }
       
-
         for($i=1; $i <= 10; $i++) {
             $contact_type = rand(0,2);
             \DB::table('estate_contact')->insert([
