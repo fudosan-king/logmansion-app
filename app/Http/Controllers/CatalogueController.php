@@ -131,6 +131,7 @@ class CatalogueController extends Controller
     {
         $data = Catalogue::orderBy('cate_index', 'asc')->get();
         $maxIndex = $data->max('cate_index');
+        $minIndex = $data->min('cate_index');
         return DataTables::of($data)
                 ->addColumn('image', function($row){
                     $imageUrl = asset("storage/$row->cata_image");
@@ -154,9 +155,9 @@ class CatalogueController extends Controller
                     }
                     return $action;
                 })
-                ->addColumn('position', function($row) use ($maxIndex) {
+                ->addColumn('position', function($row) use ($maxIndex, $minIndex) {
                     $action = "";
-                    if($row->cate_index > 1){
+                    if($row->cate_index != $minIndex){
                         $action .= '<a class="dtMoveUp" data-index="' . $row->cate_index . '" style="margin-right: 10px;"><i class="fas fa-arrow-up"></i></a>';
                     }
                     if($row->cate_index < $maxIndex){
