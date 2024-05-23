@@ -141,7 +141,7 @@ class UsersController extends Controller
             // dd($request->current_password);
             if($request->current_password != null || $request->password != null || $request->password_confirmation != null) {
                 $request->validate([
-                    'password' => 'required|confirmed|required_with:current_password|min:4',
+                    'password' => 'required|confirmed|required_with:current_password|min:8',
                     'password_confirmation' => 'required|same:password',
                     'current_password' => ['required', function ($attribute, $value, $fail) use ($user) {
                         if (!\Hash::check($value, $user->password)) {
