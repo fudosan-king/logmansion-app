@@ -17,6 +17,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AdminResetNotification;
 use Illuminate\Auth\Passwords\PasswordBroker;
+use Illuminate\Support\Facades\Hash;
 class UsersController extends Controller
 {
 
@@ -131,18 +132,43 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $this->validate($request, [
-            'name' => 'required', 
-            'email' => 'required|email:rfc,dns|unique:users,email,'.$user->id,
-        ]); 
-        
-        $user->update($request->all());
-        $user->roles()->sync($request->input('roles'));
-
+    //    dd($request->all(),Auth::id(),$user->id);
+       if(Auth::id() == $user->id) {
+            $this->validate($request, [
+                'name' => 'required'
+            ]); 
+            
+            // dd($request->current_password);
+            if($request->current_password != null || $request->password != null || $request->password_confirmation != null) {
+                $request->validate([
+                    'password' => 'required|confirmed|required_with:current_password|min:4',
+                    'password_confirmation' => 'required|same:password',
+                    'current_password' => ['required', function ($attribute, $value, $fail) use ($user) {
+                        if (!\Hash::check($value, $user->password)) {
+                            return $fail(__('validation.current_password_incorrect'));
+                        }
+                    }],
+                ],
+                [
+                    'password.confirmed' => __('validation.password_required_with_current_password'),
+                    'same' => '新しいパスワードパスワードの確認は一致する必要があります。',
+                ]);
+            }
+            $user->update($request->all());
+       } else {
+            $this->validate($request, [
+                'name' => 'required', 
+                'email' => 'required|email:rfc,dns|unique:users,email,'.$user->id,
+            ]); 
+            
+            $user->update($request->all());
+            $user->roles()->sync($request->input('roles'));
+       } 
+      
         if($user)
         {
             toast(__('messages.user_update'),'success');
-            return Redirect::to('users');
+            return Redirect::to('profile');
         }
         toast('Error in User Update','error');
         return back()->withInput();
@@ -164,10 +190,9 @@ class UsersController extends Controller
         return response(["message" => "Data Delete Error! Please Try again"], 201);
     }
 
-    private function getUsers()
+    private function getUsers($id = 0)
     {
-       
-        $data = User::with('roles')->where('id', '<>',Auth::user()->id)->get();
+        $data = User::with('roles')->where('id', '<>', $id == 0 ? Auth::user()->id : $id)->get();
         return DataTables::of($data)
                 ->addColumn('name', function($row){
                     return ucfirst($row->name);
@@ -200,5 +225,24 @@ class UsersController extends Controller
                     return $action;
                 })
                 ->rawColumns(['name', 'date','roles', 'action'])->make('true');
+    }
+
+     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function profile()
+    {
+        $user = Auth::user();
+        if (empty($user)) {
+            abort(403);
+        }
+        return view('users.profile', [
+            "user" => $user, 
+            "userRole" => $user->roles->pluck('name')->toArray(), 
+            "roles" => Role::latest()->get()
+        ]);
     }
 }
