@@ -74,4 +74,5 @@ return [
     'confirm_delete' =>  'ユーザーを削除しますか？',
     'new_catalogue' => 'おすすめオーダー家具新規追加',
     'edit_catalogue' => 'おすすめオーダー家具編集',
+    'delete_catalogue' => 'おすすめオーダー家具を削除しますか？',
 ];
