@@ -58,7 +58,7 @@
             columns:[
                 {data:'updated_at', name:'updated_at'},
                 {data:'image', name:'image'},
-                {data:'cata_title', name:'cata_title'},
+                {data:'cata_title', name:'cata_title', width: '50%', className: 'limited-width' },
                 {data:'active', name:'cata_active'},
                 {data:'action', name:'action', bSortable:true, className:"text-center"},
                 {
@@ -70,9 +70,10 @@
                         if (type === 'display') {
                             var $span = $('<span></span>');
 
-                            if (meta.row > 0) {
-                                $('<a class="dtMoveUp" data-id="' + full.cate_index + '"><i class="fas fa-arrow-up"></i></a>').css('margin-right', '10px').appendTo($span);
-                            }
+                            // if (full.cate_index > 1) {
+                            //     $('<a class="dtMoveUp" data-id="' + full.cate_index + '"><i class="fas fa-arrow-up"></i></a>').css('margin-right', '10px').appendTo($span);
+                            // }
+                            $('<a class="dtMoveUp" data-id="' + full.cate_index + '"><i class="fas fa-arrow-up"></i></a>').css('margin-right', '10px').appendTo($span);
 
                             $('<a class="dtMoveDown" data-id="' + full.cate_index + '"><i class="fas fa-arrow-down"></i></a>').appendTo($span);
 
@@ -97,7 +98,7 @@
         $('body').on('click', '#btnDel', function(){
             //confirmation
             var id = $(this).data('id');
-            if(confirm('バナーを削除しますか？')==true)
+            if(confirm('{{__('messages.delete_catalogue')}}')==true)
             {
                 var route = "{{route('catalogue.destroy', ':id')}}"; 
                 route = route.replace(':id', id);
@@ -123,7 +124,7 @@
             // moveRow(tr, 'up');
 
             var id = $(this).data('id');
-            var route = "{{route('catalog.index.up', ':id')}}"; 
+            var route = "{{route('catalogue.index.up', ':id')}}"; 
             route = route.replace(':id', id);
             changeIndex(route);
         }
@@ -133,7 +134,7 @@
             // moveRow(tr, 'down');
 
             var id = $(this).data('id');
-            var route = "{{route('catalog.index.down', ':id')}}"; 
+            var route = "{{route('catalogue.index.down', ':id')}}"; 
             route = route.replace(':id', id);
             changeIndex(route);
         }
