@@ -94,6 +94,14 @@ class EstatesController extends Controller
         $estate->est_usefulinfo_ward_url = $request->input('selected_ward_url');
         $estate->est_usefulinfo_ward_show = $request->input('showLinkstatus3') === 'on' ? 1 : 0;
         $estate->save();
+        $est_id = $estate->est_id;
+        $maxId = Client::withTrashed()->max('id');
+        $genClientid = 'LSM'. str_pad($est_id,3,'0',STR_PAD_LEFT) . str_pad($maxId + 1, 3, '0', STR_PAD_LEFT);
+        //tạo client với estate_id và client_id
+        $client = Client::create([
+            'client_id' => $genClientid,
+            'est_id' => $est_id
+        ]);
         toast(config('estate_labels.toast_create'),'success');
         return redirect()->route('estate.index');
     }   
