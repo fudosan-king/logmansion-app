@@ -141,7 +141,7 @@ class UsersController extends Controller
             // dd($request->current_password);
             if($request->current_password != null || $request->password != null || $request->password_confirmation != null) {
                 $request->validate([
-                    'password' => 'required|confirmed|required_with:current_password|min:8',
+                    'password' => 'required|confirmed|required_with:current_password|min:8|different:current_password',
                     'password_confirmation' => 'required|same:password',
                     'current_password' => ['required', function ($attribute, $value, $fail) use ($user) {
                         if (!\Hash::check($value, $user->password)) {
@@ -151,7 +151,7 @@ class UsersController extends Controller
                 ],
                 [
                     'password.confirmed' => __('validation.password_required_with_current_password'),
-                    'same' => '新しいパスワードパスワードの確認は一致する必要があります。',
+                    'password.different' => __('validation.password_different'),
                 ]);
             }
             $user->update($request->all());
