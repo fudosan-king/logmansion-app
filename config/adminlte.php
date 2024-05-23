@@ -261,7 +261,9 @@ return [
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
-    'profile_url' => false,
+    // 'profile_url' => true,
+    // 'use_route_url' => false,
+    'profile_url' => 'profile',
 
     /*
     |--------------------------------------------------------------------------
@@ -365,12 +367,12 @@ return [
             'url' => 'estcontact',
             'icon' => 'fas fa-fw  fa-address-book',
         ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url'  => 'profile',
-            'icon' => 'fas fa-fw fa-user',
-        ],
+        // ['header' => 'account_settings'],
+        // [
+        //     'text' => 'profile',
+        //     'url'  => 'profile',
+        //     'icon' => 'fas fa-fw fa-user',
+        // ],
         // [
         //     'text' => 'Settings',
         //     // 'url'  => 'settings',

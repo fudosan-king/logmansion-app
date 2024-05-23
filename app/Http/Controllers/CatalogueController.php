@@ -130,6 +130,7 @@ class CatalogueController extends Controller
     private function getCatalogues()
     {
         $data = Catalogue::orderBy('cate_index', 'asc')->get();
+        $maxIndex = $data->max('cate_index');
         return DataTables::of($data)
                 ->addColumn('image', function($row){
                     $imageUrl = asset("storage/$row->cata_image");
@@ -153,7 +154,17 @@ class CatalogueController extends Controller
                     }
                     return $action;
                 })
-                ->rawColumns(['url', 'image','active', 'action'])
+                ->addColumn('position', function($row) use ($maxIndex) {
+                    $action = "";
+                    if($row->cate_index > 1){
+                        $action .= '<a class="dtMoveUp" data-index="' . $row->cate_index . '" style="margin-right: 10px;"><i class="fas fa-arrow-up"></i></a>';
+                    }
+                    if($row->cate_index < $maxIndex){
+                        $action .= '<a class="dtMoveDown" data-index="' . $row->cate_index . '"><i class="fas fa-arrow-down"></i></a>';
+                    }
+                    return $action;
+                })
+                ->rawColumns(['url', 'image','active', 'action','position'])
                 ->addColumn('searchable', function ($row) {
                     return [
                         $row->cata_title,

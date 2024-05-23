@@ -40,7 +40,7 @@
                         <div class="form-group">
                             <label for="roles" class="form-label">{{__('messages.role')}}</label>
                             @foreach ($roles as $role)
-                                <span style="padding-left:50px">{{$user->id ? (in_array($role->name, $userRole)? ucfirst($role->name): ''):''}}</span>
+                                <span style="padding-left:100px">{{$user->id ? (in_array($role->name, $userRole)? ucfirst($role->name): ''):''}}</span>
                             @endforeach
                         </div>
                         {{-- <div class="form-group">
@@ -133,7 +133,7 @@
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">{{ __("messages.save") }}</button>
-                        <a href="{{url()->previous()}}"  class="btn btn-default float" style="margin-left:10px">@lang('messages.cancel')</a>
+                        <a href="{{ route('estate.index') }}" class="btn btn-default float" style="margin-left:10px">@lang('messages.cancel')</a>
                     </div>
                 </div>
             </form>

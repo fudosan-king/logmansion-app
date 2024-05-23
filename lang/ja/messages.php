@@ -59,7 +59,7 @@ return [
     'image' => '画像',
     'url' => 'URL',
     'create_new' => '新規追加',
-    'list' => 'リスト',
+    'list' => '一覧',
     'content' => '本文',
     'description' => '説明文',
     'add_notification' => 'お知らせ新規追加',
