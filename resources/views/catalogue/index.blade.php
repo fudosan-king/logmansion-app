@@ -72,11 +72,11 @@
                 //         if (type === 'display') {
                 //             var $span = $('<span></span>');
 
-                //             if (full.cate_index > 1) {
-                //                 $('<a class="dtMoveUp" data-id="' + full.cate_index + '"><i class="fas fa-arrow-up"></i></a>').css('margin-right', '10px').appendTo($span);
+                //             if (full.cata_index > 1) {
+                //                 $('<a class="dtMoveUp" data-id="' + full.cata_index + '"><i class="fas fa-arrow-up"></i></a>').css('margin-right', '10px').appendTo($span);
                 //             }
 
-                //             $('<a class="dtMoveDown" data-id="' + full.cate_index + '"><i class="fas fa-arrow-down"></i></a>').appendTo($span);
+                //             $('<a class="dtMoveDown" data-id="' + full.cata_index + '"><i class="fas fa-arrow-down"></i></a>').appendTo($span);
 
                 //             return $span.html();
                 //         }
