@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', __("messages.profile").' | Dashboard')
+@section('title', __("messages.profile"))
 
 @section('content_header')
     <h1>{{__('messages.profile')}}</h1>
