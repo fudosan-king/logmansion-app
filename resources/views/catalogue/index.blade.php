@@ -3,7 +3,7 @@
 @section('title', __('messages.catalogue'))
 
 @section('content_header')
-    <h1>{{__('messages.catalogue')}}</h1>
+    <h1>{{__('messages.catalogue')}}{{ __('messages.list') }}</h1>
 @stop
 
 @section('content')
@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <h5>{{ __('messages.list') }}</h5>
+                        <h5></h5>
                     </div>
                     <div class="card-tools">
                         <a href="{{ route('catalogue.create') }}" class="btn btn-primary">{{ __('messages.create_new') }}</a>
@@ -59,29 +59,30 @@
                 {data:'updated_at', name:'updated_at'},
                 {data:'image', name:'image'},
                 {data:'cata_title', name:'cata_title', width: '50%', className: 'limited-width' },
-                {data:'active', name:'cata_active'},
-                {data:'action', name:'action', bSortable:true, className:"text-center"},
-                {
-                    name: 'position',
-                    data: null,
-                    searchable: false,
-                    sortable: false,
-                    render: function (data, type, full, meta) {
-                        if (type === 'display') {
-                            var $span = $('<span></span>');
+                {data:'active', name:'cata_active', searchable: false, bSortable: false},
+                {data:'action', name:'action', searchable: false, bSortable: false, className:"text-center"},
+                
+                {data:'position', name:'position'},
+                // {
+                //     name: 'position',
+                //     data: null,
+                //     searchable: false,
+                //     sortable: false,
+                //     render: function (data, type, full, meta) {
+                //         if (type === 'display') {
+                //             var $span = $('<span></span>');
 
-                            // if (full.cate_index > 1) {
-                            //     $('<a class="dtMoveUp" data-id="' + full.cate_index + '"><i class="fas fa-arrow-up"></i></a>').css('margin-right', '10px').appendTo($span);
-                            // }
-                            $('<a class="dtMoveUp" data-id="' + full.cate_index + '"><i class="fas fa-arrow-up"></i></a>').css('margin-right', '10px').appendTo($span);
+                //             if (full.cate_index > 1) {
+                //                 $('<a class="dtMoveUp" data-id="' + full.cate_index + '"><i class="fas fa-arrow-up"></i></a>').css('margin-right', '10px').appendTo($span);
+                //             }
 
-                            $('<a class="dtMoveDown" data-id="' + full.cate_index + '"><i class="fas fa-arrow-down"></i></a>').appendTo($span);
+                //             $('<a class="dtMoveDown" data-id="' + full.cate_index + '"><i class="fas fa-arrow-down"></i></a>').appendTo($span);
 
-                            return $span.html();
-                        }
-                        return data;
-                    }
-                }
+                //             return $span.html();
+                //         }
+                //         return data;
+                //     }
+                // }
             ], 
             'drawCallback': function (settings) {
                 $('#ArgumentsTable tr:last .dtMoveDown').remove();
@@ -119,13 +120,14 @@
                 //do nothing
             }
         });
+        
         function moveUp() {
             // var tr = $(this).parents('tr');
             // moveRow(tr, 'up');
 
-            var id = $(this).data('id');
-            var route = "{{route('catalogue.index.up', ':id')}}"; 
-            route = route.replace(':id', id);
+            var index = $(this).data('index');
+            var route = "{{route('catalogue.index.up', ':index')}}"; 
+            route = route.replace(':index', index);
             changeIndex(route);
         }
 
@@ -133,9 +135,9 @@
             // var tr = $(this).parents('tr');
             // moveRow(tr, 'down');
 
-            var id = $(this).data('id');
-            var route = "{{route('catalogue.index.down', ':id')}}"; 
-            route = route.replace(':id', id);
+            var index = $(this).data('index');
+            var route = "{{route('catalogue.index.down', ':index')}}"; 
+            route = route.replace(':index', index);
             changeIndex(route);
         }
 
