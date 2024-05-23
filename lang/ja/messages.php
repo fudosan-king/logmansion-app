@@ -74,5 +74,9 @@ return [
     'confirm_delete' =>  'ユーザーを削除しますか？',
     'new_catalogue' => 'おすすめオーダー家具新規追加',
     'edit_catalogue' => 'おすすめオーダー家具編集',
+    'profile' => 'プロフィール',
+    'current_password' => '現在のパスワード',
+    'new_password' => '新しいパスワード',
+    'confirm_password' => 'パスワードの確認',
     'delete_catalogue' => 'おすすめオーダー家具を削除しますか？',
 ];
