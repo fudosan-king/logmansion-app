@@ -71,7 +71,7 @@
                             </td>
                             <td>
                                 <div class="action_bar" style="">
-                                    <a href="{{$estate['client'] ? route('client.edit',['id'=>$estate['client']['id']]):route('client.create',['estate_id' => $estate['est_id']])}}" data-toggle="tooltip" data-placement="top" title="クライアント">
+                                    <a href="{{$estate['client']?route('client.edit',['id'=>$estate['client']['id']]):route('client.create',['estate_id'=>$estate['est_id']])}}" data-toggle="tooltip" data-placement="top" title="クライアント">
                                     <i class="fas fa-hammer"></i>
                                     </a>
                                   <a href="{{route('schedule.edit', ['id' => $estate['est_id']])}}" data-toggle="tooltip" data-placement="top" title="スケジュール">
