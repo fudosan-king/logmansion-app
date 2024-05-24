@@ -315,6 +315,34 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/forgot-password",
+     *     summary="Forgot Password",
+     *     tags={"Client"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"client_email"},
+     *             @OA\Property(property="client_email", type="string", format="email", example="user@example.com")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="New password has been sent to your email.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="New password has been sent to your email.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid email address.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="Invalid email address.")
+     *         )
+     *     )
+     * )
+     */
     public function forgotPassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
