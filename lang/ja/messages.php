@@ -79,4 +79,5 @@ return [
     'new_password' => '新しいパスワード',
     'confirm_password' => 'パスワードの確認',
     'delete_catalogue' => 'おすすめオーダー家具を削除しますか？',
+    'category_being_used' => 'このカテゴリは使用されています。',
 ];

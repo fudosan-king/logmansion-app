@@ -4,12 +4,15 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Client;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use App\Mail\ForgotPasswordMail;
+use App\Models\Client;
 
 
 class AuthController extends Controller
@@ -283,7 +286,7 @@ class AuthController extends Controller
     {
         try {
             $id = JWTAuth::parseToken()->authenticate()->id;
-            $client = Client::where('client_id', $id)->first();
+            $client = Client::where('id', $id)->first();
             return response()->json(['user' => $client], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Unauthorized'], 401);
@@ -310,6 +313,57 @@ class AuthController extends Controller
                 'type' => 'bearer',
             ]
         ]);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/forgot-password",
+     *     summary="Forgot Password",
+     *     tags={"Client"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"client_email"},
+     *             @OA\Property(property="client_email", type="string", format="email", example="user@example.com")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="New password has been sent to your email.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="New password has been sent to your email.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid email address.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="Invalid email address.")
+     *         )
+     *     )
+     * )
+     */
+    public function forgotPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+        'client_email' => 'required|email|exists:estate_clients,client_email',
+        ], []);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        $client = Client::where('client_email', $request->client_email)->first();
+
+        $newPassword = Str::random(8);
+
+        $client->client_password = bcrypt($newPassword);
+        $client->save();
+
+        Mail::to($client->client_email)->send(new ForgotPasswordMail($newPassword));
+
+
+        return response()->json(['message' => 'New password has been sent to your email.']);
     }
 
 }
