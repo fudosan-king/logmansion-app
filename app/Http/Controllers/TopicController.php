@@ -60,7 +60,7 @@ class TopicController extends Controller
             $count = Notification::where('cat_id', $id)->count();
             if($count > 0)
             {
-                return response(["message" => "This category cannot currently be deleted!"], 403);
+                return response(["message" => __('messages.category_being_used')], 403);
             }
             $category->delete();    
             return response(["message" => "Category Deleted Successfully"], 200);
