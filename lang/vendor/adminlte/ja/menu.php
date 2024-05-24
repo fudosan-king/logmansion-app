@@ -6,7 +6,7 @@ return [
     'blog'                          => 'ブログ',
     'pages'                         => 'ページ',
     'account_settings'              => 'アカウント設定',
-    'profile'                       => 'プロフィール',
+    'profile'                       => 'プロファイル設定',
     'change_password'               => 'パスワード変更',
     'multilevel'                    => 'マルチ階層',
     'level_one'                     => '階層 1',
