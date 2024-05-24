@@ -57,6 +57,9 @@
                 {data:'active', name:'faq_active'},
                 {data:'action', name:'action', bSortable:false, className:"text-center"},
             ], 
+            "columnDefs": [
+                { "searchable": false, "targets": [0, 2 , 3] }
+            ],
             order:[[0, "desc"]]
         });
         $('body').on('click', '#btnDel', function(){

@@ -93,6 +93,9 @@
                 $('.dtMoveUp').click(moveUp);
                 $('.dtMoveDown').click(moveDown);
             },
+            "columnDefs": [
+                { "searchable": false, "targets": [0, 1, 3, 4, 5] }
+            ],
             order: [],
         });
 
