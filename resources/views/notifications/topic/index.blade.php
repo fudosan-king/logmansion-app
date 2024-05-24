@@ -26,7 +26,7 @@
                         <table id="tblData" class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                                 <tr>
-                                    <th>{{ __('messages.id') }}</th>
+                                    {{-- <th>{{ __('messages.id') }}</th> --}}
                                     <th>{{ __('messages.category') }}</th>
                                     <th>{{ __('messages.last_updated') }}</th>
                                     <th>{{ __('messages.action') }}</th>
@@ -52,11 +52,14 @@
             reponsive:true, processing:true, serverSide:true, autoWidth:false, 
             ajax:"{{route('topic.index')}}", 
             columns:[
-                {data:'cat_id', name:'cat_id'},
+                // {data:'cat_id', name:'cat_id'},
                 {data:'cat_name', name:'cat_name'},
                 {data:'updated_at', name:'updated_at'},
                 {data:'action', name:'action', bSortable:false, className:"text-center"},
             ], 
+            "columnDefs": [
+                { "searchable": false, "targets": [1, 2] }
+            ],
             order:[[0, "desc"]]
         });
         $('body').on('click', '#btnDel', function(){

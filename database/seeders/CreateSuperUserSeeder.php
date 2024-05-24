@@ -138,7 +138,7 @@ class CreateSuperUserSeeder extends Seeder
 
         for($i=1; $i <= 10; $i++) {
             \DB::table('catalogue')->insert([
-                'cata_title' => rand(1,10),
+                'cata_title' => $faker->name,
                 'cata_description' => $faker->paragraphs(2,true),
                 'cata_image' => '/banner/'.rand(1,5).'.jpg',
                 'cata_url' => $faker->url(),

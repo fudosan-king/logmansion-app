@@ -26,7 +26,7 @@
                         <table id="tblData" class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                                 <tr>
-                                    <th>{{ __('messages.id') }}</th>
+                                    {{-- <th>{{ __('messages.id') }}</th> --}}
                                     <th>{{ __('messages.date') }}</th>
                                     <th>{{ __('messages.category') }}</th>
                                     <th>{{ __('messages.title') }}</th>
@@ -55,7 +55,7 @@
             reponsive:true, processing:true, serverSide:true, autoWidth:false, 
             ajax:"{{route('notification.index')}}", 
             columns:[
-                {data:'noti_id', name:'noti_id'},
+                // {data:'noti_id', name:'noti_id'},
                 {data:'noti_date', name:'noti_date'},
                 {data:'cat_name', name:'cat_name'},
                 {data:'noti_title', name:'noti_title'},
@@ -63,6 +63,9 @@
                 {data:'updated_at', name:'updated_at'},
                 {data:'action', name:'action', bSortable:false, className:"text-center"},
             ], 
+            "columnDefs": [
+                { "searchable": false, "targets": [0, 1, 3, 4, 5] }
+            ],
             order:[[0, "desc"]]
         });
         $('body').on('click', '#btnDel', function(){
@@ -76,7 +79,6 @@
                     url:route, 
                     type:"delete", 
                     success:function(res){
-                        console.log(res);
                         $("#tblData").DataTable().ajax.reload();
                     },
                     error:function(res){
