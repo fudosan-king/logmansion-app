@@ -76,7 +76,9 @@
                 {data:'active', name:'banner_active'},
                 {data:'action', name:'action', bSortable:true, className:"text-center"},
             ], 
-            // columnDefs:[
+            "columnDefs": [
+                { "searchable": false, "targets": [1, 2, 3,4] }
+            ],
             // {
             //     targets:0,
             //     searchable:false,
