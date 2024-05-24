@@ -140,6 +140,9 @@
                 {data:'roles', name:'roles'},
                 {data:'action', name:'action', bSortable:false, className:"text-center"},
             ], 
+            "columnDefs": [
+                { "searchable": false, "targets": [0, 2, 4,5] }
+            ],
             // ({{__('messages.confirm_delete')}}
             // data: dataSet,
             order:[[0, "desc"]]
