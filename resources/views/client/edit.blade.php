@@ -25,7 +25,7 @@
                             <div class="w-75 mt-4">
                                 <input type="hidden" value="{{$client->est_id}}" name="est_id">
                                 <div class="form-group row">
-                                    <label for="" class="col-sm-3 col-form-label">クライアントID <span class="text-danger">※</span></label>
+                                    <label for="" class="col-sm-3 col-form-label">{{config('client_labels.custome_number')}} <span class="text-danger">※</span></label>
                                     <div class="col-sm-3">
                                         <div>{{$client->first_name}}</div>
                                         <input required readonly name="client_id" value="{{$client->client_id}}" type="text" class="form-control">
@@ -72,7 +72,9 @@
                         </div>
                         <div class="card-footer d-flex justify-content-center">
                             <a href="{{route('estate.index')}}" class="btn btn-default mr-2">キャンセル</a>
-                            <div id="delete_client" class="btn btn-danger mr-2 delete-button">削除</div>
+                            @if ($client->client_f_name && $client->client_l_name)
+                                <div id="delete_client" class="btn btn-danger mr-2 delete-button">削除</div>
+                            @endif
                             <button type="submit" class="btn btn-primary" id="finish_step2">保存</button>
                         </div>
                     </form>
@@ -148,7 +150,7 @@
                 url: "{{ route('client.destroy', ['id' => $client->id]) }}",
                 type: "DELETE",
                 success: function(response) {
-                    window.location.href = "{{ route('estate.index') }}";
+                    window.location.href = "{{ route('client.edit',['id'=>$client->id]) }}";
                 }
             });
         }
