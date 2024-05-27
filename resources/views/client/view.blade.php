@@ -44,7 +44,7 @@
                         <div class="col-md-2">
                         </div>
                         <div class="col-md-4 font-weight-bold">
-                            お客様番号
+                            {{config('client_labels.custome_number')}}
                         </div>
                         <div class="col-md-6">
                             {{$client->client_id}}
@@ -104,10 +104,10 @@
 </section>
 <div class="printable" id="printableArea" style="display:none">
    <div style="display:flex;justify-content:space-between;align-items:center;width:100%">
-        <div class="">山田三郎様</div>
+        <div class="">{{$client->client_furigana_firstname}} {{$client->client_furigana_lastname}}</div>
         <div>
-            <span>お客様番号</span>
-           <span> LSM098234 </span>
+            <span>{{config('client_labels.custome_number')}}</span>
+           <span> {{$client->client_id}} </span>
         </div>
    </div>
    <div style="display:flex;justify-content:center;">
