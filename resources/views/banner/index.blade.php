@@ -49,18 +49,53 @@
 @section('js')
 <script>
     $(document).ready(function(){
+
+
+//   var table = $('#tblData').DataTable({
+//     "dom": '<"top"i>rt<"bottom"><"clear">'
+//   });
+   
+//   $('#mySearch').on( 'keyup click', function () {
+//         table.column(0).search('^' + $(this).val() + '$', true);
+//         if (table.page.info().recordsDisplay != 1) {
+//           table.column(0).search('^' + $(this).val(), true);
+//         }
+     
+//         table.draw();
+//     } );
+// $('#tblData').DataTable().column(0).search('^' + searchString + '$',true).draw()
+
+
         var table = $('#tblData').DataTable({
             reponsive:true, processing:true, serverSide:true, autoWidth:false, 
             ajax:"{{route('banner.index')}}", 
             columns:[
                 {data:'banner_title', name:'banner_title'},
                 {data:'image', name:'image'},
-                {data:'url', name:'banner_url'},
+                {data:'url', name:'banner_url', "searchable": false},
                 {data:'active', name:'banner_active'},
                 {data:'action', name:'action', bSortable:true, className:"text-center"},
             ], 
+            "columnDefs": [
+                { "searchable": false, "targets": [1, 2, 3,4] }
+            ],
+            // {
+            //     targets:0,
+            //     searchable:false,
+            // }],
             order:[[0, "desc"]]
         });
+
+        // $('#tblData thead th.filter').each(function() {
+        //     var title = $(this).text();
+        //     alert(title);
+        //     if (title == 'banner_title') {
+        //             return NULL;     
+        //         } else {
+        //     $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+        //     }
+        // });
+
         $('body').on('click', '#btnDel', function(){
             //confirmation
             var id = $(this).data('id');

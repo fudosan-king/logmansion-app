@@ -112,16 +112,16 @@ class NotificationController extends Controller
                     return $action;
                 })
                 ->rawColumns(['noti_date', 'cat_name', 'updated_at','active', 'action'])
-                ->addColumn('searchable', function ($row) {
-                    return [
-                        $row->noti_id,
-                        $row->noti_date,
-                        $row->noti_title,
-                        $row->category->cat_name ?? '',
-                        $row->updated_at,
-                        Carbon::parse($row->updated_at)->format('Y-m-d')
-                    ];
-                })
+                // ->addColumn('searchable', function ($row) {
+                //     return [
+                //         $row->noti_id,
+                //         $row->noti_date,
+                //         $row->noti_title,
+                //         $row->category->cat_name ?? '',
+                //         $row->updated_at,
+                //         Carbon::parse($row->updated_at)->format('Y-m-d')
+                //     ];
+                // })
                 ->make('true');
     }
 }
