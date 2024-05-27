@@ -4,9 +4,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\BannerController;
 use App\Http\Controllers\API\FAQController;
+use App\Http\Controllers\API\CatalogueController;
 use App\Http\Controllers\API\AuthController;
 
 Route::get('banners', [BannerController::class, 'index']);
+Route::get('catalogues', [CatalogueController::class, 'index']);
 Route::get('faq', [FAQController::class, 'index']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
