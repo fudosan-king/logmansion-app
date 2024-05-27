@@ -26,7 +26,7 @@
                             <div class="w-75 mt-4">
                                 <input type="hidden" value="{{$est_id}}" name="est_id">
                                 <div class="form-group row">
-                                    <label for="" class="col-sm-3 col-form-label">クライアントID <span class="text-danger">※</span></label>
+                                    <label for="" class="col-sm-3 col-form-label">{{config('client_labels.custome_number')}} <span class="text-danger">※</span></label>
                                     <div class="col-sm-3">
                                         <input required readonly name="client_id" value="{{$genClientid}}" type="text" class="form-control">
                                     </div>

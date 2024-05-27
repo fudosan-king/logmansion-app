@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'custome_number'=>'お客様番号',
     'client_info' => 'クライアント情報',
     'client_registration'=>'クライアント登録',
     'client_view_infomation'=>'お申し込み者様情報',
