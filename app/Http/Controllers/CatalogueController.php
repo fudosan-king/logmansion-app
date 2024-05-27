@@ -135,7 +135,7 @@ class CatalogueController extends Controller
         return DataTables::of($data)
                 ->addColumn('image', function($row){
                     $imageUrl = asset("storage/$row->cata_image");
-                    return '<img src="' . $imageUrl . '" alt="123" style="height: 100px;">';
+                    return '<img src="' . $imageUrl . '" alt="' . $row->cata_title . '" style="height: 100px;">';
                 })
                 ->addColumn('updated_at', function($row){
                     return Carbon::parse($row->updated_at)->format('Y/m/d');
