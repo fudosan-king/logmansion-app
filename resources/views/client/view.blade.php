@@ -104,10 +104,10 @@
 </section>
 <div class="printable" id="printableArea" style="display:none">
    <div style="display:flex;justify-content:space-between;align-items:center;width:100%">
-        <div class="">山田三郎様</div>
+        <div class="">{{$client->client_furigana_firstname}} {{$client->client_furigana_lastname}}</div>
         <div>
             <span>お客様番号</span>
-           <span> LSM098234 </span>
+           <span> {{$client->client_id}} </span>
         </div>
    </div>
    <div style="display:flex;justify-content:center;">
