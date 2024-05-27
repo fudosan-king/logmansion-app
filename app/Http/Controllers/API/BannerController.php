@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Banner;
 
 class BannerController extends Controller
@@ -36,6 +37,7 @@ class BannerController extends Controller
      *                 @OA\Property(property="banner_active", type="integer", description="0:deactive | 1:active"),
      *                 @OA\Property(property="created_at", type="string", format="date-time"),
      *                 @OA\Property(property="updated_at", type="string", format="date-time"),
+     *                 @OA\Property(property="banner_image_url", type="string"),
      *             ),
      *             ),
      *         ),
@@ -46,6 +48,10 @@ class BannerController extends Controller
     public function index()
     {
         $banners = Banner::where('banner_active', 1)->get();
+        $banners->map(function ($banner) {
+            $banner->banner_image_url = url(Storage::url($banner->banner_image));
+            return $banner;
+        });
         return response()->json([
             'success' => true,
             'data' => $banners,

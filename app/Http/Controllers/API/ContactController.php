@@ -19,6 +19,37 @@ use Config;
 
 class ContactController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/api/client/new-contact",
+     *     tags={"Contact"},
+     *     summary="Get data for new contact",
+     *     description="Retrieve contact types and spots for creating a new contact",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="contact_type",
+     *                 type="object",
+     *                 @OA\AdditionalProperties(type="string")
+     *             ),
+     *             @OA\Property(
+     *                 property="contact_spot",
+     *                 type="object",
+     *                 @OA\AdditionalProperties(type="string")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="Error message")
+     *         )
+     *     )
+     * )
+     */
     public function newContact()
     {
         try {
@@ -31,7 +62,52 @@ class ContactController extends Controller
         }
     }
 
-
+    /**
+     * @OA\Post(
+     *     path="/api/client/create-contact",
+     *     tags={"Contact"},
+     *     summary="Create a new contact",
+     *     description="Create a new contact with the provided details",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"contact_title", "contact_message"},
+     *             @OA\Property(property="contact_type", type="string", example="1"),
+     *             @OA\Property(property="contact_spot", type="string", example="2"),
+     *             @OA\Property(property="contact_title", type="string", example="New Contact Title"),
+     *             @OA\Property(property="contact_message", type="string", example="This is the contact message"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Contact created successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Create contact success")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Validation Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="object", example={"contact_title": "contact title is required"})
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="Unauthorized")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="Error message")
+     *         )
+     *     )
+     * )
+     */
     public function createContact(Request $request)
     {
         try {
@@ -48,7 +124,7 @@ class ContactController extends Controller
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()], 400);
             }
-
+            
             //get client id by JWT
             $clientId = JWTAuth::parseToken()->authenticate()->id;
             $client = Client::where('id', $clientId)->first();
@@ -62,7 +138,7 @@ class ContactController extends Controller
             $contact_type = $request->input('contact_type');
             $contact_spot = $request->input('contact_spot', null);
             $contact_title = $request->input('contact_title');
-            $contact_status = config('const.contact_status')[0];
+            $contact_status = 0;
             $contact_message = $request->input('contact_message');
             $listImage = $request->file('contact_images');
 
@@ -83,7 +159,6 @@ class ContactController extends Controller
             $contactDetail->author = $client->client_id;
             $contactDetail->author_type = config('const.author_type_client');
             $contactDetail->save();
-
             //save image if exists data send to contact
             if ($listImage) {
                 $contactDetailId = $contactDetail->id;
@@ -102,11 +177,60 @@ class ContactController extends Controller
             }
 
             return response()->json(['message' => 'Create contact success'], 200);
-        } catch (\Exception $e) {
+        }
+        catch (JWTException $e) {
+            return response()->json(['error' => 'Token is invalid or expired'], 401);
+        } 
+        catch (\Exception $e) {
             return response()->json(['error' => $e], 500);
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/client/list-contact",
+     *     tags={"Contact"},
+     *     summary="List all contacts for a client",
+     *     description="Retrieve a list of all contacts for the authenticated client",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="listContact",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(property="contact_id", type="integer", example=2),
+     *                     @OA\Property(property="client_id", type="string", example="Est000002"),
+     *                     @OA\Property(property="contact_type", type="integer", example=2),
+     *                     @OA\Property(property="contact_spot", type="integer", example=7),
+     *                     @OA\Property(property="contact_status", type="integer", example=0),
+     *                     @OA\Property(property="contact_title", type="string", example="Et ut debitis deserunt aut odio labore eum."),
+     *                     @OA\Property(property="user_id", type="integer", example=2),
+     *                     @OA\Property(property="created_at", type="string", format="date-time", example="2024-05-20T08:21:02.000000Z"),
+     *                     @OA\Property(property="updated_at", type="string", format="date-time", example="2024-05-20T08:21:02.000000Z"),
+     *                     @OA\Property(property="deleted_at", type="string", format="date-time", nullable=true, example=null)
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="Unauthorized")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="Error message")
+     *         )
+     *     )
+     * )
+     */
     public function listContact(Request $request)
     {
         try {
@@ -122,11 +246,73 @@ class ContactController extends Controller
             //get all contact by client
             $listContact = Contact::where('client_id', $client->client_id)->orderBy('created_at', 'asc')->get();
             return response()->json(['listContact' => $listContact], 200);
-        } catch (\Exception $e) {
+        }
+        catch (JWTException $e) {
+            return response()->json(['error' => 'Token is invalid or expired'], 401);
+        } 
+        catch (\Exception $e) {
             return response()->json(['error' => $e], 500);
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/client/list-contact-detail/{id}",
+     *     tags={"Contact"},
+     *     summary="List all contact details for a specific contact",
+     *     description="Retrieve a list of all contact details for the specified contact ID",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         description="Contact ID"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="listContactDetail",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(property="id", type="integer", example=14),
+     *                     @OA\Property(property="contact_id", type="integer", example=1),
+     *                     @OA\Property(property="contact_message", type="string", example="Esse similique nesciunt hic rerum."),
+     *                     @OA\Property(property="author", type="string", example="2"),
+     *                     @OA\Property(property="author_type", type="integer", example=1),
+     *                     @OA\Property(property="contact_note", type="string", nullable=true, example=null),
+     *                     @OA\Property(property="created_at", type="string", format="date-time", nullable=true, example=null),
+     *                     @OA\Property(property="updated_at", type="string", format="date-time", nullable=true, example=null),
+     *                     @OA\Property(property="deleted_at", type="string", format="date-time", nullable=true, example=null)
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="Unauthorized")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Contact not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="Contact not found")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="Error message")
+     *         )
+     *     )
+     * )
+     */
     public function listContactDetail(Request $request, $id)
     {
         try {
@@ -148,7 +334,50 @@ class ContactController extends Controller
         }
     }
 
-    public function createContactDetail(Request $request, $id)
+    /**
+     * @OA\Post(
+     *     path="/api/client/create-contact-detail",
+     *     tags={"Contact"},
+     *     summary="Create a new contact detail",
+     *     description="Create a new contact detail for the specified contact ID",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"contact_id", "contact_message"},
+     *             @OA\Property(property="contact_id", type="integer", example=1),
+     *             @OA\Property(property="contact_message", type="string", example="This is the contact message"),
+     *             @OA\Property(
+     *                 property="contact_images",
+     *                 type="array",
+     *                 @OA\Items(type="string", format="binary")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Contact detail created successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Create contact detail success")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="Unauthorized")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="Error message")
+     *         )
+     *     )
+     * )
+     */
+    public function createContactDetail(Request $request)
     {
         try {
             //get client id by JWT
@@ -190,7 +419,11 @@ class ContactController extends Controller
                 }
             }
             return response()->json(['message' => 'Create contact detail success'], 200);
-        } catch (\Exception $e) {
+        }
+        catch (JWTException $e) {
+            return response()->json(['error' => 'Token is invalid or expired'], 401);
+        } 
+        catch (\Exception $e) {
             return response()->json(['error' => $e], 500);
         }
     }

@@ -20,10 +20,9 @@ Route::post('client/change-password', [AuthController::class, 'changePassword'])
 
 Route::get('client/new-contact', [ContactController::class, 'newContact']);
 Route::get('client/list-contact', [ContactController::class, 'listContact']);
-Route::get('client/list-contact-detail', [ContactController::class, 'listContactDetail']);
+Route::get('client/list-contact-detail/{id}', [ContactController::class, 'listContactDetail']);
 Route::post('client/create-contact', [ContactController::class, 'createContact']);
 Route::post('client/create-contact-detail', [ContactController::class, 'createContactDetail']);
-
 
 Route::group(['middleware' => ['auth:clients']], function(){
 });
