@@ -191,7 +191,11 @@ class AuthController extends Controller
             $user->save();
     
             return response()->json(['message' => 'Password changed successfully']);
-        } catch (\Exception $e) {
+        }
+        catch (JWTException $e) {
+            return response()->json(['error' => 'Token is invalid or expired'], 401);
+        } 
+         catch (\Exception $e) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
     }
@@ -288,7 +292,11 @@ class AuthController extends Controller
             $id = JWTAuth::parseToken()->authenticate()->id;
             $client = Client::where('id', $id)->first();
             return response()->json(['user' => $client], 200);
-        } catch (\Exception $e) {
+        }
+        catch (JWTException $e) {
+            return response()->json(['error' => 'Token is invalid or expired'], 401);
+        } 
+        catch (\Exception $e) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
     }

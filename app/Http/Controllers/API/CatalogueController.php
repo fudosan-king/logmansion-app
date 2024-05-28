@@ -5,16 +5,16 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Banner;
+use App\Models\Catalogue;
 
-class BannerController extends Controller
+class CatalogueController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/api/banners",
-     *     tags={"Banners"},
-     *     summary="Get list of banners",
-     *     description="Returns list of banners",
+     *     path="/api/catalogues",
+     *     tags={"Catalogues"},
+     *     summary="Get list of catalogues",
+     *     description="Returns list of catalogues",
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
@@ -29,15 +29,13 @@ class BannerController extends Controller
      *                 property="data",
      *                 type="array",
      *             @OA\Items(
-     *                 @OA\Property(property="banner_id", type="integer"),
-     *                 @OA\Property(property="banner_title", type="string"),
-     *                 @OA\Property(property="banner_description", type="string"),
-     *                 @OA\Property(property="banner_image", type="string"),
-     *                 @OA\Property(property="banner_url", type="string"),
-     *                 @OA\Property(property="banner_active", type="integer", description="0:deactive | 1:active"),
+     *                 @OA\Property(property="cata_id", type="integer"),
+     *                 @OA\Property(property="cata_title", type="string"),
+     *                 @OA\Property(property="cata_description", type="string"),
+     *                 @OA\Property(property="cata_image", type="string"),
      *                 @OA\Property(property="created_at", type="string", format="date-time"),
      *                 @OA\Property(property="updated_at", type="string", format="date-time"),
-     *                 @OA\Property(property="banner_image_url", type="string"),
+     *                 @OA\Property(property="cata_image_url", type="string"),
      *             ),
      *             ),
      *         ),
@@ -47,14 +45,14 @@ class BannerController extends Controller
 
     public function index()
     {
-        $banners = Banner::where('banner_active', 1)->get();
-        $banners->map(function ($banner) {
-            $banner->banner_image_url = url(Storage::url($banner->banner_image));
-            return $banner;
+        $catalogues = Catalogue::where('cata_active', 1)->get();
+        $catalogues->map(function ($catalogue) {
+            $catalogue->cata_image_url = url(Storage::url($catalogue->cata_image));
+            return $catalogue;
         });
         return response()->json([
             'success' => true,
-            'data' => $banners,
+            'data' => $catalogues,
         ]);
     }
 }

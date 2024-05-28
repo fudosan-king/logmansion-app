@@ -132,7 +132,7 @@ class BannerController extends Controller
                 })
                 ->addColumn('image', function($row){
                     $imageUrl = asset("storage/$row->banner_image");
-                    return '<img src="' . $imageUrl . '" alt="123" style="height: 100px;">';
+                    return '<img src="' . $imageUrl . '" alt="' . $row->banner_title . '" style="height: 100px;">';
                 })
                 ->addColumn('active', function($row){
                     return $row->banner_active ? '表示' : '非表示';

@@ -71,7 +71,7 @@
             ajax:"{{route('banner.index')}}", 
             columns:[
                 {data:'banner_title', name:'banner_title'},
-                {data:'image', name:'image'},
+                {data:'image', name:'image', searchable: false, bSortable: false},
                 {data:'url', name:'banner_url', "searchable": false},
                 {data:'active', name:'banner_active'},
                 {data:'action', name:'action', bSortable:true, className:"text-center"},
