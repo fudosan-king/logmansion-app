@@ -57,32 +57,12 @@
             ajax:"{{route('catalogue.index')}}", 
             columns:[
                 {data:'updated_at', name:'updated_at'},
-                {data:'image', name:'image'},
+                {data:'image', name:'image', searchable: false, bSortable: false},
                 {data:'cata_title', name:'cata_title', width: '50%', className: 'limited-width' },
-                {data:'active', name:'cata_active', searchable: false, bSortable: false},
+                {data:'active', name:'cata_active', searchable: false},
                 {data:'action', name:'action', searchable: false, bSortable: false, className:"text-center"},
                 
                 {data:'position', name:'position'},
-                // {
-                //     name: 'position',
-                //     data: null,
-                //     searchable: false,
-                //     sortable: false,
-                //     render: function (data, type, full, meta) {
-                //         if (type === 'display') {
-                //             var $span = $('<span></span>');
-
-                //             if (full.cata_index > 1) {
-                //                 $('<a class="dtMoveUp" data-id="' + full.cata_index + '"><i class="fas fa-arrow-up"></i></a>').css('margin-right', '10px').appendTo($span);
-                //             }
-
-                //             $('<a class="dtMoveDown" data-id="' + full.cata_index + '"><i class="fas fa-arrow-down"></i></a>').appendTo($span);
-
-                //             return $span.html();
-                //         }
-                //         return data;
-                //     }
-                // }
             ], 
             'drawCallback': function (settings) {
                 $('#ArgumentsTable tr:last .dtMoveDown').remove();

@@ -33,30 +33,6 @@ use Illuminate\Routing\Controller as BaseController;
      *      url="http://127.0.0.1:9000/api/",
      *      description="Staging  Environment"
      * )
-     * @OA\Tag(
-     *     name="auth",
-     *     description="Operations about auth user",
-     *     @OA\ExternalDocumentation(
-     *         description="Find out more about store",
-     *         url="http://swagger.io"
-     *     )
-     * )
-     * @OA\Tag(
-     *     name="user",
-     *     description="Operations about user",
-     *     @OA\ExternalDocumentation(
-     *         description="Find out more about store",
-     *         url="http://swagger.io"
-     *     )
-     * )
-     * @OA\Tag(
-     *     name="upload",
-     *     description="Operations about file",
-     *     @OA\ExternalDocumentation(
-     *         description="Find out more about store",
-     *         url="http://swagger.io"
-     *     )
-     * )
      * @OA\ExternalDocumentation(
      *     description="Find out more about Swagger",
      *     url="http://swagger.io"
