@@ -104,7 +104,7 @@
 </section>
 <div class="printable" id="printableArea" style="display:none">
    <div style="display:flex;justify-content:space-between;align-items:center;width:100%">
-        <div class="">{{$client->client_furigana_firstname}} {{$client->client_furigana_lastname}}</div>
+        <div class="">{{$client->client_f_name}} {{$client->client_l_name}}</div>
         <div>
             <span>{{config('client_labels.custome_number')}}</span>
            <span> {{$client->client_id}} </span>
