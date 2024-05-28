@@ -50,14 +50,25 @@ class EstateController extends Controller
      *                 property="data",
      *                 type="array",
         *             @OA\Items(
-        *                 @OA\Property(property="banner_id", type="integer"),
-        *                 @OA\Property(property="banner_title", type="string"),
-        *                 @OA\Property(property="banner_description", type="string"),
-        *                 @OA\Property(property="banner_image", type="string"),
-        *                 @OA\Property(property="banner_url", type="string"),
-        *                 @OA\Property(property="banner_active", type="integer", description="0:deactive | 1:active"),
+        *                 @OA\Property(property="est_id", type="integer"),
+        *                 @OA\Property(property="est_room_no", type="string"),
+        *                 @OA\Property(property="est_name", type="string"),
+        *                 @OA\Property(property="est_zip", type="string"),
+        *                 @OA\Property(property="est_pref", type="string"),
+        *                 @OA\Property(property="est_city", type="string"),
+        *                 @OA\Property(property="est_ward", type="string", nullable=true),
+        *                 @OA\Property(property="est_address", type="string", nullable=true),
+        *                 @OA\Property(property="est_archive", type="integer"),
+        *                 @OA\Property(property="est_usefulinfo_pref_url", type="string", nullable=true),
+        *                 @OA\Property(property="est_usefulinfo_pref_show", type="integer"),
+        *                 @OA\Property(property="est_usefulinfo_city_url", type="string", nullable=true),
+        *                 @OA\Property(property="est_usefulinfo_city_show", type="integer"),
+        *                 @OA\Property(property="est_usefulinfo_ward_url", type="string", nullable=true),
+        *                 @OA\Property(property="est_usefulinfo_ward_show", type="integer"),
         *                 @OA\Property(property="created_at", type="string", format="date-time"),
         *                 @OA\Property(property="updated_at", type="string", format="date-time"),
+        *                 @OA\Property(property="deleted_at", type="string", nullable=true),
+        *                 @OA\Property(property="is_archive", type="boolean"),
         *             ),
      *             ),
      *         ),
@@ -69,6 +80,18 @@ class EstateController extends Controller
         $estate = Estate::whereHas('client', function ($query) use ($client_id) {
             $query->where('id', $client_id);
         })->first();
+        $late_schedule = EstateSchedule::where('est_id', $estate->est_id)
+        ->orderBy('schedule_date', 'desc')
+        ->first();
+        if ($late_schedule) {
+            $scheduleDate = strtotime($late_schedule['schedule_date']);
+            $oneYearAgo = strtotime('-1 year -1 day');
+            if ($scheduleDate <= $oneYearAgo) {
+                $estate['is_archive'] = true;
+            }else{
+                $estate['is_archive'] = false;
+            }
+        }
         return response()->json([
             'success' => $estate ? true : false,
             'message' => $estate ? null : 'Estate not found',
