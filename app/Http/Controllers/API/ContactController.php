@@ -138,10 +138,10 @@ class ContactController extends Controller
             $contact_type = $request->input('contact_type');
             $contact_spot = $request->input('contact_spot', null);
             $contact_title = $request->input('contact_title');
-            $contact_status = 0;
+            $contact_status = 1;
             $contact_message = $request->input('contact_message');
             $listImage = $request->file('contact_images');
-
+            return is_array($listImage) ? count($listImage) : 0;
             //create new contact
             $contact = new Contact();
             $contact->client_id = $client->client_id;
