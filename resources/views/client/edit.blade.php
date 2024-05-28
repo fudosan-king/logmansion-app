@@ -43,7 +43,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3">氏名（フリガナ</label>
+                                    <label class="col-sm-3">氏名（フリガナ) </label>
                                     <div class="col-sm-4">
                                         <label for="">セイ</label>
                                         <input value="{{ old('client_furigana_firstname') ?? $client->client_furigana_firstname }}"  name="first_name_furi" maxlength="500" type="text" class="form-control">
