@@ -138,15 +138,17 @@
 @section('js')
 <script>
     function printDiv() {
-        var divContents = document.getElementById("printableArea").innerHTML;
-        var printWindow = window.open('', '', '');
+        let divContents = document.getElementById("printableArea").innerHTML;
+        let printWindow = window.open('', '', 'width=800,height=600');
         printWindow.document.write('<html>');
         printWindow.document.write('<body>');
         printWindow.document.write(divContents);
         printWindow.document.write('</body></html>');
         printWindow.document.close();
-        printWindow.print();
-        printWindow.close();
+        printWindow.onload = function() {
+            printWindow.print();
+            printWindow.close();
+        };
     }
 </script>
 @stop
