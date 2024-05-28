@@ -157,10 +157,11 @@ return [
         */
         'securityDefinitions' => [
             'securitySchemes' => [
-                'bearer' => [
+                'bearerAuth' => [
                     'type' => 'apiKey',
                     'name' => 'Authorization',
                     'in' => 'header',
+                    'description' => 'Enter token in format (Bearer <token>)',
                 ],
             ],
             'security' => [
