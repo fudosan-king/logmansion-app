@@ -6,6 +6,7 @@ use App\Http\Controllers\API\BannerController;
 use App\Http\Controllers\API\FAQController;
 use App\Http\Controllers\API\CatalogueController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\EstateController;
 use App\Http\Controllers\API\ContactController;
 
 Route::get('banners', [BannerController::class, 'index']);
@@ -30,3 +31,14 @@ Route::group(['middleware' => ['auth:clients']], function(){
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+Route::group(['prefix' => 'estate', 'as' => 'estate.'], function(){
+    /**
+     *  Example: id_client = 66
+     */
+    Route::get('/view_estate/{id_client}', [EstateController::class, 'get_estate']);
+    Route::get('/view_schedule/{id_client}', [EstateController::class, 'get_schedule']);
+    Route::get('/view_docs/{id_client}', [EstateController::class, 'get_document']);
+})->name('estate');
