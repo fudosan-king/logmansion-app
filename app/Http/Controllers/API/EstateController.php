@@ -94,7 +94,7 @@ class EstateController extends Controller
         }
         return response()->json([
             'success' => $estate ? true : false,
-            'message' => $estate ? null : 'Estate not found',
+            'message' => $estate ? null : config('estate_labels.api.get_estate_fail'),
             'data' => $estate ? $estate : null,
         ]);
     }
@@ -163,7 +163,7 @@ class EstateController extends Controller
         if($estate == null){
             return response()->json([
                 'success' => false,
-                'message' => 'Estate not found',
+                'message' => config('estate_labels.api.get_schedule_fail'),
                 'data' => null,
             ]);
         }
@@ -187,7 +187,7 @@ class EstateController extends Controller
         $estateSchedules = $estateSchedules->sortByDesc('schedule_date')->values();
         return response()->json([
             'success' => $estateSchedules ? true : false,
-            'message' => $estateSchedules ? null : 'Schedule not found',
+            'message' => $estateSchedules ? null : config('estate_labels.api.get_schedule_fail'),
             'data' => $estateSchedules ? $estateSchedules : null,
         ]);
     }
@@ -226,19 +226,24 @@ class EstateController extends Controller
      *                 type="boolean",
      *                 example=true
      *             ),
+     *              @OA\Property(
+     *                 property="is_delivered",
+     *                 type="boolean",
+     *                 example=true
+     *             ),
      *             @OA\Property(
      *                 property="data",
     *                 type="array",
        *             @OA\Items(
-       *                 @OA\Property(property="doc_id", type="integer"),
-       *                 @OA\Property(property="est_id", type="integer"),
-       *                 @OA\Property(property="doc_category", type="integer"),
-       *                 @OA\Property(property="doc_name", type="string", nullable=true),
-       *                 @OA\Property(property="doc_file", type="string"),
-       *                 @OA\Property(property="doc_description", type="string", nullable=true),
-       *                 @OA\Property(property="created_at", type="string", format="date-time"),
-       *                 @OA\Property(property="updated_at", type="string", format="date-time"),
-       *                 @OA\Property(property="deleted_at", type="string", nullable=true),
+    *                 @OA\Property(property="doc_id", type="integer"),
+    *                 @OA\Property(property="est_id", type="integer"),
+    *                 @OA\Property(property="doc_category", type="integer"),
+    *                 @OA\Property(property="doc_name", type="string", nullable=true),
+    *                 @OA\Property(property="doc_file", type="string"),
+    *                 @OA\Property(property="doc_description", type="string", nullable=true),
+    *                 @OA\Property(property="created_at", type="string", format="date-time"),
+    *                 @OA\Property(property="updated_at", type="string", format="date-time"),
+    *                 @OA\Property(property="deleted_at", type="string", nullable=true),
        *             ),
      *             ),
      *         ),
@@ -250,17 +255,28 @@ class EstateController extends Controller
         $estate = Estate::whereHas('client', function ($query) use ($client_id) {
             $query->where('id', $client_id);
         })->first();
-        if($estate == null){
+        $schedule_delivery = EstateSchedule::where('est_id', $estate->est_id)
+            ->orderBy('schedule_date', 'desc')
+            ->first();
+        if($estate == null ||$schedule_delivery ==null){
             return response()->json([
                 'success' => false,
-                'message' => 'Estate not found',
+                'message' => config('estate_labels.api.get_document_fail'),
                 'data' => null,
             ]);
         }
+        $is_delivered = Carbon::now()->gt(Carbon::parse($schedule_delivery['schedule_date']));
         $estateDocuments = EstateDoc::where('est_id', $estate->est_id)->get();
+        if($is_delivered === false){
+            $estateDocuments = $estateDocuments->where('doc_category', '!=', 4)->values();
+        }else{
+            $estateDocuments = $estateDocuments->where('doc_category', '!=', 3)->values();
+        }
+        // $estateDocuments = $estateDocuments->where('doc_category', '!=', 3)->values();
         return response()->json([
             'success' => $estateDocuments ? true : false,
-            'message' => $estateDocuments ? null : 'Document not found',
+            'message' => $estateDocuments ? null : config('estate_labels.api.get_document_fail'),
+            'is_delivered' => $is_delivered,
             'data' => $estateDocuments ? $estateDocuments : null,
         ]);
     }

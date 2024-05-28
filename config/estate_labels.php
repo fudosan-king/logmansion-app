@@ -26,5 +26,9 @@ return [
     'staff' => '対応者',
     'date' => '登録日',
     'all' => 'すべて',
-
+    'api'=>[
+        'get_estate_fail'=>'Estate not found',
+        'get_schedule_fail'=>'Schedule not found',
+        'get_document_fail'=>'Document not found',
+    ]
 ];
