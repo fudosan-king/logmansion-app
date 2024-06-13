@@ -27,6 +27,7 @@ class FAQController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'faq_type' => ['required', 'in:0,1'],
             'faq_title' => 'required',
             'faq_content' => 'required',
             'faq_active' => 'boolean',
@@ -35,6 +36,7 @@ class FAQController extends Controller
         ]);
 
         $faq = new FAQ();
+        $faq->faq_type = $request->input('faq_type');
         $faq->faq_title = $request->input('faq_title');
         $faq->faq_content = $request->input('faq_content');
         $faq->faq_active = $request->input('faq_active', false);
@@ -54,13 +56,14 @@ class FAQController extends Controller
         $faq = FAQ::findOrFail($id);
 
         $request->validate([
+            'faq_type' => ['required', 'in:0,1'],
             'faq_title' => 'required',
             'faq_content' => 'required',
             'faq_active' => 'boolean',
         ], [
             'required' => 'この項目は必須です。',
         ]);
-
+        $faq->faq_type = $request->input('faq_type');
         $faq->faq_title = $request->input('faq_title');
         $faq->faq_content = $request->input('faq_content');
         $faq->faq_active = $request->input('faq_active', false);
