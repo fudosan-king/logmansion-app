@@ -6,8 +6,10 @@ import '../../blocs/authentication/authentication_event.dart';
 import '../../blocs/authentication/authentication_state.dart';
 import '../../widgets/component.dart';
 import '../home/home_screen.dart';
+import '../../widgets/colors.dart';
 import '/blocs/authentication/authentication_bloc.dart';
 import '/utils/validators.dart';
+import 'signin_checkover.dart';
 
 class SignInEmailScreen extends StatefulWidget {
   @override
@@ -38,7 +40,7 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
         right: 28.w,
       ),
       clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(color: Color(0xFFF2F4FA)),
+      decoration: const BoxDecoration(color: AppColors.primaryColor),
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -51,7 +53,7 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
                 '会員登録',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Color(0xFF333333),
+                  color: AppColors.textWhite,
                   fontSize: 24.sp,
                   fontFamily: 'SF Pro Display',
                   fontWeight: FontWeight.w800,
@@ -74,7 +76,7 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
                       'メールアドレスとパスワードを\n登録してください。',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color(0xFF4F4F4F),
+                        color: AppColors.textGrey,
                         fontSize: 16.sp,
                         fontFamily: 'SF Pro Display',
                         fontWeight: FontWeight.w400,
@@ -109,9 +111,9 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
                                     SizedBox(
                                       width: 80.w,
                                       child: Text(
-                                        'お客様番号',
+                                        '契約番号',
                                         style: TextStyle(
-                                          color: Color(0xFF4F4F4F),
+                                          color: AppColors.textWhite,
                                           fontSize: 14.sp,
                                           fontFamily: 'SF Pro Display',
                                           fontWeight: FontWeight.w400,
@@ -125,7 +127,7 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
                                         child: Text(
                                           'ABCD124678',
                                           style: TextStyle(
-                                            color: Color(0xFF333333),
+                                            color: AppColors.textWhite,
                                             fontSize: 20.sp,
                                             fontFamily: 'SF Pro Display',
                                             fontWeight: FontWeight.w700,
@@ -145,7 +147,7 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
                                     side: BorderSide(
                                       width: 1.w,
                                       strokeAlign: BorderSide.strokeAlignCenter,
-                                      color: Color(0xFF828282),
+                                      color: const Color(0xFF828282),
                                     ),
                                   ),
                                 ),
@@ -174,7 +176,7 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
                                       child: Text(
                                         'お名前',
                                         style: TextStyle(
-                                          color: Color(0xFF4F4F4F),
+                                          color: AppColors.textWhite,
                                           fontSize: 14.sp,
                                           fontFamily: 'SF Pro Display',
                                           fontWeight: FontWeight.w400,
@@ -188,7 +190,7 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
                                         child: Text(
                                           '山田 太郎',
                                           style: TextStyle(
-                                            color: Color(0xFF333333),
+                                            color: AppColors.textWhite,
                                             fontSize: 18.sp,
                                             fontFamily: 'SF Pro Display',
                                             fontWeight: FontWeight.w700,
@@ -201,7 +203,7 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
                                     Text(
                                       '様',
                                       style: TextStyle(
-                                        color: Color(0xFF4F4F4F),
+                                        color: AppColors.textWhite,
                                         fontSize: 14.sp,
                                         fontFamily: 'SF Pro Display',
                                         fontWeight: FontWeight.w400,
@@ -211,7 +213,7 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               Container(
                                 width: double.infinity,
                                 decoration: ShapeDecoration(
@@ -219,7 +221,7 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
                                     side: BorderSide(
                                       width: 1.w,
                                       strokeAlign: BorderSide.strokeAlignCenter,
-                                      color: Color(0xFF828282),
+                                      color: const Color(0xFF828282),
                                     ),
                                   ),
                                 ),
@@ -245,91 +247,32 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
                   SizedBox(height: 6.h),
                   CustomPasswordField(
                       label: "新しいパスワード", controller: _passwordController),
-                  //   Container(
-                  //     child: Column(
-                  //       mainAxisSize: MainAxisSize.min,
-                  //       mainAxisAlignment: MainAxisAlignment.start,
-                  //       crossAxisAlignment: CrossAxisAlignment.start,
-                  //       children: [
-                  //         Text(
-                  //           '新しいパスワード',
-                  //           style: TextStyle(
-                  //             color: Color(0xFF333333),
-                  //             fontSize: 14.sp,
-                  //             fontFamily: 'SF Pro Display',
-                  //             fontWeight: FontWeight.w700,
-                  //             height: 1.0,
-                  //           ),
-                  //         ),
-                  //         SizedBox(height: 10.h),
-                  //         Container(
-                  //           width: 320.w,
-                  //           padding: EdgeInsets.symmetric(
-                  //             horizontal: 12.w,
-                  //             vertical: 14.h,
-                  //           ),
-                  //           decoration: ShapeDecoration(
-                  //             color: Colors.white,
-                  //             shape: RoundedRectangleBorder(
-                  //               borderRadius: BorderRadius.circular(5.r),
-                  //             ),
-                  //           ),
-                  //           child: Row(
-                  //             mainAxisSize: MainAxisSize.min,
-                  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //             crossAxisAlignment: CrossAxisAlignment.center,
-                  //             children: [
-                  //               SizedBox(
-                  //                 width: 150.w,
-                  //                 height: 8.h,
-                  //                 child: Text(
-                  //                   '*************************',
-                  //                   style: TextStyle(
-                  //                     color: Color(0xFF828282),
-                  //                     fontSize: 12.sp,
-                  //                     fontFamily: 'Plus Jakarta Sans',
-                  //                     fontWeight: FontWeight.w400,
-                  //                     height: 1.0,
-                  //                     letterSpacing: 0.24.sp,
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //               SizedBox(width: 138.w),
-                  //               Container(
-                  //                 width: 1.w,
-                  //                 height: 13.5.h,
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //       SizedBox(height: 10.h),
-                  //       Text(
-                  //         '※半角英大文字小文字と数字の組み合わせで８文字以上',
-                  //         style: TextStyle(
-                  //           color: Color(0xFF828282),
-                  //           fontSize: 12,
-                  //           fontFamily: 'SF Pro Display',
-                  //           fontWeight: FontWeight.w400,
-                  //           height: 0,
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
+                  const Text(
+                    '※半角英大文字小文字と数字の組み合わせで８文字以上',
+                    style: TextStyle(
+                      color: AppColors.textWhite,
+                      fontSize: 12,
+                      fontFamily: 'SF Pro Display',
+                      fontWeight: FontWeight.w400,
+                      height: 0,
+                    ),
+                  ),
                   SizedBox(height: 20.h),
+
                   InkWell(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SignInCheckoverScreen()));
                     },
                     child: Container(
                       width: 320.w,
                       padding: const EdgeInsets.all(15),
                       decoration: ShapeDecoration(
-                        color: Color(0xFF4B57B1),
+                        color: AppColors.buttonColor,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6)),
                       ),
-                      child: Row(
+                      child: const Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,

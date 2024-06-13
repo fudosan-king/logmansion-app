@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import './colors.dart';
 
 class CustomTextField extends StatelessWidget {
   final String label;
@@ -24,7 +25,7 @@ class CustomTextField extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              color: Color(0xFF333333),
+              color: AppColors.textWhite,
               fontSize: 14.sp,
               fontFamily: 'SF Pro Display',
               fontWeight: FontWeight.w700,
@@ -91,7 +92,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
           Text(
             widget.label,
             style: TextStyle(
-              color: Color(0xFF333333),
+              color: AppColors.textWhite,
               fontSize: 14.sp,
               fontFamily: 'SF Pro Display',
               fontWeight: FontWeight.w700,
