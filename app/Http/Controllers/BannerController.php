@@ -26,9 +26,12 @@ class BannerController extends Controller
 
     public function store(Request $request)
     {
+      
         $request->validate([
+            'banner_type' => ['required', 'in:0,1'],
             'banner_title' => 'nullable|max:255',
             'banner_description' => 'nullable|string',
+       
             'banner_image' => [
                 'required',
                 'image',
@@ -58,6 +61,7 @@ class BannerController extends Controller
         $imagePath = $this->storeUploadedFile($request->file('banner_image'));
 
         $banner = new Banner();
+        $banner->banner_type = $request->input('banner_type');
         $banner->banner_title = $request->input('banner_title');
         $banner->banner_description = $request->input('banner_description');
         $banner->banner_image = $imagePath;
@@ -79,6 +83,7 @@ class BannerController extends Controller
         $banner = Banner::findOrFail($id);
 
         $request->validate([
+            'banner_title' =>  ['required', 'in:0,1'],
             'banner_title' => 'nullable|string|max:255',
             'banner_description' => 'nullable|string',
             'banner_image' => 'nullable|image|max:' . config('upload.max_image_size'),
@@ -102,6 +107,7 @@ class BannerController extends Controller
             }
         }
 
+        $banner->banner_type = $request->input('banner_type');
         $banner->banner_title = $request->input('banner_title');
         $banner->banner_description = $request->input('banner_description');
         $banner->banner_url = $request->input('banner_url');

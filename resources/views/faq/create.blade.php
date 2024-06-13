@@ -21,6 +21,20 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="form-group clearfix">
+                        <div class="icheck-primary d-inline" style="padding-right:20px">
+                            <input type="radio" name="faq_type"" id="faq_type0"  {{ old('faq_type') == '0' || empty(old('faq_type')) ? 'checked' : '' }} value="0">
+                            <label>{{ __('messages.faq_home') }}</label>
+                        </div>
+                        <div class="icheck-primary d-inline">
+                          <input type="radio" name="faq_type" id="faq_type1" {{ old('faq_type') ? 'checked' : '' }} value="1">
+                          <label>{{ __('messages.faq_app') }}</label>
+                        </div>
+                        @error('faq_type')
+                            <div class="text-danger" style="font-size: 80%;">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
                     <div class="form-group">
                         <label for="faq_content">{{ __('messages.content') }}</label>
                         <span class="red-required">※</span>

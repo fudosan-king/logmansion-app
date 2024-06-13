@@ -22,6 +22,19 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="form-group clearfix">
+                        <div class="icheck-primary d-inline" style="padding-right:20px">
+                            <input type="radio" name="banner_type"" id="banner_type0" {{ old('banner_type', $banner->banner_type) == '0' ? 'checked' : '' }} value="0">
+                            <label>{{ __('messages.banner_img') }}</label>
+                        </div>
+                        <div class="icheck-primary d-inline">
+                          <input type="radio" name="banner_type" id="banner_type1" {{ old('banner_type', $banner->banner_type) ? 'checked' : '' }} value="1">
+                          <label>{{ __('messages.banner_img_text') }}</label>
+                        </div>
+                        @error('banner_type')
+                            <div class="text-danger" style="font-size: 80%;">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <div class="form-group">
                         <label for="banner_description">{{ __('messages.description') }}</label>
                         <textarea name="banner_description" id="banner_description"
@@ -83,6 +96,23 @@
 
 @section('js')
     <script>
+
+        if($('input[type=radio][name=banner_type]:checked').val()==='0') {
+            $('#banner_description').prop('disabled', true);
+        }
+        
+        $('input[type=radio][name=banner_type]').on('change', function() {
+            switch ($(this).val()) {
+                case '0':
+                    $('#banner_description').prop('disabled', true);
+                    $('#banner_description').val('');
+                break;
+                case '1':
+                    $('#banner_description').prop('disabled', false);
+                break;
+              }
+        });
+
         function previewImage(input) {
             var preview = document.getElementById('banner_image_preview');
             var file = input.files[0];
