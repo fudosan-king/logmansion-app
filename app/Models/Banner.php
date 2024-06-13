@@ -14,6 +14,7 @@ class Banner extends Model
     protected $primaryKey = 'banner_id';
 
     protected $fillable = [
+        'banner_type',
         'banner_title',
         'banner_description',
         'banner_image',

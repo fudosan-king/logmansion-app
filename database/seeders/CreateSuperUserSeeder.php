@@ -128,6 +128,7 @@ class CreateSuperUserSeeder extends Seeder
         
         for($i=1; $i <= 10; $i++) {
             \DB::table('estate_banners')->insert([
+                'banner_type' => rand(0,1),
                 'banner_title' => $faker->name,
                 'banner_description' => $faker->paragraphs(2,true),
                 'banner_image' => '/banner/'.rand(1,5).'.jpg',

@@ -23,6 +23,7 @@ class FaqFactory extends Factory
     {
         return [
             'faq_title' => $this->faker->sentence,
+            'faq_type' => $this->faker->randomElement([0, 1]),
             'faq_content' => $this->faker->paragraph,
             'faq_active' => $this->faker->randomElement([0, 1]),
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
