@@ -7,9 +7,10 @@ import '../../blocs/authentication/authentication_state.dart';
 import '../../widgets/component.dart';
 import '../home/home_screen.dart';
 import '../../widgets/colors.dart';
+import '../../lang/app_strings.dart';
 import '/blocs/authentication/authentication_bloc.dart';
 import '/utils/validators.dart';
-import 'signin_checkover.dart';
+import 'sign_in_checkover.dart';
 
 class SignInEmailScreen extends StatefulWidget {
   @override
@@ -19,9 +20,6 @@ class SignInEmailScreen extends StatefulWidget {
 class _SignInEmailScreenState extends State<SignInEmailScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
-  String? _emailError;
-  String? _passwordError;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +48,7 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
             SizedBox(
               width: 320.w,
               child: Text(
-                '会員登録',
+                AppStrings.signIn,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppColors.textWhite,
@@ -73,7 +71,7 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
                   SizedBox(
                     width: 319.w,
                     child: Text(
-                      'メールアドレスとパスワードを\n登録してください。',
+                      AppStrings.validateSignIn,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.textGrey,
@@ -111,7 +109,7 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
                                     SizedBox(
                                       width: 80.w,
                                       child: Text(
-                                        '契約番号',
+                                        AppStrings.clientID,
                                         style: TextStyle(
                                           color: AppColors.textWhite,
                                           fontSize: 14.sp,
@@ -174,7 +172,7 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
                                     SizedBox(
                                       width: 80.w,
                                       child: Text(
-                                        'お名前',
+                                        AppStrings.name,
                                         style: TextStyle(
                                           color: AppColors.textWhite,
                                           fontSize: 14.sp,
@@ -201,7 +199,7 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
                                     ),
                                     SizedBox(width: 20.w),
                                     Text(
-                                      '様',
+                                      AppStrings.sir,
                                       style: TextStyle(
                                         color: AppColors.textWhite,
                                         fontSize: 14.sp,
@@ -240,15 +238,15 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomTextField(
-                            label: "メールアドレス", controller: _emailController),
+                            label: AppStrings.email, controller: _emailController),
                       ],
                     ),
                   ),
                   SizedBox(height: 6.h),
                   CustomPasswordField(
-                      label: "新しいパスワード", controller: _passwordController),
+                      label: AppStrings.newPassword, controller: _passwordController),
                   const Text(
-                    '※半角英大文字小文字と数字の組み合わせで８文字以上',
+                    AppStrings.validatePassword,
                     style: TextStyle(
                       color: AppColors.textWhite,
                       fontSize: 12,
@@ -278,7 +276,7 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            '会員登録',
+                            AppStrings.register,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,

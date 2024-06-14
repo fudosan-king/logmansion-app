@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../blocs/authentication/authentication_event.dart';
 import '../../blocs/authentication/authentication_state.dart';
+import '../../lang/app_strings.dart';
 import '../../widgets/component.dart';
 import '../home/home_screen.dart';
 import '../../widgets/colors.dart';
@@ -49,7 +50,7 @@ class _SignInCheckoverScreenState extends State<SignInCheckoverScreen> {
             SizedBox(
               width: 320.w,
               child: Text(
-                '会員登録',
+                AppStrings.register,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppColors.textWhite,
@@ -74,7 +75,7 @@ class _SignInCheckoverScreenState extends State<SignInCheckoverScreen> {
                     width: 319.w,
                     height: 52.h,
                     child: Text(
-                      '登録手続きが完了しました。',
+                      AppStrings.messageRegister,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xFFB49554),
@@ -88,7 +89,7 @@ class _SignInCheckoverScreenState extends State<SignInCheckoverScreen> {
                   SizedBox(
                     width: 319.w,
                     child: Text(
-                      '引き続きアプリをご利用の場合は このままログインに進んでください。',
+                      AppStrings.notificationRegister,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.textGrey,
@@ -118,7 +119,7 @@ class _SignInCheckoverScreenState extends State<SignInCheckoverScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'ログインへ進む',
+                            AppStrings.proceedToLogin,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,

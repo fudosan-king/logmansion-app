@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:logmansion_app/screens/login/signin_email_screen.dart';
+import 'package:logmansion_app/screens/login/sign_in_email_screen.dart';
 import '../../widgets/colors.dart';
 
-class SignInScreen extends StatelessWidget {
+class FirstSignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -183,7 +183,7 @@ class SignInScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'ログイン',
+                            '次へ',
                             style: TextStyle(
                               color: AppColors.textWhite,
                               fontSize: 16,

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'blocs/authentication/authentication_bloc.dart';
 import 'repositories/authentication_repository.dart';
-import 'screens/login/signin_screen.dart';
+import 'screens/login/sign_in_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/home.dart';
 

@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 32.h,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/images/logo.png"),
+                    image: AssetImage("assets/images/logo-black.png"),
                     fit: BoxFit.fill,
                   ),
                 ),
