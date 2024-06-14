@@ -54,14 +54,14 @@
                     </div>
                 </div>
             </div>
-
-            <div class="card-footer d-flex justify-content-center">
-                <div class="col-md-8">
-                    <a href="{{ route('faq.index') }}" class="btn btn-default">{{ __('messages.cancel') }}</a>
-                    <button type="submit" class="btn btn-primary float-right">{{ __("messages.submit") }}</button>
-                </div>
-            </div>
         </form>
+
+        <div class="card-footer d-flex justify-content-center">
+            <div class="col-md-8">
+                <a href="{{ route('faq.index') }}" class="btn btn-default">{{ __('messages.cancel') }}</a>
+                <button type="submit" class="btn btn-primary float-right">{{ __("messages.submit") }}</button>
+            </div>
+        </div>
     </div>
 @stop
 
