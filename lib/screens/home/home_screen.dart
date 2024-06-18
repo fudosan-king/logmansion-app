@@ -6,6 +6,10 @@ import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
+
+  static Route<void> route() {
+    return MaterialPageRoute<void>(builder: (_) => HomeScreen());
+  }
 }
 
 class _HomeScreenState extends State<HomeScreen> {

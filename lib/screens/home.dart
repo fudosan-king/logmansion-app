@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
+import '../widgets/colors.dart';
 import 'home/home_screen.dart';
 
 
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
+
+  static Route<void> route() {
+    return MaterialPageRoute<void>(builder: (_) => Home());
+  }
 }
 
 class _HomeState extends State<Home> {
@@ -35,8 +40,8 @@ class _HomeState extends State<Home> {
         item: ItemConfig(
           icon: Icon(Icons.home),
           title: "Home",
-          activeForegroundColor: Color(0xFF4B57B1),
-          inactiveForegroundColor: Colors.grey,
+          activeForegroundColor: AppColors.buttonColor,
+          inactiveForegroundColor: Colors.white,
         ),
       ),
       PersistentTabConfig(
@@ -44,8 +49,8 @@ class _HomeState extends State<Home> {
         item: ItemConfig(
           icon: Icon(Icons.notifications),
           title: "Notifications",
-          activeForegroundColor: Color(0xFF4B57B1),
-          inactiveForegroundColor: Colors.grey,
+          activeForegroundColor: AppColors.buttonColor,
+          inactiveForegroundColor: Colors.white,
         ),
       ),
       PersistentTabConfig(
@@ -53,8 +58,8 @@ class _HomeState extends State<Home> {
         item: ItemConfig(
           icon: Icon(Icons.mail),
           title: "Message",
-          activeForegroundColor: Color(0xFF4B57B1),
-          inactiveForegroundColor: Colors.white,
+          activeForegroundColor: Colors.white,
+          inactiveForegroundColor: AppColors.primaryColor,
         ),
       ),
       PersistentTabConfig(
@@ -82,6 +87,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return PersistentTabView(
       controller: _controller,
+      backgroundColor: Colors.black,
       tabs: _navBarsItems(),
       navBarBuilder: (navBarConfig) => Style13BottomNavBar(
         navBarConfig: navBarConfig,

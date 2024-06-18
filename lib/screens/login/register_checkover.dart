@@ -11,12 +11,14 @@ import '../../widgets/colors.dart';
 import '/blocs/authentication/authentication_bloc.dart';
 import '/utils/validators.dart';
 
-class SignInCheckoverScreen extends StatefulWidget {
+class RegisterCheckOverScreen extends StatefulWidget {
+  const RegisterCheckOverScreen({super.key});
+
   @override
-  State<SignInCheckoverScreen> createState() => _SignInCheckoverScreenState();
+  State<RegisterCheckOverScreen> createState() => _RegisterCheckOverScreenState();
 }
 
-class _SignInCheckoverScreenState extends State<SignInCheckoverScreen> {
+class _RegisterCheckOverScreenState extends State<RegisterCheckOverScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 

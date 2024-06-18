@@ -10,14 +10,20 @@ import '../../widgets/colors.dart';
 import '../../lang/app_strings.dart';
 import '/blocs/authentication/authentication_bloc.dart';
 import '/utils/validators.dart';
-import 'sign_in_checkover.dart';
+import 'register_checkover.dart';
 
-class SignInEmailScreen extends StatefulWidget {
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
   @override
-  State<SignInEmailScreen> createState() => _SignInEmailScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
+
+  static Route<void> route() {
+    return MaterialPageRoute<void>(builder: (_) => const RegisterScreen());
+  }
 }
 
-class _SignInEmailScreenState extends State<SignInEmailScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -260,7 +266,7 @@ class _SignInEmailScreenState extends State<SignInEmailScreen> {
                   InkWell(
                     onTap: () {
                       // Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => SignInCheckoverScreen()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterCheckOverScreen()));
                     },
                     child: Container(
                       width: 320.w,

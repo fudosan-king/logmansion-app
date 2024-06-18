@@ -6,13 +6,15 @@ class CustomTextField extends StatelessWidget {
   final String label;
   final String? hint;
   final TextEditingController controller;
+  void Function(String)? onChanged;
 
-  const CustomTextField({
-    Key? key,
+  CustomTextField({
+    super.key,
     required this.label,
     this.hint,
     required this.controller,
-  }) : super(key: key);
+    this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,7 @@ class CustomTextField extends StatelessWidget {
           ),
           TextField(
             controller: controller,
+            onChanged: onChanged,
             decoration: InputDecoration(
               alignLabelWithHint: true,
               hintText: hint,
@@ -66,13 +69,15 @@ class CustomPasswordField extends StatefulWidget {
   final String label;
   final String? hint;
   final TextEditingController controller;
+  void Function(String)? onChanged;
 
-  const CustomPasswordField({
-    Key? key,
+  CustomPasswordField({
+    super.key,
     required this.label,
     this.hint,
     required this.controller,
-  }) : super(key: key);
+    this.onChanged,
+  });
 
   @override
   _CustomPasswordFieldState createState() => _CustomPasswordFieldState();
@@ -105,6 +110,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
           TextField(
             controller: widget.controller,
             obscureText: _obscureText,
+            onChanged: widget.onChanged,
             decoration: InputDecoration(
               alignLabelWithHint: true,
               hintText: widget.hint,

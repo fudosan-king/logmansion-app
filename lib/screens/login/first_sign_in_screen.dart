@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:logmansion_app/screens/login/sign_in_email_screen.dart';
+import 'package:logmansion_app/screens/login/register_screen.dart';
 import '../../widgets/colors.dart';
 
 class FirstSignInScreen extends StatelessWidget {
@@ -167,7 +167,7 @@ class FirstSignInScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context)=> SignInEmailScreen()),
+                          MaterialPageRoute(builder: (context)=> RegisterScreen()),
                       );
                     },
                     child: Container(
