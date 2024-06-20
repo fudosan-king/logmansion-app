@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/user.dart';
 import '../../repositories/authentication_repository.dart';
@@ -20,6 +21,7 @@ class AuthenticationBloc
     _authenticationStatusSubscription = _authenticationRepository.status.listen(
       (status) => add(AuthenticationStatusChanged(status)),
     );
+    _checkToken();
   }
 
   final AuthenticationRepository _authenticationRepository;
@@ -41,10 +43,17 @@ class AuthenticationBloc
       case AuthenticationStatus.unauthenticated:
         return emit(const AuthenticationState.unauthenticated());
       case AuthenticationStatus.authenticated:
-        final user = await _tryGetUser();print(user);
+        final user = await _tryGetUser();
         return emit(
           user != null
               ? AuthenticationState.authenticated(user)
+              : const AuthenticationState.unauthenticated(),
+        );
+      case AuthenticationStatus.firstLogin:
+        final user = await _tryGetUser();
+        return emit(
+          user != null
+              ? AuthenticationState.firstUpdate(user)
               : const AuthenticationState.unauthenticated(),
         );
       case AuthenticationStatus.unknown:
@@ -65,6 +74,21 @@ class AuthenticationBloc
       return user;
     } catch (_) {
       return null;
+    }
+  }
+
+  Future<void> _checkToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    if (token != null) {
+      final user = await _tryGetUser();
+      if (user != null) {
+        emit(AuthenticationState.authenticated(user));
+      } else {
+        emit(const AuthenticationState.unauthenticated());
+      }
+    } else {
+      emit(const AuthenticationState.unauthenticated());
     }
   }
 }

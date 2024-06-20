@@ -1,17 +1,18 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../models/user.dart';
 import '/utils/domain.dart';
 import 'dart:async';
 
-enum AuthenticationStatus { unknown, authenticated, unauthenticated }
+enum AuthenticationStatus { unknown, authenticated, firstLogin, unauthenticated }
 
 class AuthenticationRepository {
 
   final _controller = StreamController<AuthenticationStatus>();
 
   Stream<AuthenticationStatus> get status async* {
-    await Future<void>.delayed(const Duration(seconds: 1));
+    await Future<void>.delayed(const Duration(seconds: 3));
     yield AuthenticationStatus.unauthenticated;
     yield* _controller.stream;
   }
@@ -26,27 +27,64 @@ class AuthenticationRepository {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'client_email': clientID,
+        'client_id': clientID,
         'client_password': password,
       }),
     );
     if (response.statusCode == 200) {
-      _controller.add(AuthenticationStatus.authenticated);
       var token = jsonDecode(response.body)['token'];
-      print(token);
+      print(jsonDecode(response.body));
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('token', token);
+      if(jsonDecode(response.body)['isFirstLogin']){
+        _controller.add(AuthenticationStatus.firstLogin);
+      }
+      else{
+        _controller.add(AuthenticationStatus.authenticated);
+      }
     } else {
-
       throw Exception('Failed to authenticate');
     }
   }
 
-  void logOut() {
+  Future<void> logOut() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
     _controller.add(AuthenticationStatus.unauthenticated);
   }
 
   void dispose() => _controller.close();
+
+  Future updateUserOnFirst({required String email, required String password }) async {
+    try{
+      final prefs = await SharedPreferences.getInstance();
+      String token = prefs.getString('token')!;
+      final response = await http.post(
+        Uri.parse(Domain.getApiUrl("client/update")),
+        headers: <String, String>{
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'email': email,
+          'password': password,
+        }),
+      );
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        User user = User.fromJson(jsonDecode(response.body)['user']);
+        _controller.add(AuthenticationStatus.authenticated);
+        _controller.add(AuthenticationStatus.unknown);
+        print(user);
+        return user;
+      } else {
+        throw Exception('Failed to update');
+      }
+    }
+    catch(e){
+      throw Exception('Failed to update');
+    }
+  }
 
   //code cũ
 
@@ -79,9 +117,7 @@ class AuthenticationRepository {
         'Authorization': 'Bearer $token',
       },
     );
-    print(jsonDecode(response.statusCode.toString()));
     if (response.statusCode == 200) {
-      print(jsonDecode(response.body));
       return jsonDecode(response.body)['token'];
     } else {
       throw Exception('Failed to authenticate');

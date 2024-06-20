@@ -23,8 +23,8 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _clientIDController = TextEditingController(text: "Est000002");
+  final _passwordController = TextEditingController(text: "super1234");
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
             ),
             LoginForm(
-                emailController: _emailController,
+                emailController: _clientIDController,
                 passwordController: _passwordController),
           ],
         ),

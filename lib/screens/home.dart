@@ -57,7 +57,7 @@ class _HomeState extends State<Home> {
         screen: HomeScreen(),
         item: ItemConfig(
           icon: Icon(Icons.mail),
-          title: "Message",
+          title: "お問合わせ",
           activeForegroundColor: Colors.white,
           inactiveForegroundColor: AppColors.primaryColor,
         ),

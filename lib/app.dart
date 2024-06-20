@@ -8,6 +8,7 @@ import 'blocs/authentication/authentication_state.dart';
 import 'repositories/authentication_repository.dart';
 import 'repositories/user_repository.dart';
 import 'screens/home.dart';
+import 'screens/login/register_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/splash/SplashScreen.dart';
 
@@ -74,11 +75,16 @@ class _AppViewState extends State<AppView> {
       builder: (context, child) {
         ScreenUtil.init(context, designSize: const Size(375, 812), minTextAdapt: true, splitScreenMode: true);
         return BlocListener<AuthenticationBloc, AuthenticationState>(
-          listener: (context, state) {
+          listener: (context, state) {print(123123);print(state.status);
             switch (state.status) {
               case AuthenticationStatus.authenticated:
                 _navigator.pushAndRemoveUntil<void>(
                   Home.route(),
+                      (route) => false,
+                );
+              case AuthenticationStatus.firstLogin:
+                _navigator.pushAndRemoveUntil<void>(
+                  RegisterScreen.route(),
                       (route) => false,
                 );
               case AuthenticationStatus.unauthenticated:

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../blocs/authentication/authentication_event.dart';
 import '../../blocs/authentication/authentication_state.dart';
 import '../../lang/app_strings.dart';
+import '../../repositories/authentication_repository.dart';
 import '../../widgets/component.dart';
 import '../home/home_screen.dart';
 import '../../widgets/colors.dart';
@@ -16,14 +18,13 @@ class RegisterCheckOverScreen extends StatefulWidget {
 
   @override
   State<RegisterCheckOverScreen> createState() => _RegisterCheckOverScreenState();
+
+  static Route<void> route() {
+    return MaterialPageRoute<void>(builder: (_) => const RegisterCheckOverScreen());
+  }
 }
 
 class _RegisterCheckOverScreenState extends State<RegisterCheckOverScreen> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  String? _emailError;
-  String? _passwordError;
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +106,10 @@ class _RegisterCheckOverScreenState extends State<RegisterCheckOverScreen> {
                   SizedBox(height: 30.h),
                   InkWell(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                      context.read<AuthenticationBloc>().add(
+                          const AuthenticationStatusChanged(
+                              AuthenticationStatus.authenticated));
                     },
                     child: Container(
                       width: 320.w,

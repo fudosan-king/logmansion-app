@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -9,8 +10,24 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: CircularProgressIndicator()),
+    return Scaffold(
+      body: Container(
+        width: 375.w,
+        height: 812.h,
+        color: Colors.white,
+        child: Center(
+          child: Container(
+            width: 200.w,
+            height: 32.h,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/logo-black.png"),
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

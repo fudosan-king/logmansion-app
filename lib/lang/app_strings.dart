@@ -1,10 +1,10 @@
 class AppStrings {
   //login
-  static const String validateLogin = r'メールアドレスとパスワードを入力してください。';
+  static const String validateLogin = r'契約番号とパスワードを入力してください。';
   static const String clientID = '契約番号';
   static const String hintClientID = '半角英数でご入力ください';
   static const String password = 'パスワード';
-  static const String validatePassword = '※半角英大文字小文字と数字の組み合わせで８文字以上';
+  static const String validatePassword = '※半角英字、数字、記号をそれぞれ１文字以上含む８文字以上';
   static const String login = 'ログイン';
   static const String forgotPassword = 'ID・パスワードをお忘れの方はこちら';
   //sign in

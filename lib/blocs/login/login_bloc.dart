@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
 
 import '../../repositories/authentication_repository.dart';
+import '../../repositories/user_repository.dart';
 import '../../screens/login/component/password.dart';
 import '../../screens/login/component/username.dart';
 import 'login_event.dart';
@@ -15,6 +16,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginUsernameChanged>(_onUsernameChanged);
     on<LoginPasswordChanged>(_onPasswordChanged);
     on<LoginSubmitted>(_onSubmitted);
+    on<UpdateUser>(_onUpdateUser);
   }
 
   final AuthenticationRepository _authenticationRepository;
@@ -62,6 +64,23 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       } catch (_) {
         emit(state.copyWith(status: FormzSubmissionStatus.failure));
       }
+    }
+  }
+
+  Future<void> _onUpdateUser(
+    UpdateUser event,
+    Emitter<LoginState> emit,
+  ) async {
+    emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
+    try {
+      AuthenticationRepository authenticationRepository = AuthenticationRepository();
+      await authenticationRepository.updateUserOnFirst(
+        email: event.email,
+        password: event.password,
+      );
+      emit(state.copyWith(status: FormzSubmissionStatus.success));
+    } catch (_) {
+      emit(state.copyWith(status: FormzSubmissionStatus.failure));
     }
   }
 }
