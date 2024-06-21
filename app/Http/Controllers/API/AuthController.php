@@ -70,21 +70,26 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $credentials = $request->only('client_email', 'client_password');
+        $credentials = $request->only('client_id', 'client_password');
+        $isFirstLogin = false;
         try {
-            $token = auth('clients')->attempt([
-                'client_email' => $credentials['client_email'], 
+            $token = auth('estate_clients')->attempt([
+                'client_id' => $credentials['client_id'], 
                 'password' => $credentials['client_password']
             ]);
             if (!$token) {
                 return response()->json(['error' => 'invalid_credentials'], 401);
             }
-            $token = auth('clients')->login(Client::where('client_email', $credentials['client_email'])->first());
+            $client = Client::where('client_id', $credentials['client_id'])->first(); 
+            $token = auth('estate_clients')->login($client);
+            if($client->client_email == null || $client->client_email == ""){
+                $isFirstLogin = true;
+            }
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
-        return response()->json(compact('token'));
+        return response()->json(compact('token', 'isFirstLogin'));
     }
 
     /**
@@ -201,6 +206,127 @@ class AuthController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *      path="/api/client/update",
+     *      operationId="Update",
+     *      tags={"Client"},
+     *      summary="Client update on first login",
+     *      description="Client update on first login",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              required={"email", "password"},
+     *              @OA\Property(
+     *                  property="email",
+     *                  type="string",
+     *                  format="email",
+     *                  description="email"
+     *              ),
+     *              @OA\Property(
+     *                  property="password",
+     *                  type="string",
+     *                  format="password",
+     *                  description="New password"
+     *              ),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Password changed successfully",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="token",
+     *                  type="string",
+     *                  description="JWT token"
+     *              ),
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="Password changed successfully"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="error",
+     *                  type="string",
+     *                  example="Unauthorized"
+     *              ),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad request",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="error",
+     *                  type="string",
+     *                  example="The given data was invalid."
+     *              ),
+     *          )
+     *      ),
+     *      security={
+     *          {"bearerAuth": {}}
+     *      }
+     * )
+     */
+    public function Update(Request $request)
+    {
+        $id = 0;
+        $token = $request->bearerToken();
+        try {
+            $id = JWTAuth::setToken($token)->getPayload()['sub'];
+        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            return response()->json(['error' => 'Token is expired'], 401);
+        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(['error' => 'Token is invalid'], 401);
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json(['error' => 'Unauthenticate'], 401);
+        }
+
+        try {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required',
+                // 'password' => 'required|min:6|confirmed',
+                'password' => 'required|min:6',
+            ], [
+                'password.required' => '新しいパスワードを入力してください。',
+                'password.min' => '新しいパスワードは少なくとも6文字でなければなりません。',
+                'password.confirmed' => '新しいパスワードが一致しません。',
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
+    
+            // $id = JWTAuth::parseToken()->authenticate()->id;
+            if($id == 0){
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+            $user = Client::where('id', $id)->first();
+            if (!$user) {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+    
+            $user->client_password = bcrypt($request->password);
+            $user->client_email = $request->email;
+            $user->save();
+    
+            // return response()->json(['message' => 'Password changed successfully']);
+            return response()->json(['user' => $user], 200);
+        }
+        catch (JWTException $e) {
+            return response()->json(['error' => 'Token is invalid or expired'], 401);
+        } 
+         catch (\Exception $e) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+    }
+
+    /**
      * @OA\Get(
      *      path="/api/client/profile",
      *      operationId="client",
@@ -288,17 +414,26 @@ class AuthController extends Controller
      */
     public function profile(Request $request)
     {
+        $token = $request->bearerToken();
         try {
-            $id = JWTAuth::parseToken()->authenticate()->id;
+            $id = JWTAuth::setToken($token)->getPayload()['sub'];
             $client = Client::where('id', $id)->first();
             return response()->json(['user' => $client], 200);
+        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            return response()->json(['error' => 'Token is expired'], 401);
+        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(['error' => 'Token is invalid'], 401);
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json(['error' => 'Unauthenticate'], 401);
         }
-        catch (JWTException $e) {
-            return response()->json(['error' => 'Token is invalid or expired'], 401);
-        } 
-        catch (\Exception $e) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+
+        // return auth('estate_clients')->user();
+
+        // JWTAuth::setToken($request->bearerToken());
+        // $user = JWTAuth::parseToken()->authenticate();
+
+        // return response()->json($user);
+
     }
 
     
@@ -372,6 +507,19 @@ class AuthController extends Controller
 
 
         return response()->json(['message' => 'New password has been sent to your email.']);
+    }
+
+    function getClientID($token) {
+        try {
+            $id = JWTAuth::setToken($token)->getPayload()['sub'];
+            return $id;
+        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            return response()->json(['error' => 'Token đã hết hạn'], 401);
+        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(['error' => 'Token is invalid'], 401);
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json(['error' => 'Unauthenticate'], 401);
+        }
     }
 
 }
