@@ -1,4 +1,10 @@
 class AppStrings {
+  //bottom menu
+  static const String home = 'ホーム';
+  static const String notification = 'お知らせ';
+  static const String message = 'お問合わせ';
+  static const String document = '契約書類';
+  static const String profile = 'マイページ';
   //login
   static const String validateLogin = r'契約番号とパスワードを入力してください。';
   static const String clientID = '契約番号';

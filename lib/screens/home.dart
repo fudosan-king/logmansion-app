@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:logmansion_app/screens/profile/home_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
+import '../lang/app_strings.dart';
 import '../widgets/colors.dart';
 import 'home/home_screen.dart';
-
 
 class Home extends StatefulWidget {
   @override
@@ -23,23 +24,13 @@ class _HomeState extends State<Home> {
     _controller = PersistentTabController(initialIndex: 0);
   }
 
-  List<Widget> _buildScreens() {
-    return [
-      Center(child: Text("Home")),
-      Center(child: Text("Notifications")),
-      Center(child: Text("Message")),
-      Center(child: Text("File")),
-      Center(child: Text("Profile")),
-    ];
-  }
-
   List<PersistentTabConfig> _navBarsItems() {
     return [
       PersistentTabConfig(
         screen: HomeScreen(),
         item: ItemConfig(
           icon: Icon(Icons.home),
-          title: "Home",
+          title: AppStrings.home,
           activeForegroundColor: AppColors.buttonColor,
           inactiveForegroundColor: Colors.white,
         ),
@@ -48,7 +39,7 @@ class _HomeState extends State<Home> {
         screen: HomeScreen(),
         item: ItemConfig(
           icon: Icon(Icons.notifications),
-          title: "Notifications",
+          title: AppStrings.notification,
           activeForegroundColor: AppColors.buttonColor,
           inactiveForegroundColor: Colors.white,
         ),
@@ -56,28 +47,28 @@ class _HomeState extends State<Home> {
       PersistentTabConfig(
         screen: HomeScreen(),
         item: ItemConfig(
-          icon: Icon(Icons.mail),
-          title: "お問合わせ",
+          icon: Icon(Icons.mail_rounded, color: Colors.black),
+          title: AppStrings.message,
           activeForegroundColor: Colors.white,
-          inactiveForegroundColor: AppColors.primaryColor,
+          inactiveForegroundColor: Colors.white,
         ),
       ),
       PersistentTabConfig(
         screen: HomeScreen(),
         item: ItemConfig(
           icon: Icon(Icons.file_copy),
-          title: "File",
-          activeForegroundColor: Color(0xFF4B57B1),
-          inactiveForegroundColor: Colors.grey,
+          title: AppStrings.document,
+          activeForegroundColor: AppColors.buttonColor,
+          inactiveForegroundColor: Colors.white,
         ),
       ),
       PersistentTabConfig(
-        screen: HomeScreen(),
+        screen: ProfileScreen(),
         item: ItemConfig(
           icon: Icon(Icons.person),
-          title: "Profile",
-          activeForegroundColor: Color(0xFF4B57B1),
-          inactiveForegroundColor: Colors.grey,
+          title: AppStrings.profile,
+          activeForegroundColor: AppColors.buttonColor,
+          inactiveForegroundColor: Colors.white,
         ),
       ),
     ];
@@ -87,10 +78,20 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return PersistentTabView(
       controller: _controller,
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.red,
       tabs: _navBarsItems(),
+      handleAndroidBackButtonPress: true,
+      resizeToAvoidBottomInset: true,
+      stateManagement: true,
       navBarBuilder: (navBarConfig) => Style13BottomNavBar(
         navBarConfig: navBarConfig,
+        navBarDecoration: NavBarDecoration(
+          color: AppColors.primaryBlack,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
+          ),
+        ),
       ),
     );
   }

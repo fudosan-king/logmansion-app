@@ -75,7 +75,7 @@ class _AppViewState extends State<AppView> {
       builder: (context, child) {
         ScreenUtil.init(context, designSize: const Size(375, 812), minTextAdapt: true, splitScreenMode: true);
         return BlocListener<AuthenticationBloc, AuthenticationState>(
-          listener: (context, state) {print(123123);print(state.status);
+          listener: (context, state) {
             switch (state.status) {
               case AuthenticationStatus.authenticated:
                 _navigator.pushAndRemoveUntil<void>(
