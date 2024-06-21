@@ -18,6 +18,7 @@ Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
 
 Route::get('client/profile', [AuthController::class, 'profile']);
 Route::post('client/change-password', [AuthController::class, 'changePassword']);
+Route::post('client/update', [AuthController::class, 'update']);
 
 Route::get('client/new-contact', [ContactController::class, 'newContact']);
 Route::get('client/list-contact', [ContactController::class, 'listContact']);

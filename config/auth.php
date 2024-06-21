@@ -41,7 +41,13 @@ return [
             'provider' => 'users',
         ],
 
-        'clients' => [
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'estate_clients',
+            'hash' => false,
+        ],
+
+        'estate_clients' => [
             'driver' => 'jwt',
             'provider' => 'estate_clients',
         ],
