@@ -97,7 +97,7 @@
             <div class="card-body text-center">
                 <div class="form-upload doc-permanent">
 
-                    @if($getDocPayment)
+                    {{-- @if($getDocPayment)
 
                     <div class="row doc-row form-group">
                         <input type="hidden" name="doc-permanent" value="{{$getDocPayment['doc_id']}}">
@@ -149,7 +149,7 @@
                         </div>
                     </div>
 
-                    @endif
+                    @endif --}}
 
                     @if($getWarrantyPeriod)
 

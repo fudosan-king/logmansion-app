@@ -49,31 +49,32 @@ class ClientController extends Controller
             'client_id.required' => 'The client id field is required.',
             'client_id.unique' => 'The client id has already been taken.',
             'telephone.required' => 'The telephone field is required.',
-            'email.required' => 'The email field is required.',
-            'email.email' => 'The email must be a valid email address.',
+            // 'email.required' => 'The email field is required.',
+            // 'email.email' => 'The email must be a valid email address.',
         ];
         $validatedData = $request->validate([
             'client_id' => 'required|unique:estate_clients',
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
             'telephone' => 'required',
-            'email' => 'required|email|max:255|unique:estate_clients,client_email',
+            // 'email' => 'required|email|max:255|unique:estate_clients,client_email',
         ], $message);
-        $password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') , 0 , 8 );
+        // $password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') , 0 , 8 );
+        $password = substr(str_shuffle('0123456789') , 0 , 8 );
         $data = [
             'client_id'=>$request->input('client_id'),
             'est_id'=>$request->input('est_id'),
             'client_f_name'=>$request->input('first_name'),
             'client_l_name'=>$request->input('last_name'),
+            'client_name'=>$request->input('first_name')." ".$request->input('last_name'),
             'client_furigana_firstname'=>$request->input('first_name_furi'),
             'client_furigana_lastname'=>$request->input('last_name_furi'),
-            'client_email'=>$request->input('email'),
-            //'client_password'=>Hash::make($password),// send password later
+            // 'client_email'=>$request->input('email'),
+            'client_password'=>bcrypt($password),// send password later
             'client_tel'=>$request->input('telephone')
         ];
         $estate = Client::create($data);
         toast(config('client_labels.toast_create'),'success');
-        
         // Mail::to($data['client_email'])->send(new SendPasswordEmail($password));
         // toast('Add client success!','success');
         return redirect()->route('estate.index');
@@ -121,21 +122,23 @@ class ClientController extends Controller
         $message = [
             'telephone.required' => 'The telephone field is required.',
             'email.required' => 'The email field is required.',
-            'email.email' => 'The email must be a valid email address.',
+            // 'email.email' => 'The email must be a valid email address.',
         ];
         $validatedData = $request->validate([
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
             'telephone' => 'required',
-            'email' => 'required|email|max:255|unique:estate_clients,client_email,'.$id,
+            //'email' => 'required|email|max:255|unique:estate_clients,client_email,'.$id,
         ], $message);
         $data = [
             'est_id'=>$request->input('est_id'),
             'client_f_name'=>$request->input('first_name'),
             'client_l_name'=>$request->input('last_name'),
+            'client_name'=>$request->input('first_name')." ".$request->input('last_name'),
             'client_furigana_firstname'=>$request->input('first_name_furi'),
             'client_furigana_lastname'=>$request->input('last_name_furi'),
-            'client_email'=>$request->input('email'),
+            // client_email'=>$request->input('email'),
+            // 'client_password'=>bcrypt($password),// send passwor
             'client_tel'=>$request->input('telephone')
         ];
         $client->update($data);
