@@ -150,7 +150,7 @@ class CreateSuperUserSeeder extends Seeder
             ]);
         }
 
-        for($i=1; $i <= 50; $i++) {
+        for($i=1; $i <= 10; $i++) {
             \DB::table('estate_clients')->insert([
                 'client_id' => 'Est'. sprintf("%06d", $i),
                 'est_id' =>   $i,
@@ -164,7 +164,7 @@ class CreateSuperUserSeeder extends Seeder
          ]);
         }
       
-        for($i=1; $i <= 10; $i++) {
+        for($i=1; $i <= 5; $i++) {
             $contact_type = rand(0,2);
             \DB::table('estate_contact')->insert([
                 'client_id' => 'Est'. sprintf("%06d", $i),
@@ -181,7 +181,7 @@ class CreateSuperUserSeeder extends Seeder
 
         for($i=1; $i <= 100; $i++) {
             \DB::table('estate_contact_detail')->insert([
-                'contact_id' => rand(1,10),
+                'contact_id' => rand(1,5),
                 'contact_message' =>  $faker->sentence,
                 'author' =>   rand(1,2),
                 'author_type' =>  rand(0,1),
