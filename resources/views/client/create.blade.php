@@ -59,7 +59,7 @@
                                         <input value="{{ old('telephone') }}" maxlength="10" required name="telephone" type="number" class="form-control">
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                {{-- <div class="form-group row">
                                     <label class="col-sm-3">メールアドレス <span class="text-danger">※</span></label>
                                     <div class="col-sm-4">
                                         <input value="{{ old('email') }}" required name="email" type="email" class="form-control @error('email') is-invalid @enderror">
@@ -67,7 +67,7 @@
                                             <div class="d-inline invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-center">
