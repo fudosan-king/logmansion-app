@@ -30,49 +30,43 @@
                         <label for="newField" class="col-form-label">説明文</label>
                     </div>
                 </div>
-
                 @foreach($getAllSchedule as $schedule)
+                    @if (!in_array($schedule['schedule_name'], [ '引渡し', '契約日'])) 
+                    <div class="form-group row mx-auto schedule-row">
+                        <input type="hidden" name="schedule-id" value="{{$schedule['schedule_id']}}">
+                        <div class="col-sm-3">
+                            <input type="text" name="schedule-name" class="form-control" value="{{$schedule['schedule_name']}}" maxlength="255">
+                        </div>
 
-                @if ($schedule['schedule_name'] != '引渡し')
-                <div class="form-group row mx-auto schedule-row">
-                    <input type="hidden" name="schedule-id" value="{{$schedule['schedule_id']}}">
-                    <div class="col-sm-3">
-                        <input type="text" name="schedule-name" class="form-control" value="{{$schedule['schedule_name']}}" maxlength="255">
+                        <div class="col-sm-3">
+                            <?php $dateValue = date('Y-m-d', strtotime($schedule['schedule_date'])); ?>
+                            <input type="date" name="schedule-date" class="form-control datepicker" value="{{$dateValue}}">
+                        </div>
+
+                        <div class="col-sm-5">
+                            <textarea class="form-control" name="schedule-description" maxlength="255">{{$schedule['schedule_description']}}</textarea>
+                        </div>
+
+                        <div class="col-sm-1 remove-icon">
+                            <span class="icon"><i class="fas fa-times-circle"></i></span>
+                        </div>
                     </div>
+                    @else
+                    <div class="form-group row mx-auto schedule-row">
+                        <input type="hidden" name="schedule-id" value="{{$schedule['schedule_id']}}">
+                        <div class="col-sm-3">
+                            <input type="text" name="schedule-name" class="form-control" value="{{$schedule['schedule_name']}}" readonly maxlength="255">
+                        </div>
 
-                    <div class="col-sm-3">
-                        <?php $dateValue = date('Y-m-d', strtotime($schedule['schedule_date'])); ?>
-                        <input type="date" name="schedule-date" class="form-control datepicker" value="{{$dateValue}}">
+                        <div class="col-sm-3">
+                            <?php $dateValue = date('Y-m-d', strtotime($schedule['schedule_date'])); ?>
+                            <input type="date" name="schedule-date" class="form-control datepicker" value="{{$dateValue}}">
+                        </div>
+                        <div class="col-sm-5">
+                            <textarea class="form-control" name="schedule-description" maxlength="255">{{$schedule['schedule_description']}}</textarea>
+                        </div>
                     </div>
-
-                    <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description" maxlength="255">{{$schedule['schedule_description']}}</textarea>
-                    </div>
-
-                    <div class="col-sm-1 remove-icon">
-                        <span class="icon"><i class="fas fa-times-circle"></i></span>
-                    </div>
-                </div>
-
-                @else
-
-                <div class="form-group row mx-auto schedule-row">
-                    <input type="hidden" name="schedule-id" value="{{$schedule['schedule_id']}}">
-                    <div class="col-sm-3">
-                        <input type="text" name="schedule-name" class="form-control" value="{{$schedule['schedule_name']}}" readonly maxlength="255">
-                    </div>
-
-                    <div class="col-sm-3">
-                        <?php $dateValue = date('Y-m-d', strtotime($schedule['schedule_date'])); ?>
-                        <input type="date" name="schedule-date" class="form-control datepicker" value="{{$dateValue}}">
-                    </div>
-                    <div class="col-sm-5">
-                        <textarea class="form-control" name="schedule-description" maxlength="255">{{$schedule['schedule_description']}}</textarea>
-                    </div>
-                </div>
-
-                @endif
-
+                    @endif
                 @endforeach
 
 
