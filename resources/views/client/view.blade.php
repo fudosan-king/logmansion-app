@@ -80,6 +80,7 @@
                             {{$client->client_tel}}
                         </div> 
                     </div>
+                    @if($client->client_email != null)
                     <div class="row mb-2 d-flex justify-content-center">
                         <div class="col-md-2">
                         </div>
@@ -90,6 +91,7 @@
                             {{$client->client_email}}
                         </div> 
                     </div>
+                    @endif
                 </div>
                 <div class="w-100 text-center mt-4">
                     <a href="{{route('estate.index')}}" class="btn btn-default mr-2">キャンセル</a>
