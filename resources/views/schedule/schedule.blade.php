@@ -142,6 +142,20 @@
                 <div class="form-group row mx-auto schedule-row">
 
                     <div class="col-sm-3">
+                        <input type="text" name="schedule-name" class="form-control" value="契約日" readonly maxlength="255">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="date" name="schedule-date" class="form-control datepicker">
+                    </div>
+                    <div class="col-sm-5">
+                        <textarea class="form-control" name="schedule-description" maxlength="255"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group row mx-auto schedule-row">
+
+                    <div class="col-sm-3">
                         <input type="text" name="schedule-name" class="form-control" value="引渡し" readonly maxlength="255">
                     </div>
 
