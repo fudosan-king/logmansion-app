@@ -108,7 +108,7 @@
         <div class="col-md-10 mx-auto">
             <div class="card-body text-center">
                 <div class="form-upload doc-permanent">
-
+{{-- 
                     @if($getDocPayment)
 
                     <div class="row doc-row form-group">
@@ -160,7 +160,7 @@
                         </div>
                     </div>
 
-                    @endif
+                    @endif --}}
 
                     @if($getWarrantyPeriod)
 
