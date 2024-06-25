@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:logmansion_app/screens/profile/home_screen.dart';
+import 'package:logmansion_app/screens/profile/profile_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 import '../lang/app_strings.dart';
@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
       PersistentTabConfig(
         screen: HomeScreen(),
         item: ItemConfig(
-          icon: Icon(Icons.home),
+          icon: const Icon(Icons.home),
           title: AppStrings.home,
           activeForegroundColor: AppColors.buttonColor,
           inactiveForegroundColor: Colors.white,
@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
       PersistentTabConfig(
         screen: HomeScreen(),
         item: ItemConfig(
-          icon: Icon(Icons.notifications),
+          icon: const Icon(Icons.notifications),
           title: AppStrings.notification,
           activeForegroundColor: AppColors.buttonColor,
           inactiveForegroundColor: Colors.white,
@@ -47,7 +47,7 @@ class _HomeState extends State<Home> {
       PersistentTabConfig(
         screen: HomeScreen(),
         item: ItemConfig(
-          icon: Icon(Icons.mail_rounded, color: Colors.black),
+          icon: const Icon(Icons.mail_rounded, color: Colors.black),
           title: AppStrings.message,
           activeForegroundColor: Colors.white,
           inactiveForegroundColor: Colors.white,
@@ -56,16 +56,16 @@ class _HomeState extends State<Home> {
       PersistentTabConfig(
         screen: HomeScreen(),
         item: ItemConfig(
-          icon: Icon(Icons.file_copy),
+          icon: const Icon(Icons.file_copy),
           title: AppStrings.document,
           activeForegroundColor: AppColors.buttonColor,
           inactiveForegroundColor: Colors.white,
         ),
       ),
       PersistentTabConfig(
-        screen: ProfileScreen(),
+        screen: const ProfileScreen(),
         item: ItemConfig(
-          icon: Icon(Icons.person),
+          icon: const Icon(Icons.person),
           title: AppStrings.profile,
           activeForegroundColor: AppColors.buttonColor,
           inactiveForegroundColor: Colors.white,
@@ -78,14 +78,14 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return PersistentTabView(
       controller: _controller,
-      backgroundColor: Colors.red,
+      backgroundColor: Colors.white,
       tabs: _navBarsItems(),
       handleAndroidBackButtonPress: true,
       resizeToAvoidBottomInset: true,
       stateManagement: true,
       navBarBuilder: (navBarConfig) => Style13BottomNavBar(
         navBarConfig: navBarConfig,
-        navBarDecoration: NavBarDecoration(
+        navBarDecoration: const NavBarDecoration(
           color: AppColors.primaryBlack,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20.0),
