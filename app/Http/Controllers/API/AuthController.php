@@ -81,7 +81,15 @@ class AuthController extends Controller
                 return response()->json(['error' => 'invalid_credentials'], 401);
             }
             $client = Client::where('client_id', $credentials['client_id'])->first(); 
-            $token = auth('estate_clients')->login($client);
+            // Tính toán thời gian hết hạn token
+            $now = \Carbon\Carbon::now();
+            $endOfDay = $now->copy()->endOfDay();
+            $minutesUntilEndOfDay = $now->diffInMinutes($endOfDay);
+
+            // Thiết lập thời gian hết hạn token
+            $customClaims = ['exp' => \Carbon\Carbon::now()->addMinutes($minutesUntilEndOfDay)->timestamp];
+            $token = auth('estate_clients')->claims($customClaims)->login($client);
+            // $token = auth('estate_clients')->login($client);
             if($client->client_email == null || $client->client_email == ""){
                 $isFirstLogin = true;
             }
