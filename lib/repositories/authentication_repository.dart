@@ -86,6 +86,32 @@ class AuthenticationRepository {
     }
   }
 
+  Future forgotPassword({required String email }) async {
+    try{
+      final response = await http.post(
+        Uri.parse(Domain.getApiUrl("forgot-password")),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'client_email': email,
+        }),
+      );
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        // User user = User.fromJson(jsonDecode(response.body)['user']);
+        // _controller.add(AuthenticationStatus.authenticated);
+        // _controller.add(AuthenticationStatus.unknown);
+        return true;
+      } else {
+        return false;
+      }
+    }
+    catch(e){
+      return false;
+    }
+  }
+
   //code cũ
 
   Future<String?> authenticate({required String email, required String password}) async {

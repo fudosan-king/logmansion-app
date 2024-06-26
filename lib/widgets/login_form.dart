@@ -6,7 +6,6 @@ import '../blocs/login/login_bloc.dart';
 import '../blocs/login/login_event.dart';
 import '../blocs/login/login_state.dart';
 
-
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
 
@@ -52,7 +51,7 @@ class _UsernameInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'username',
             errorText:
-            state.clientID.displayError != null ? 'invalid username' : null,
+                state.clientID.displayError != null ? 'invalid username' : null,
           ),
         );
       },
@@ -74,7 +73,7 @@ class _PasswordInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'password',
             errorText:
-            state.password.displayError != null ? 'invalid password' : null,
+                state.password.displayError != null ? 'invalid password' : null,
           ),
         );
       },
@@ -90,14 +89,14 @@ class _LoginButton extends StatelessWidget {
         return state.status.isInProgress
             ? const CircularProgressIndicator()
             : ElevatedButton(
-          key: const Key('loginForm_continue_raisedButton'),
-          onPressed: state.isValid
-              ? () {
-            context.read<LoginBloc>().add(const LoginSubmitted());
-          }
-              : null,
-          child: const Text('Login'),
-        );
+                key: const Key('loginForm_continue_raisedButton'),
+                onPressed: state.isValid
+                    ? () {
+                        context.read<LoginBloc>().add(const LoginSubmitted());
+                      }
+                    : null,
+                child: const Text('Login'),
+              );
       },
     );
   }

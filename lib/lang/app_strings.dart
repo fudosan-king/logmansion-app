@@ -13,7 +13,12 @@ class AppStrings {
   static const String password = 'パスワード';
   static const String validatePassword = '※半角英字、数字、記号をそれぞれ１文字以上含む８文字以上';
   static const String login = 'ログイン';
-  static const String forgotPassword = 'ID・パスワードをお忘れの方はこちら';
+  static const String forgotPasswordLabel = 'パスワードをお忘れの方はこちら';
+  static const String forgotIDLabel = '契約番号をお忘れの方はこちら';
+  static const String or = 'または';
+  static const String forgotPassword= 'Forgot Password';
+  static const String forgotID = 'Forgot ID';
+  static const String noteForgotID = '登録メールアドレスに契約番号をお送りします';
 
   //sign in
   static const String signIn = '会員登録';

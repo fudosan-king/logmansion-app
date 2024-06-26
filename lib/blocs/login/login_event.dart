@@ -34,3 +34,13 @@ final class UpdateUser extends LoginEvent {
   final String email;
   final String password;
 }
+
+final class ForgotPassword extends LoginEvent {
+  const ForgotPassword(this.email);
+  final String email;
+}
+
+final class ForgotClientID extends LoginEvent {
+  const ForgotClientID(this.email);
+  final String email;
+}

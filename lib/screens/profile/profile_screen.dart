@@ -34,7 +34,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
-        print(state);
         if (state.status == AuthenticationStatus.authenticated) {
           return SizedBox(
             width: 375.w,
@@ -239,6 +238,45 @@ class ProfileBody extends StatelessWidget {
     );
   }
 
+  Widget logoutButton(BuildContext context) {
+    return InkWell(
+        onTap: (){
+          context
+              .read<AuthenticationBloc>()
+              .add(AuthenticationLogoutRequested());
+        },
+        child: Container(
+          margin: EdgeInsets.only(bottom: 10.h),
+          width: 335.w,
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+          clipBehavior: Clip.antiAlias,
+          decoration: ShapeDecoration(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+          ),
+          child: const Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Text(
+                  AppStrings.logout,
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 14,
+                    fontFamily: 'SF Pro Display',
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+  }
+
   Container footer() {
     return Container(
         width: 335.w,
@@ -325,44 +363,6 @@ class ProfileBody extends StatelessWidget {
     );
   }
 
-  Widget logoutButton(context) {
-    return InkWell(
-      onTap: (){
-        context
-            .read<AuthenticationBloc>()
-            .add(AuthenticationLogoutRequested());
-      },
-      child: Container(
-        margin: EdgeInsets.only(bottom: 10.h),
-        width: 335.w,
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-        clipBehavior: Clip.antiAlias,
-        decoration: ShapeDecoration(
-          color: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-        ),
-        child: const Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Text(
-                AppStrings.logout,
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 14,
-                  fontFamily: 'SF Pro Display',
-                  fontWeight: FontWeight.w400,
-                  height: 0,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   Widget profileBlock({required String label, required String image}) {
     return Container(

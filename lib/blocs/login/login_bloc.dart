@@ -17,6 +17,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginPasswordChanged>(_onPasswordChanged);
     on<LoginSubmitted>(_onSubmitted);
     on<UpdateUser>(_onUpdateUser);
+    on<ForgotPassword>(_onForgotPassword);
   }
 
   final AuthenticationRepository _authenticationRepository;
@@ -68,15 +69,31 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Future<void> _onUpdateUser(
-    UpdateUser event,
-    Emitter<LoginState> emit,
-  ) async {
+      UpdateUser event,
+      Emitter<LoginState> emit,
+      ) async {
     emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
     try {
       AuthenticationRepository authenticationRepository = AuthenticationRepository();
       await authenticationRepository.updateUserOnFirst(
         email: event.email,
         password: event.password,
+      );
+      emit(state.copyWith(status: FormzSubmissionStatus.success));
+    } catch (_) {
+      emit(state.copyWith(status: FormzSubmissionStatus.failure));
+    }
+  }
+
+  Future<void> _onForgotPassword(
+      ForgotPassword event,
+      Emitter<LoginState> emit,
+      ) async {
+    emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
+    try {
+      AuthenticationRepository authenticationRepository = AuthenticationRepository();
+      await authenticationRepository.forgotPassword(
+        email: event.email,
       );
       emit(state.copyWith(status: FormzSubmissionStatus.success));
     } catch (_) {
