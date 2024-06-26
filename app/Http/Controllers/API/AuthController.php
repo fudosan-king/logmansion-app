@@ -31,9 +31,9 @@ class AuthController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  @OA\Property(
-     *                      property="client_email",
+     *                      property="client_id",
      *                      type="string",
-     *                      example="client1@gmail.com"
+     *                      example="Est0001"
      *                  ),
      *                  @OA\Property(
      *                      property="client_password",
@@ -41,7 +41,7 @@ class AuthController extends Controller
      *                      format="password",
      *                      example="super1234"
      *                  ),
-     *                  required={"client_email", "client_password"}
+     *                  required={"client_id", "client_password"}
      *              )
      *          )
      *      ),
