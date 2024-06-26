@@ -14,15 +14,17 @@ class ForgotPasswordMail extends Mailable
     use Queueable, SerializesModels;
 
     public $newPassword;
+    public $user;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($newPassword)
+    public function __construct($newPassword, $user)
     {
         $this->newPassword = $newPassword;
+        $this->user = $user;
     }
 
     /**
@@ -33,8 +35,9 @@ class ForgotPasswordMail extends Mailable
     public function build()
     {
         return $this->view('emails.forgot-password')
-                    ->subject('Your New Password')
-                    ->with(['newPassword' => $this->newPassword]);
+                    ->subject('パスワード変更のお知らせ【ログマンション購入者アプリ】')
+                    ->with(['newPassword' => $this->newPassword, 'user' => $this->user]);
     }
 
 }
+

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use App\Mail\ForgotPasswordMail;
+use App\Mail\ForgotClientIDMail;
 use App\Models\Client;
 
 
@@ -511,10 +512,57 @@ class AuthController extends Controller
         $client->client_password = bcrypt($newPassword);
         $client->save();
 
-        Mail::to($client->client_email)->send(new ForgotPasswordMail($newPassword));
+        Mail::to($client->client_email)->send(new ForgotPasswordMail($newPassword, $client));
 
 
         return response()->json(['message' => 'New password has been sent to your email.']);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/forgot-client-id",
+     *     summary="Forgot client ID",
+     *     tags={"Client"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"client_email"},
+     *             @OA\Property(property="client_email", type="string", format="email", example="user@example.com")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Client ID has been sent to your email.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Client ID has been sent to your email.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid email address.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="Invalid email address.")
+     *         )
+     *     )
+     * )
+     */
+    public function forgotClientID(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+        'client_email' => 'required|email|exists:estate_clients,client_email',
+        ], []);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        $client = Client::where('client_email', $request->client_email)->first();
+
+
+        Mail::to($client->client_email)->send(new ForgotClientIDMail($client));
+
+
+        return response()->json(['message' => 'Client ID has been sent to your email.']);
     }
 
     function getClientID($token) {

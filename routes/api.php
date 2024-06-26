@@ -14,6 +14,7 @@ Route::get('catalogues', [CatalogueController::class, 'index']);
 Route::get('faq', [FAQController::class, 'index']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
+Route::post('forgot-client-id', [AuthController::class, 'forgotClientID']);
 
 
 Route::get('client/profile', [AuthController::class, 'profile']);
