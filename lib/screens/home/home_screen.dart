@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Center(
                 child: Container(
                   width: 222.w,
-                  height: 58.h,
+                  height: 60.h,
                   child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           decoration: const BoxDecoration(),
                           child: Image.asset("assets/images/logo.png"),
                         ),
-                        const SizedBox(height: 10),
+                        SizedBox(height: 10.h),
                         const Text(
                           'OWNERS CLUB',
                           textAlign: TextAlign.center,
@@ -106,27 +106,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Builder(
-                  //   builder: (context) {
-                  //     final userId = context.select(
-                  //       (AuthenticationBloc bloc) => bloc.state.user.id,
-                  //     );
-                  //     return Text('UserID: $userId');
-                  //   },
-                  // ),
-                  // ElevatedButton(
-                  //   child: const Text('Logout'),
-                  //   onPressed: () {
-                  //     context
-                  //         .read<AuthenticationBloc>()
-                  //         .add(AuthenticationLogoutRequested());
-                  //   },
-                  // ),
-                ],
-              ),
             ),
           ),
           Positioned(
@@ -134,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
             top: 250.h,
             child: Container(
               width: 375.w,
-              height: 500.h,
+              // height: 500.h,
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: SingleChildScrollView(
                 child: Column(

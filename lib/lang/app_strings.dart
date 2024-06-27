@@ -19,15 +19,20 @@ class AppStrings {
   static const String forgotPassword= 'Forgot Password';
   static const String forgotID = 'Forgot ID';
   static const String noteForgotID = '登録メールアドレスに契約番号をお送りします';
+  static const String noteForgotPassword = '登録メールアドレスにパスワードをお送りします';
 
-  //sign in
-  static const String signIn = '会員登録';
-  static const String validateSignIn = 'メールアドレスとパスワードを登録してください。';
+  //register
+  static const String register = '会員登録';
+  static const String validateRegister = 'メールアドレスとパスワードを登録してください。';
   static const String name = 'お名前';
   static const String sir = '様';
   static const String email = 'メールアドレス';
+  static const String emailHint = '半角英数でご入力ください';
   static const String newPassword = '新しいパスワード';
-  static const String register = '会員登録';
+  static const String notePassword1 = '※半角英字、数字、記号をそれぞれ１文字以上含む８文字以上';
+  static const String notePassword2 = '※半角英字：「A-Z」、「a-z」';
+  static const String notePassword3 = '※半角数字：「0-9」';
+  static const String notePassword4 = '※半角記号：「!」、「.」、「_」、「-」、「@」';
 
   //sign in check over
   static const String messageRegister = '登録手続きが完了しました。';

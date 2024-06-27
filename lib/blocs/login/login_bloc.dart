@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
 
 import '../../repositories/authentication_repository.dart';
-import '../../repositories/user_repository.dart';
 import '../../screens/login/component/password.dart';
 import '../../screens/login/component/username.dart';
 import 'login_event.dart';
@@ -18,6 +17,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginSubmitted>(_onSubmitted);
     on<UpdateUser>(_onUpdateUser);
     on<ForgotPassword>(_onForgotPassword);
+    on<ForgotClientID>(_onForgotClientID);
   }
 
   final AuthenticationRepository _authenticationRepository;
@@ -69,12 +69,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Future<void> _onUpdateUser(
-      UpdateUser event,
-      Emitter<LoginState> emit,
-      ) async {
+    UpdateUser event,
+    Emitter<LoginState> emit,
+  ) async {
     emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
     try {
-      AuthenticationRepository authenticationRepository = AuthenticationRepository();
+      AuthenticationRepository authenticationRepository =
+          AuthenticationRepository();
       await authenticationRepository.updateUserOnFirst(
         email: event.email,
         password: event.password,
@@ -86,17 +87,53 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Future<void> _onForgotPassword(
-      ForgotPassword event,
-      Emitter<LoginState> emit,
-      ) async {
+    ForgotPassword event,
+    Emitter<LoginState> emit,
+  ) async {
     emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
     try {
-      AuthenticationRepository authenticationRepository = AuthenticationRepository();
-      await authenticationRepository.forgotPassword(
+      AuthenticationRepository authenticationRepository =
+          AuthenticationRepository();
+      var data = await authenticationRepository.forgotPassword(
         email: event.email,
       );
-      emit(state.copyWith(status: FormzSubmissionStatus.success));
-    } catch (_) {
+      if (data['error'] != null) {
+        String error = (data['error'])['client_email'][0];
+        emit(state.copyWith(
+            status: FormzSubmissionStatus.failure, message: error));
+      } else if (data['message'] != null) {
+        String message = (data['message']);
+        emit(state.copyWith(
+            status: FormzSubmissionStatus.failure, message: message));
+      }
+    } catch (e) {
+      print("Errors: $e");
+      emit(state.copyWith(status: FormzSubmissionStatus.failure));
+    }
+  }
+
+  Future<void> _onForgotClientID(
+    ForgotClientID event,
+    Emitter<LoginState> emit,
+  ) async {
+    emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
+    try {
+      AuthenticationRepository authenticationRepository =
+          AuthenticationRepository();
+      var data = await authenticationRepository.forgotClientID(
+        email: event.email,
+      );
+      if (data['error'] != null) {
+        String error = (data['error'])['client_email'][0];
+        emit(state.copyWith(
+            status: FormzSubmissionStatus.failure, message: error));
+      } else if (data['message'] != null) {
+        String message = (data['message']);
+        emit(state.copyWith(
+            status: FormzSubmissionStatus.success, message: message));
+      }
+    } catch (e) {
+      print("Errors: $e");
       emit(state.copyWith(status: FormzSubmissionStatus.failure));
     }
   }

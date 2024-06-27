@@ -11,26 +11,28 @@ final class LoginState extends Equatable {
     this.clientID = const Username.pure(),
     this.password = const Password.pure(),
     this.isValid = false,
+    this.message,
   });
 
   final FormzSubmissionStatus status;
   final Username clientID;
   final Password password;
   final bool isValid;
+  final String? message;
 
   LoginState copyWith({
     FormzSubmissionStatus? status,
     Username? clientID,
     Password? password,
     bool? isValid,
+    String? message,
   }) {
     return LoginState(
       status: status ?? this.status,
-      // username: username ?? this.username,
-      // password: password ?? this.password,
       clientID: clientID ?? this.clientID,
       password: password ?? this.password,
       isValid: isValid ?? this.isValid,
+      message: message,
     );
   }
 

@@ -2,13 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 import '../../blocs/authentication/authentication_bloc.dart';
 import '../../blocs/authentication/authentication_event.dart';
 import '../../blocs/authentication/authentication_state.dart';
-import '../../blocs/login/login_bloc.dart';
-import '../../blocs/login/login_state.dart';
 import '../../lang/app_strings.dart';
 import '../../repositories/authentication_repository.dart';
 import '../../widgets/colors.dart';
@@ -43,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 topWidget(state),
                 Positioned(
                   left: 0,
-                  top: 272,
+                  top: 272.h,
                   child: Container(
                     width: 375.w,
                     height: 532.h,
@@ -205,11 +202,10 @@ class ProfileBody extends StatelessWidget {
           height: 110.h,
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               profileBlock(label: AppStrings.myAccount, image: 'assets/images/avatar.png'),
-              SizedBox(width: 18.w),
               profileBlock(label: AppStrings.consultationHistory, image: 'assets/images/consultation.png'),
             ],
           ),

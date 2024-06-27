@@ -48,7 +48,7 @@ class CustomDialog {
                     padding: const EdgeInsets.only(bottom: 8,),
                     child: Center(
                         child: SizedBox(
-                          width: 238.w,
+                          width: 210.w,
                           child: Text(
                             content ?? "",
                             textAlign: TextAlign.center,

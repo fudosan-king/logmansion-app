@@ -13,12 +13,10 @@ class Menu extends StatelessWidget {
       width: 335.w,
       height: 210.h,
       child: Wrap(
-        spacing: 10,
+        spacing: 9.w,
         runSpacing: 10,
         children: [
-          MenuItem(
-            title: 'マイページ',
-            image: 'assets/images/menu-icon1.png',),
+          MenuItem(title: 'マイページ', image: 'assets/images/menu-icon1.png',),
           MenuItem(title: 'お問合わせ', image: 'assets/images/menu-icon2.png'),
           MenuItem(title: '契約書類', image: 'assets/images/menu-icon3.png'),
           MenuItem(title: 'オーダー家具', image: 'assets/images/menu-icon4.png',

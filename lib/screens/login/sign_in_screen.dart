@@ -48,7 +48,6 @@ class _SignInScreenState extends State<SignInScreen> {
       clipBehavior: Clip.antiAlias,
       decoration: const BoxDecoration(color: AppColors.primaryColor),
       padding: EdgeInsets.only(
-        top: 100.h,
         left: 28.w,
         right: 28.w,
       ),
@@ -56,6 +55,9 @@ class _SignInScreenState extends State<SignInScreen> {
         child: Column(
           children: [
             Container(
+              margin: EdgeInsets.only(
+                top: 100.h,
+              ),
               width: 200.w,
               height: 27.62.h,
               decoration: const BoxDecoration(
@@ -68,6 +70,7 @@ class _SignInScreenState extends State<SignInScreen> {
             LoginForm(
                 emailController: _clientIDController,
                 passwordController: _passwordController),
+            SizedBox(height: 60.h),
           ],
         ),
       ),
@@ -97,14 +100,24 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
+        if (state.status.isInProgress) {
+          _showLoadingDialog(context);
+        } else if (state.status.isFailure || state.status.isSuccess) {
+          Navigator.of(context).pop(); // Dismiss the dialog
+        }
         if (state.status.isFailure) {
           // ScaffoldMessenger.of(context)
           //   ..hideCurrentSnackBar()
           //   ..showSnackBar(
           //     const SnackBar(content: Text('Authentication Failure')),
           //   );
-          String title = r'半角英大文字小文字と数字の組み合わせに問題があるか使えない文字が入力されました';
-          String content = r'お客様番号をお確かめの上再度入力してください';
+
+          String title = r'契約番号またはパスワードが異なります';
+          String content = r'入力内容をお確かめの上再度入力してくださいい';
+          if(state.message != null){
+            title = '';
+            content = state.message ?? "";
+          }
           CustomDialog.alertDialog(
               context: context, title: title, content: content);
         }
@@ -117,22 +130,21 @@ class _LoginFormState extends State<LoginForm> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 30.h),
-              if (hasError)
-                SizedBox(
-                  width: 319.w,
-                  height: 52.h,
-                  child: const Text(
-                    AppStrings.validateLogin,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: AppColors.textGrey,
-                      fontSize: 16,
-                      fontFamily: 'SF Pro Display',
-                      fontWeight: FontWeight.w400,
-                      height: 1.5,
-                    ),
+              SizedBox(
+                width: 319.w,
+                height: 52.h,
+                child: const Text(
+                  AppStrings.validateLogin,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: AppColors.textGrey,
+                    fontSize: 16,
+                    fontFamily: 'SF Pro Display',
+                    fontWeight: FontWeight.w400,
+                    height: 1.5,
                   ),
                 ),
+              ),
               SizedBox(height: 30.h),
               Container(
                 child: Column(
@@ -159,16 +171,16 @@ class _LoginFormState extends State<LoginForm> {
                     .read<LoginBloc>()
                     .add(LoginPasswordChanged(password)),
               ),
-              // const Text(
-              //   AppStrings.validatePassword,
-              //   style: TextStyle(
-              //     color: AppColors.textGrey,
-              //     fontSize: 12,
-              //     fontFamily: 'SF Pro Display',
-              //     fontWeight: FontWeight.w400,
-              //     height: 0,
-              //   ),
-              // ),
+              const Text(
+                AppStrings.validatePassword,
+                style: TextStyle(
+                  color: AppColors.textGrey,
+                  fontSize: 12,
+                  fontFamily: 'SF Pro Display',
+                  fontWeight: FontWeight.w400,
+                  height: 0,
+                ),
+              ),
               SizedBox(height: 50.h),
               InkWell(
                 onTap: () {
@@ -210,12 +222,12 @@ class _LoginFormState extends State<LoginForm> {
                 ),
               ),
               SizedBox(height: 20.h),
-              Center(
-                child: InkWell(
-                  onTap: () {
-                    handleForgot(context);
-                  },
-                  child: const Text(
+              InkWell(
+                onTap: () {
+                  handleForgot(context, PopUpType.forgotPassword);
+                },
+                child: const Center(
+                  child: Text(
                     AppStrings.forgotPasswordLabel,
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -241,16 +253,21 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                 ),
               ),
-              const Center(
-                child: Text(
-                  AppStrings.forgotIDLabel,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xFF2F80ED),
-                    fontSize: 14,
-                    fontFamily: 'SF Pro Display',
-                    fontWeight: FontWeight.w400,
-                    height: 0,
+              InkWell(
+                onTap: () {
+                  handleForgot(context, PopUpType.forgotClientID);
+                },
+                child: const Center(
+                  child: Text(
+                    AppStrings.forgotIDLabel,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color(0xFF2F80ED),
+                      fontSize: 14,
+                      fontFamily: 'SF Pro Display',
+                      fontWeight: FontWeight.w400,
+                      height: 0,
+                    ),
                   ),
                 ),
               ),
@@ -261,7 +278,7 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  void handleForgot(BuildContext context) {
+  void handleForgot(BuildContext context, PopUpType type) {
     showGeneralDialog(
       context: context,
       barrierLabel: "",
@@ -269,144 +286,181 @@ class _LoginFormState extends State<LoginForm> {
       barrierColor: Colors.black.withOpacity(0.5),
       transitionDuration: const Duration(milliseconds: 200),
       pageBuilder: (_, __, ___) {
-        return Center(
-          child: popUp(context),
-        );
+        return PopUpInputEmail(context: context, type: type);
       },
-      // transitionBuilder: (_, anim, __, child) {
-      //   Tween<Offset> tween;
-      //   if (anim.status == AnimationStatus.reverse) {
-      //     tween = Tween(begin: const Offset(0, -1), end: Offset.zero);
-      //   } else {
-      //     tween = Tween(begin: const Offset(0, -1), end: Offset.zero);
-      //   }
-      //
-      //   return SlideTransition(
-      //     position: tween.animate(anim),
-      //     child: FadeTransition(
-      //       opacity: anim,
-      //       child: child,
-      //     ),
-      //   );
-      // },
     );
   }
 
-  Widget popUp(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
-    String? emailError;
-    return Container(
-      width: 335.w,
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
-      clipBehavior: Clip.antiAlias,
-      decoration: ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-      ),
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          minHeight: 220.h,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              width: double.infinity,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: SizedBox(
-                      child: Text(
-                        AppStrings.forgotPassword,
-                        style: const TextStyle(
-                          color: Color(0xFFB49554),
-                          fontSize: 20,
-                          fontFamily: 'SF Pro Display',
-                          fontWeight: FontWeight.w700,
-                          decoration: TextDecoration.none,
+  void _showLoadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const Dialog(
+          backgroundColor: Colors.transparent,
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      },
+    );
+  }
+
+}
+
+enum PopUpType { forgotPassword, forgotClientID }
+
+class PopUpInputEmail extends StatefulWidget {
+  PopUpInputEmail({
+    super.key,
+    required this.context,
+    required this.type,
+  });
+  BuildContext context;
+  PopUpType type;
+
+  @override
+  State<PopUpInputEmail> createState() => _PopUpInputEmailState();
+}
+
+class _PopUpInputEmailState extends State<PopUpInputEmail> {
+  TextEditingController emailController = TextEditingController();
+  String? emailError;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Card(
+        child: Container(
+          width: 335.w,
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 4.h),
+          clipBehavior: Clip.antiAlias,
+          decoration: ShapeDecoration(
+            color: Colors.white,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+          ),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: 220.h,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: Text(
+                            widget.type == PopUpType.forgotPassword ? AppStrings.forgotPassword : AppStrings.forgotID,
+                            style: const TextStyle(
+                              color: Color(0xFFB49554),
+                              fontSize: 20,
+                              fontFamily: 'SF Pro Display',
+                              fontWeight: FontWeight.w700,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      SizedBox(width: 10),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          padding: const EdgeInsets.all(5),
+                          child: Center(
+                              child: Icon(Icons.close,
+                                  color: AppColors.textGrey, size: 24)),
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(width: 10),
-                  // Container(
-                  //   width: 24,
-                  //   height: 24,
-                  //   padding: const EdgeInsets.all(5),
-                  //   child: Icon(Icons.close, color: AppColors.textGrey, size: 24),
-                  // ),
-                ],
-              ),
-            ),
-            SizedBox(height: 12.h),
-            const Text(
-              AppStrings.noteForgotID,
-              style: TextStyle(
-                color: AppColors.textGrey500,
-                fontSize: 16,
-                fontFamily: 'SF Pro Display',
-                fontWeight: FontWeight.w700,
-                decoration: TextDecoration.none,
-              ),
-            ),
-            SizedBox(height: 12.h),
-            Card(
-              child: TextFormField(
-                controller: emailController,
-                decoration: InputDecoration(labelText: '', errorText: emailError),
-                onFieldSubmitted: (value) {
-                  setState(() {
-                    emailError = Validators.emailValidator(value);
-                  });
-                },
-              ),
-            ),
-            SizedBox(height: 12.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Card(
-                  child: Container(
-                    width: 100.w,
-                    height: 40.w,
-                    padding: const EdgeInsets.all(10),
-                    decoration: ShapeDecoration(
-                      color: AppColors.buttonColor,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-                    ),
-                    child: InkWell(
-                      onTap: (){
-                        if(emailError == null){
-                          print(12312321312312);
-                          context
-                              .read<LoginBloc>()
-                              .add(ForgotPassword(emailController.text));
-                        }
-                        // print(emailController.text);
-                      },
-                      child: const Center(
-                        child: Text(
-                          'Send',
-                          style: TextStyle(
-                            color: AppColors.textWhite,
-                            fontSize: 16,
-                            fontFamily: 'SF Pro Display',
-                            fontWeight: FontWeight.w700,
-                            decoration: TextDecoration.none,
+                ),
+                SizedBox(height: 12.h),
+                Text(
+                  widget.type == PopUpType.forgotPassword ? AppStrings.noteForgotPassword : AppStrings.noteForgotID,
+                  style: TextStyle(
+                    color: AppColors.textGrey500,
+                    fontSize: 16,
+                    fontFamily: 'SF Pro Display',
+                    fontWeight: FontWeight.w700,
+                    decoration: TextDecoration.none,
+                  ),
+                ),
+                SizedBox(height: 12.h),
+                TextField(
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    labelText: '',
+                    errorText: emailError,
+                    border: const OutlineInputBorder(),
+                  ),
+                  onSubmitted: (value) {
+                    setState(() {
+                      emailError = Validators.emailValidator(value);
+                    });
+                  },
+                ),
+                SizedBox(height: 12.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Card(
+                      child: Container(
+                        width: 100.w,
+                        height: 40.w,
+                        padding: const EdgeInsets.all(10),
+                        decoration: ShapeDecoration(
+                          color: AppColors.buttonColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6)),
+                        ),
+                        child: InkWell(
+                          onTap: () {
+                            if (emailError == null && emailController.text != "") {
+                              if(widget.type == PopUpType.forgotPassword){
+                                widget.context
+                                    .read<LoginBloc>()
+                                    .add(ForgotPassword(emailController.text));
+                              } else {
+                                widget.context
+                                    .read<LoginBloc>()
+                                    .add(ForgotClientID(emailController.text));
+                              }
+                            }
+                          },
+                          child: const Center(
+                            child: Text(
+                              'Send',
+                              style: TextStyle(
+                                color: AppColors.textWhite,
+                                fontSize: 16,
+                                fontFamily: 'SF Pro Display',
+                                fontWeight: FontWeight.w700,
+                                decoration: TextDecoration.none,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );
