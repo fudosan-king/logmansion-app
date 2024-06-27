@@ -53,6 +53,11 @@ class AuthController extends Controller
      *                  property="token",
      *                  type="string",
      *                  example="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjEzZDNiMmUxMTI3NTIzY2U5YTIwNzNkOTY3MTMyZDQxNzllZmRhMjRlNzA0YjBkNzZiOTMxMzM0M2QwNzllMTE3ZmE5ZGIxNjk0ZjIwNTc4In0.eyJhdWQiOiIxIiwianRpIjoiMTNkM2IyZTExMjc1MjNjZTlhMjA3M2Q5NjcxMzJkNDE3OWVmZGEyNGU3MDRiMGQ3NmI5MzEzMzQzZDA3OWUxMTdmYTlkYjE2OTRmMjA1NzgiLCJpYXQiOjE2MTkxMTg1NjgsIm5iZiI6MTYxOTExODU2OCwiZXhwIjoxNjQwNjU0NTY3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.c3Q4aXfPpZztlNrU4SdbSPk8Hx8epx3lR8IooPM_6z7m6dLd4qRgjO2cyuSs06rsfDy2IBujpYgXrMzufTXAd2Ijtn-9x2RtGoEwD4ByEECef7rS4TYw3D8w3wXrDlXJFcCkI_YvqXbDzI4e5Yf2t9wL9igTwF0_lOM49Fpxi0"
+     *              ),
+     *              @OA\Property(
+     *                  property="isFirstLogin",
+     *                  type="boolean",
+     *                  example=false,
      *              )
      *          )
      *      ),
@@ -298,13 +303,16 @@ class AuthController extends Controller
 
         try {
             $validator = Validator::make($request->all(), [
-                'email' => 'required',
+                'email' => 'required|email|unique:estate_clients,client_email',
                 // 'password' => 'required|min:6|confirmed',
                 'password' => 'required|min:6',
             ], [
-                'password.required' => '新しいパスワードを入力してください。',
+                'email.required' => 'フィールドは必須です',
+                'email.email' => '入力されたメールアドレスの形式が正しくありません。',
+                'email.unique' => 'メールアドレスは既に登録されています。',
+                'password.required' => 'パスワードをご入力ください。',
                 'password.min' => '新しいパスワードは少なくとも6文字でなければなりません。',
-                'password.confirmed' => '新しいパスワードが一致しません。',
+                // 'password.confirmed' => '新しいパスワードが一致しません。',
             ]);
     
             if ($validator->fails()) {
@@ -499,7 +507,11 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
         'client_email' => 'required|email|exists:estate_clients,client_email',
-        ], []);
+        ], [
+            'client_email.required' => 'フィールドは必須です',
+            'client_email.email' => '有効なメールアドレスを入力してください。',
+            'client_email.exists' => '登録用メールアドレスが一致しませんでした',
+        ]);
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
@@ -514,8 +526,7 @@ class AuthController extends Controller
 
         Mail::to($client->client_email)->send(new ForgotPasswordMail($newPassword, $client));
 
-
-        return response()->json(['message' => 'New password has been sent to your email.']);
+        return response()->json(['message' => 'パスワードをおくりました']);
     }
 
     /**
@@ -550,7 +561,11 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
         'client_email' => 'required|email|exists:estate_clients,client_email',
-        ], []);
+        ], [
+            'client_email.required' => 'フィールドは必須です',
+            'client_email.email' => '有効なメールアドレスを入力してください。',
+            'client_email.exists' => '登録用メールアドレスが一致しませんでした',
+        ]);
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
@@ -562,7 +577,7 @@ class AuthController extends Controller
         Mail::to($client->client_email)->send(new ForgotClientIDMail($client));
 
 
-        return response()->json(['message' => 'Client ID has been sent to your email.']);
+        return response()->json(['message' => '契約番号を送りました']);
     }
 
     function getClientID($token) {
