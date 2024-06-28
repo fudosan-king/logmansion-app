@@ -70,13 +70,13 @@ class AuthenticationRepository {
           'password': password,
         }),
       );
-      print(response.statusCode);
       if (response.statusCode == 200) {
-        User user = User.fromJson(jsonDecode(response.body)['user']);
-        _controller.add(AuthenticationStatus.authenticated);
+        // User user = User.fromJson(jsonDecode(response.body)['user']);
+        // _controller.add(AuthenticationStatus.authenticated);
         _controller.add(AuthenticationStatus.unknown);
-        print(user);
-        return user;
+        return response.body;
+      } else if(response.statusCode == 400 || response.statusCode == 401) {
+        return response.body;
       } else {
         throw Exception('Failed to update');
       }

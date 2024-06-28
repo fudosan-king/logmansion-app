@@ -11,7 +11,7 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 335.w,
-      height: 210.h,
+      // height: 210.h,
       child: Wrap(
         spacing: 9.w,
         runSpacing: 10,

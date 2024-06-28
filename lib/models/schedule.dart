@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
 class Schedule extends Equatable {
-  final String id;
+  final int id;
   final String name;
   final String description;
-  final String date;
+  final DateTime date;
   final int position;
 
   const Schedule({
@@ -19,21 +19,29 @@ class Schedule extends Equatable {
   // TODO: implement props
   List<Object?> get props => [id, description];
 
-  static const empty = Schedule(
-    id: '',
+  static  Schedule empty = Schedule(
+    id: 0,
     description: '',
     name: '',
-    date: '',
+    date: DateTime.now(),
     position: 0,
   );
 
   factory Schedule.fromJson(Map<String, dynamic> json) {
     return Schedule(
-      id: json['schedule_id'] ?? "",
+      id: json['schedule_id'] ?? 0,
       name: json['schedule_name'] ?? "",
       description: json['schedule_description'] ?? "",
-      date: json['schedule_date	'] ?? "",
+      date: DateTime.parse(json['schedule_date']),
       position: json['position'] ?? 0,
     );
   }
+
+  bool isDateBeforeToday() {
+    DateTime today = DateTime.now();
+    DateTime todayDateOnly = DateTime(today.year, today.month, today.day);
+    DateTime inputDateOnly = DateTime(date.year, date.month, date.day);
+    return inputDateOnly.isBefore(todayDateOnly);
+  }
+
 }

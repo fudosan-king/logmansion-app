@@ -17,6 +17,7 @@ dependencies:
   persistent_bottom_nav_bar_v2: ^5.2.3
   equatable: ^2.0.0
   formz: ^0.7.0
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:

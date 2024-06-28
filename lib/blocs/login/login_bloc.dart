@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
 
@@ -76,11 +78,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       AuthenticationRepository authenticationRepository =
           AuthenticationRepository();
-      await authenticationRepository.updateUserOnFirst(
+      var dataRaw = await authenticationRepository.updateUserOnFirst(
         email: event.email,
         password: event.password,
       );
-      emit(state.copyWith(status: FormzSubmissionStatus.success));
+      var data = json.decode(dataRaw);
+      if(data['error'] == null){
+        emit(state.copyWith(status: FormzSubmissionStatus.success));
+      } else{
+        String error = data['error'].values.first[0] ?? "";
+        emit(state.copyWith(status: FormzSubmissionStatus.failure, message: error));
+      }
     } catch (_) {
       emit(state.copyWith(status: FormzSubmissionStatus.failure));
     }

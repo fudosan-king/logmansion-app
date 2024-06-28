@@ -101,7 +101,7 @@ class _LoginFormState extends State<LoginForm> {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state.status.isInProgress) {
-          _showLoadingDialog(context);
+          Component.showLoadingDialog(context);
         } else if (state.status.isFailure || state.status.isSuccess) {
           Navigator.of(context).pop(); // Dismiss the dialog
         }
@@ -287,21 +287,6 @@ class _LoginFormState extends State<LoginForm> {
       transitionDuration: const Duration(milliseconds: 200),
       pageBuilder: (_, __, ___) {
         return PopUpInputEmail(context: context, type: type);
-      },
-    );
-  }
-
-  void _showLoadingDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return const Dialog(
-          backgroundColor: Colors.transparent,
-          child: Center(
-            child: CircularProgressIndicator(),
-          ),
-        );
       },
     );
   }

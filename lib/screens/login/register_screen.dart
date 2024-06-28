@@ -46,16 +46,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget _buildBody(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
+        if (state.status.isInProgress) {
+          Component.showLoadingDialog(context);
+        } else if (state.status.isFailure || state.status.isSuccess) {
+          Navigator.of(context).pop(); // Dismiss the dialog
+        }
         if (state.status.isFailure) {
-          String title = r'半角英大文字小文字と数字の組み合わせに問題があるか使えない文字が入力されました';
-          String content = r'お客様番号をお確かめの上再度入力してください';
+          String title = r'エラーが発生しました';
+          String content = state.message ?? "";
           CustomDialog.alertDialog(
               context: context, title: title, content: content);
         }
         if (state.status.isSuccess) {
           Navigator.of(context).pushAndRemoveUntil<void>(
             RegisterCheckOverScreen.route(),
-                (route) => false,
+            (route) => false,
           );
         }
       },
@@ -116,7 +121,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SizedBox(height: 30.h),
                       Container(
                         width: double.infinity,
-                        height: 88.h,
+                        // height: 88.h,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -164,13 +169,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                 return Text(
                                                   userId,
                                                   style: TextStyle(
-                                                    color:
-                                                        AppColors.textWhite,
+                                                    color: AppColors.textWhite,
                                                     fontSize: 20.sp,
                                                     fontFamily:
                                                         'SF Pro Display',
-                                                    fontWeight:
-                                                        FontWeight.w700,
+                                                    fontWeight: FontWeight.w700,
                                                     height: 1.0,
                                                   ),
                                                 );
@@ -201,7 +204,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             SizedBox(height: 20.h),
                             Container(
                               width: double.infinity,
-                              height: 34.h,
+                              // height: 34.h,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -234,21 +237,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           child: SizedBox(
                                             child: Builder(
                                               builder: (context) {
-                                                final userName =
-                                                    context.select(
+                                                final userName = context.select(
                                                   (AuthenticationBloc bloc) =>
                                                       bloc.state.user.name,
                                                 );
                                                 return Text(
                                                   userName,
                                                   style: TextStyle(
-                                                    color:
-                                                        AppColors.textWhite,
+                                                    color: AppColors.textWhite,
                                                     fontSize: 18.sp,
                                                     fontFamily:
                                                         'SF Pro Display',
-                                                    fontWeight:
-                                                        FontWeight.w700,
+                                                    fontWeight: FontWeight.w700,
                                                     height: 1.0,
                                                   ),
                                                 );
@@ -312,15 +312,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SizedBox(height: 20.h),
                       InkWell(
                         onTap: () {
-                          if(_emailController.text != "" && _passwordController.text != ""){
-                            if(Validators.emailValidator(_emailController.text) != null) {
+                          String? emailError =
+                              Validators.emailValidator(_emailController.text);
+                          String? passwordError = Validators.passwordValidator(
+                              _passwordController.text);
+                          if (emailError != null) {
+                            CustomDialog.alertDialog(
+                                context: context,
+                                title: 'エラーが発生しました',
+                                content: emailError!);
+                          } else if (passwordError != null) {
+                            CustomDialog.alertDialog(
+                                context: context,
+                                title: 'エラーが発生しました',
+                                content: passwordError!);
+                          } else {
+                            _showConfirmationDialog(context, _emailController.text, () {
                               context.read<LoginBloc>().add(UpdateUser(
                                   _emailController.text,
                                   _passwordController.text));
-                            }
-                          }
-                          else{
-
+                            });
                           }
                         },
                         child: Container(
@@ -363,52 +374,79 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Column notePassword() {
+  Widget notePassword() {
     return const Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            AppStrings.notePassword1,
-                            style: TextStyle(
-                              color: AppColors.textGrey,
-                              fontSize: 12,
-                              fontFamily: 'SF Pro Display',
-                              fontWeight: FontWeight.w400,
-                              height: 0,
-                            ),
-                          ),
-                          Text(
-                            AppStrings.notePassword2,
-                            style: TextStyle(
-                              color: AppColors.textGrey,
-                              fontSize: 12,
-                              fontFamily: 'SF Pro Display',
-                              fontWeight: FontWeight.w400,
-                              height: 0,
-                            ),
-                          ),
-                          Text(
-                            AppStrings.notePassword3,
-                            style: TextStyle(
-                              color: AppColors.textGrey,
-                              fontSize: 12,
-                              fontFamily: 'SF Pro Display',
-                              fontWeight: FontWeight.w400,
-                              height: 0,
-                            ),
-                          ),
-                          Text(
-                            AppStrings.notePassword4,
-                            style: TextStyle(
-                              color: AppColors.textGrey,
-                              fontSize: 12,
-                              fontFamily: 'SF Pro Display',
-                              fontWeight: FontWeight.w400,
-                              height: 0,
-                            ),
-                          ),
-                        ],
-                      );
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          AppStrings.notePassword1,
+          style: TextStyle(
+            color: AppColors.textGrey,
+            fontSize: 12,
+            fontFamily: 'SF Pro Display',
+            fontWeight: FontWeight.w400,
+            height: 0,
+          ),
+        ),
+        Text(
+          AppStrings.notePassword2,
+          style: TextStyle(
+            color: AppColors.textGrey,
+            fontSize: 12,
+            fontFamily: 'SF Pro Display',
+            fontWeight: FontWeight.w400,
+            height: 0,
+          ),
+        ),
+        Text(
+          AppStrings.notePassword3,
+          style: TextStyle(
+            color: AppColors.textGrey,
+            fontSize: 12,
+            fontFamily: 'SF Pro Display',
+            fontWeight: FontWeight.w400,
+            height: 0,
+          ),
+        ),
+        Text(
+          AppStrings.notePassword4,
+          style: TextStyle(
+            color: AppColors.textGrey,
+            fontSize: 12,
+            fontFamily: 'SF Pro Display',
+            fontWeight: FontWeight.w400,
+            height: 0,
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showConfirmationDialog(BuildContext context, String email, Function func) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('確認'),
+          content: Text('この $email アドレスをパスワードのリセットやその他の機能に使用してもよろしいですか? '),
+          actions: <Widget>[
+            TextButton(
+              child: Text('キャンセル'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('確認'),
+              onPressed: () {
+                func();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

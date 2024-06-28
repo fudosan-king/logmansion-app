@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -46,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 375.w,
               height: 310.h,
               decoration: const BoxDecoration(
-                color: Color(0xffC8CDE8),
+                // color: Color(0xffC8CDE8),
                 image: DecorationImage(
                   image: AssetImage(
                     'assets/images/home-bg.png',
@@ -113,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
             top: 250.h,
             child: Container(
               width: 375.w,
-              // height: 500.h,
+              height: 500.h,
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: SingleChildScrollView(
                 child: Column(
@@ -123,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     WelcomeField(name: userName),
                     SizedBox(height: 18.h),
                     const Menu(),
-                    SizedBox(height: 60.h),
+                    SizedBox(height: 140.h),
                   ],
                 ),
               ),
