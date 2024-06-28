@@ -185,11 +185,11 @@ class AuthController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'old_password' => 'required',
-                'password' => 'required|min:6|confirmed',
+                'password' => 'required|min:8|confirmed',
             ], [
                 'old_password.required' => 'パスワードを入力してください。',
                 'password.required' => '新しいパスワードを入力してください。',
-                'password.min' => '新しいパスワードは少なくとも6文字でなければなりません。',
+                'password.min' => '新しいパスワードは少なくとも8文字でなければなりません。',
                 'password.confirmed' => '新しいパスワードが一致しません。',
             ]);
     
@@ -305,13 +305,13 @@ class AuthController extends Controller
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email|unique:estate_clients,client_email',
                 // 'password' => 'required|min:6|confirmed',
-                'password' => 'required|min:6',
+                'password' => 'required|min:8',
             ], [
-                'email.required' => 'フィールドは必須です',
+                'email.required' => 'メールアドレスをご入力ください。',
                 'email.email' => '入力されたメールアドレスの形式が正しくありません。',
                 'email.unique' => 'メールアドレスは既に登録されています。',
                 'password.required' => 'パスワードをご入力ください。',
-                'password.min' => '新しいパスワードは少なくとも6文字でなければなりません。',
+                'password.min' => '新しいパスワードは少なくとも8文字でなければなりません。',
                 // 'password.confirmed' => '新しいパスワードが一致しません。',
             ]);
     
@@ -333,7 +333,7 @@ class AuthController extends Controller
             $user->save();
     
             // return response()->json(['message' => 'Password changed successfully']);
-            return response()->json(['user' => $user], 200);
+            return response()->json(['user' => $user, 'message' => ''], 200);
         }
         catch (JWTException $e) {
             return response()->json(['error' => 'Token is invalid or expired'], 401);
