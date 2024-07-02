@@ -5,9 +5,11 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Faq;
+use Illuminate\Support\Facades\DB;
 
 class FAQController extends Controller
 {
+    public $active = 1;
     /**
      * @OA\Get(
      *     path="/api/faq",
@@ -43,7 +45,19 @@ class FAQController extends Controller
 
     public function index()
     {
-        $faq = FAQ::where('faq_active', 1)->get();
-        return response()->json($faq);
+        $faq = FAQ::where('faq_active', $this->active)->get();
+        $f = [];
+
+        if ($faq->count() > 0) {
+            foreach ($faq as $k => $v) {
+                if ($v->faq_type == 1) {
+                    $f[__("messages.faq_app")][]  = $v;
+                } else {
+                    $f[__("messages.faq_home")][] = $v;
+                }
+            }  
+        }
+      
+        return response()->json($f);
     }
 }
