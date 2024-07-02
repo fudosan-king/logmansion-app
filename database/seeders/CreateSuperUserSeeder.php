@@ -161,6 +161,8 @@ class CreateSuperUserSeeder extends Seeder
                 'client_email' => $faker->email,
                 'client_password' => Hash::make('super1234'),
                 'client_tel' => $faker->phoneNumber,
+                'updated_at' => now(),
+                'created_at' => now(),
          ]);
         }
       
